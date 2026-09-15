@@ -65,6 +65,7 @@
       margin-top: 8px;
       font-size: 16px;
       opacity: 0.9;
+      line-height: 1.4;
     }
 
     .login-button {
@@ -92,7 +93,7 @@
     .section-title {
       font-size: 21px;
       font-weight: bold;
-      margin: 20px 0 12px;
+      margin: 22px 0 12px;
     }
 
     .grid {
@@ -129,7 +130,7 @@
       margin-top: 7px;
       font-size: 13px;
       opacity: 0.85;
-      line-height: 1.3;
+      line-height: 1.4;
     }
 
     .status {
@@ -146,6 +147,79 @@
       opacity: 0.75;
     }
 
+    .search-box {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: white;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .product-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.12);
+      text-align: center;
+    }
+
+    .product-icon {
+      font-size: 45px;
+    }
+
+    .product-name {
+      margin-top: 8px;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .product-category {
+      margin-top: 6px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .product-price {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .view-button,
+    .back-button {
+      width: 100%;
+      margin-top: 14px;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      color: #4b217a;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .back-button {
+      margin-top: 25px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
     @media (max-width: 360px) {
       .grid {
         grid-template-columns: 1fr;
@@ -157,6 +231,8 @@
 <body>
 
   <div class="container">
+
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -219,143 +295,296 @@
       </div>
 
 
-      <div class="section-title">
-        Explore AMANA HUB
+      <!-- HOME VIEW -->
+
+      <div id="homeView">
+
+        <div class="section-title">
+          Explore AMANA HUB
+        </div>
+
+
+        <div class="grid">
+
+          <div
+            class="card"
+            onclick="showMarketplace()"
+          >
+
+            <div class="card-icon">
+              🛒
+            </div>
+
+            <div class="card-title">
+              Marketplace
+            </div>
+
+            <div class="card-text">
+              Discover products and services.
+            </div>
+
+          </div>
+
+
+          <div
+            class="card"
+            onclick="showComingSoon('Agent Opportunity')"
+          >
+
+            <div class="card-icon">
+              🤝
+            </div>
+
+            <div class="card-title">
+              Agent Opportunity
+            </div>
+
+            <div class="card-text">
+              Become an agent and earn commission.
+            </div>
+
+          </div>
+
+
+          <div
+            class="card"
+            onclick="showComingSoon('Businesses')"
+          >
+
+            <div class="card-icon">
+              🏢
+            </div>
+
+            <div class="card-title">
+              Businesses
+            </div>
+
+            <div class="card-text">
+              Discover businesses on AMANA HUB.
+            </div>
+
+          </div>
+
+
+          <div
+            class="card"
+            onclick="showComingSoon('My Orders')"
+          >
+
+            <div class="card-icon">
+              📦
+            </div>
+
+            <div class="card-title">
+              My Orders
+            </div>
+
+            <div class="card-text">
+              Track your orders and purchases.
+            </div>
+
+          </div>
+
+
+          <div
+            class="card"
+            onclick="showComingSoon('My Profile')"
+          >
+
+            <div class="card-icon">
+              👤
+            </div>
+
+            <div class="card-title">
+              My Profile
+            </div>
+
+            <div class="card-text">
+              Manage your account.
+            </div>
+
+          </div>
+
+
+          <div
+            class="card"
+            onclick="showComingSoon('Pi Payments')"
+          >
+
+            <div class="card-icon">
+              💜
+            </div>
+
+            <div class="card-title">
+              Pi Payments
+            </div>
+
+            <div class="card-text">
+              Secure payments with Pi.
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
 
 
-      <div class="grid">
+      <!-- MARKETPLACE VIEW -->
 
-        <!-- MARKETPLACE -->
+      <div id="marketplaceView" class="hidden">
 
-        <div
-          class="card"
-          onclick="openSection('Marketplace')"
-        >
+        <div class="welcome">
 
-          <div class="card-icon">
-            🛒
+          <div class="welcome-title">
+            🛒 AMANA MARKETPLACE
           </div>
 
-          <div class="card-title">
-            Marketplace
-          </div>
-
-          <div class="card-text">
-            Discover products and services.
+          <div class="welcome-text">
+            Discover products and services
+            from businesses on AMANA HUB.
           </div>
 
         </div>
 
 
-        <!-- AGENT -->
+        <div class="search-box">
 
-        <div
-          class="card"
-          onclick="openSection('Agent Opportunity')"
-        >
-
-          <div class="card-icon">
-            🤝
-          </div>
-
-          <div class="card-title">
-            Agent Opportunity
-          </div>
-
-          <div class="card-text">
-            Become an agent and earn commission.
-          </div>
+          <input
+            type="text"
+            id="searchProduct"
+            placeholder="🔎 Search products..."
+            onkeyup="searchProducts()"
+          >
 
         </div>
 
 
-        <!-- BUSINESSES -->
+        <div class="section-title">
+          Featured Products
+        </div>
+
 
         <div
-          class="card"
-          onclick="openSection('Businesses')"
+          id="productList"
+          class="product-list"
         >
 
-          <div class="card-icon">
-            🏢
+
+          <!-- PRODUCT 1 -->
+
+          <div
+            class="product-card"
+            data-search="monti 7 in 1 nutrition food porridge"
+          >
+
+            <div class="product-icon">
+              🥣
+            </div>
+
+            <div class="product-name">
+              MONTI 7 in 1
+            </div>
+
+            <div class="product-category">
+              Nutrition • Food
+            </div>
+
+            <div class="product-price">
+              3,300 RWF
+            </div>
+
+            <button
+              class="view-button"
+              onclick="viewProduct('MONTI 7 in 1','3,300 RWF')"
+            >
+              View Product
+            </button>
+
           </div>
 
-          <div class="card-title">
-            Businesses
+
+          <!-- PRODUCT 2 -->
+
+          <div
+            class="product-card"
+            data-search="monti composite flour nutrition food"
+          >
+
+            <div class="product-icon">
+              🌾
+            </div>
+
+            <div class="product-name">
+              MONTI Composite Flour
+            </div>
+
+            <div class="product-category">
+              Nutrition • Food
+            </div>
+
+            <div class="product-price">
+              3,030 RWF
+            </div>
+
+            <button
+              class="view-button"
+              onclick="viewProduct('MONTI Composite Flour','3,030 RWF')"
+            >
+              View Product
+            </button>
+
           </div>
 
-          <div class="card-text">
-            Discover businesses on AMANA HUB.
+
+          <!-- PRODUCT 3 -->
+
+          <div
+            class="product-card"
+            data-search="monti super nutrition food"
+          >
+
+            <div class="product-icon">
+              🌱
+            </div>
+
+            <div class="product-name">
+              MONTI Super
+            </div>
+
+            <div class="product-category">
+              Nutrition • Food
+            </div>
+
+            <div class="product-price">
+              Contact Business
+            </div>
+
+            <button
+              class="view-button"
+              onclick="viewProduct('MONTI Super','Contact Business')"
+            >
+              View Product
+            </button>
+
           </div>
+
 
         </div>
 
 
-        <!-- ORDERS -->
-
         <div
-          class="card"
-          onclick="openSection('My Orders')"
+          id="marketStatus"
+          class="status"
+        ></div>
+
+
+        <button
+          class="back-button"
+          onclick="backToHome()"
         >
-
-          <div class="card-icon">
-            📦
-          </div>
-
-          <div class="card-title">
-            My Orders
-          </div>
-
-          <div class="card-text">
-            Track your orders and purchases.
-          </div>
-
-        </div>
-
-
-        <!-- PROFILE -->
-
-        <div
-          class="card"
-          onclick="openSection('My Profile')"
-        >
-
-          <div class="card-icon">
-            👤
-          </div>
-
-          <div class="card-title">
-            My Profile
-          </div>
-
-          <div class="card-text">
-            Manage your account.
-          </div>
-
-        </div>
-
-
-        <!-- PI PAYMENTS -->
-
-        <div
-          class="card"
-          onclick="openSection('Pi Payments')"
-        >
-
-          <div class="card-icon">
-            💜
-          </div>
-
-          <div class="card-title">
-            Pi Payments
-          </div>
-
-          <div class="card-text">
-            Secure payments with Pi.
-          </div>
-
-        </div>
+          ← Back to Home
+        </button>
 
       </div>
 
@@ -420,8 +649,6 @@
           auth.accessToken;
 
 
-        // Verify user through backend
-
         const response =
           await fetch(
             "https://amana-hub.onrender.com/api/auth/verify",
@@ -450,8 +677,6 @@
         }
 
 
-        // Show username
-
         document.getElementById(
           "welcomeUser"
         ).innerText =
@@ -460,14 +685,10 @@
           " 👋";
 
 
-        // Hide login
-
         document.getElementById(
           "loginArea"
         ).style.display = "none";
 
-
-        // Show dashboard
 
         document.getElementById(
           "dashboard"
@@ -508,16 +729,143 @@
 
 
     // =========================
-    // DASHBOARD SECTIONS
+    // MARKETPLACE
     // =========================
 
-    function openSection(section) {
+    function showMarketplace() {
 
-      const status =
-        document.getElementById("status");
+      document.getElementById(
+        "homeView"
+      ).style.display = "none";
 
 
-      status.innerText =
+      document.getElementById(
+        "marketplaceView"
+      ).classList.remove("hidden");
+
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "AMANA Marketplace";
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    // =========================
+    // SEARCH PRODUCTS
+    // =========================
+
+    function searchProducts() {
+
+      const search =
+        document
+          .getElementById("searchProduct")
+          .value
+          .toLowerCase()
+          .trim();
+
+
+      const products =
+        document.querySelectorAll(
+          ".product-card"
+        );
+
+
+      products.forEach(product => {
+
+        const text =
+          product
+            .getAttribute("data-search")
+            .toLowerCase();
+
+
+        if (text.includes(search)) {
+
+          product.style.display =
+            "block";
+
+        } else {
+
+          product.style.display =
+            "none";
+
+        }
+
+      });
+
+    }
+
+
+    // =========================
+    // VIEW PRODUCT
+    // =========================
+
+    function viewProduct(
+      productName,
+      price
+    ) {
+
+      document.getElementById(
+        "marketStatus"
+      ).innerHTML =
+        "🛍️ <strong>" +
+        productName +
+        "</strong><br>" +
+        "Price: " +
+        price +
+        "<br><br>" +
+        "Product details and ordering " +
+        "will be connected next 🚀";
+
+    }
+
+
+    // =========================
+    // BACK HOME
+    // =========================
+
+    function backToHome() {
+
+      document.getElementById(
+        "marketplaceView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "homeView"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "Pi Connected ✓";
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    // =========================
+    // OTHER SECTIONS
+    // =========================
+
+    function showComingSoon(section) {
+
+      document.getElementById(
+        "status"
+      ).innerText =
         section +
         " is coming soon 🚀";
 
@@ -534,9 +882,6 @@
         "Incomplete payment found:",
         payment
       );
-
-      // Payment recovery will be connected
-      // to the order system later.
 
     }
 
