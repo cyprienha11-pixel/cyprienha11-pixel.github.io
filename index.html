@@ -8,14 +8,10 @@
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#f5f7fb;
   color:#222;
 }
@@ -27,16 +23,8 @@ header{
   text-align:center;
 }
 
-.logo{
-  font-size:28px;
-  font-weight:bold;
-}
-
-.tagline{
-  margin-top:5px;
-  font-size:14px;
-  opacity:.9;
-}
+.logo{font-size:28px;font-weight:bold}
+.tagline{margin-top:5px;font-size:14px;opacity:.9}
 
 .container{
   max-width:600px;
@@ -63,32 +51,13 @@ button{
   margin-top:10px;
 }
 
-.primary{
-  background:#5b35d5;
-  color:white;
-}
+.primary{background:#5b35d5;color:white}
+.secondary{background:#eee9ff;color:#4d27bd}
+.success{background:#198754;color:white}
+.danger{background:#dc3545;color:white}
+.back{background:#eee;color:#333}
 
-.secondary{
-  background:#eee9ff;
-  color:#4d27bd;
-}
-
-.success{
-  background:#198754;
-  color:white;
-}
-
-.danger{
-  background:#dc3545;
-  color:white;
-}
-
-.back{
-  background:#eee;
-  color:#333;
-}
-
-input, select, textarea{
+input,select,textarea{
   width:100%;
   padding:13px;
   margin-top:7px;
@@ -119,12 +88,24 @@ label{
   margin-bottom:12px;
 }
 
-.product h3{
-  margin-bottom:6px;
-}
+.product h3{margin-bottom:6px}
 
 .price{
   color:#5b35d5;
+  font-weight:bold;
+  font-size:18px;
+  margin:7px 0;
+}
+
+.agent-price{
+  color:#198754;
+  font-weight:bold;
+  font-size:18px;
+  margin:7px 0;
+}
+
+.profit{
+  color:#d17a00;
   font-weight:bold;
   font-size:18px;
   margin:7px 0;
@@ -176,26 +157,24 @@ label{
   margin-top:8px;
 }
 
-.hidden{
-  display:none !important;
+.agent-badge{
+  display:inline-block;
+  background:#e8f7ee;
+  color:#176b3a;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:8px;
 }
 
-.center{
-  text-align:center;
-}
+.hidden{display:none!important}
+.center{text-align:center}
 
 hr{
   border:none;
   border-top:1px solid #eee;
   margin:14px 0;
-}
-
-ul{
-  padding-left:20px;
-}
-
-li{
-  margin-bottom:5px;
 }
 
 .success-box{
@@ -205,6 +184,17 @@ li{
   border-radius:12px;
   margin-bottom:15px;
 }
+
+.info-box{
+  background:#eee9ff;
+  color:#4d27bd;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+ul{padding-left:20px}
+li{margin-bottom:6px}
 </style>
 </head>
 
@@ -222,8 +212,10 @@ li{
 
   <div class="card center">
     <h2>Welcome to AMANA HUB 👋</h2>
+
     <p class="small" style="margin-top:10px;">
-      A digital marketplace connecting customers, businesses and agents.
+      A digital marketplace connecting customers,
+      businesses and agents.
     </p>
 
     <button class="primary" onclick="loginWithPi()">
@@ -241,12 +233,14 @@ li{
 
   <div class="card">
     <h2>Welcome, <span id="username"></span> 👋</h2>
+
     <p class="small" style="margin-top:6px;">
       AMANA HUB TEST MODE
     </p>
   </div>
 
   <div class="card">
+
     <button class="primary" onclick="showMarketplace()">
       🛍️ Marketplace
     </button>
@@ -274,6 +268,7 @@ li{
     <button class="secondary" onclick="comingSoon('Pi Payments')">
       🟣 Pi Payments
     </button>
+
   </div>
 
 </div>
@@ -284,12 +279,15 @@ li{
 
   <div class="card">
     <h2>🛍️ MONTI Marketplace</h2>
+
     <p class="small" style="margin-top:7px;">
       Consumer prices • TEST MODE
     </p>
   </div>
 
+
   <div class="product">
+
     <div class="product-icon">🥣</div>
 
     <h3>MONTI 7 in 1</h3>
@@ -297,17 +295,19 @@ li{
     <p class="price">4,500 RWF</p>
 
     <p class="small">
-      Ingredients: Ibishyimbo bya Fer, ubunyobwa, ingano,
-      soya, ibigori, uburo n'isukali.
+      Ingredients: Ibishyimbo bya Fer, ubunyobwa,
+      ingano, soya, ibigori, uburo n'isukali.
     </p>
 
     <button class="primary" onclick="showProduct('monti7')">
       View Product
     </button>
+
   </div>
 
 
   <div class="product">
+
     <div class="product-icon">🌾</div>
 
     <h3>MONTI Composite Flour</h3>
@@ -315,16 +315,19 @@ li{
     <p class="price">4,000 RWF</p>
 
     <p class="small">
-      Ingredients: ibigori, Soya, ingano, uburo n'amasaka.
+      Ingredients: ibigori, Soya, ingano,
+      uburo n'amasaka.
     </p>
 
     <button class="primary" onclick="showProduct('composite')">
       View Product
     </button>
+
   </div>
 
 
   <div class="product">
+
     <div class="product-icon">🥜</div>
 
     <h3>MONTI Super 5K</h3>
@@ -339,9 +342,13 @@ li{
     <button class="primary" onclick="showProduct('super5k')">
       View Product
     </button>
+
   </div>
 
-  <button class="back" onclick="goHome()">⬅️ Back to Home</button>
+
+  <button class="back" onclick="goHome()">
+    ⬅️ Back to Home
+  </button>
 
 </div>
 
@@ -361,7 +368,9 @@ li{
 
     <h3>Ingredients</h3>
 
-    <p id="productIngredients" class="small" style="margin-top:7px;"></p>
+    <p id="productIngredients"
+       class="small"
+       style="margin-top:7px;"></p>
 
     <p class="small" style="margin-top:12px;">
       🔥 All ingredients are roasted before being processed.
@@ -403,7 +412,9 @@ li{
 
     <div id="cartTotal" class="total"></div>
 
-    <button id="checkoutButton" class="primary" onclick="startOrder()">
+    <button id="checkoutButton"
+            class="primary"
+            onclick="startOrder()">
       📦 Continue to Test Order
     </button>
 
@@ -428,23 +439,37 @@ li{
     </p>
 
     <label>Customer Name</label>
-    <input id="customerName" type="text" placeholder="Enter your name">
+    <input id="customerName"
+           type="text"
+           placeholder="Enter your name">
 
     <label>Phone Number</label>
-    <input id="customerPhone" type="tel" placeholder="07XXXXXXXX">
+    <input id="customerPhone"
+           type="tel"
+           placeholder="07XXXXXXXX">
 
     <label>Location</label>
-    <input id="customerLocation" type="text" placeholder="Enter location">
+    <input id="customerLocation"
+           type="text"
+           placeholder="Enter location">
 
     <label>Delivery</label>
+
     <select id="deliveryMethod">
-      <option value="Customer Pickup">Customer Pickup</option>
-      <option value="Delivery">Delivery</option>
+      <option value="Customer Pickup">
+        Customer Pickup
+      </option>
+
+      <option value="Delivery">
+        Delivery
+      </option>
     </select>
 
     <label>Notes</label>
-    <textarea id="customerNotes" rows="4"
-      placeholder="Optional notes"></textarea>
+
+    <textarea id="customerNotes"
+              rows="4"
+              placeholder="Optional notes"></textarea>
 
     <button class="primary" onclick="reviewOrder()">
       👁️ Review Test Order
@@ -466,7 +491,8 @@ li{
 
     <h2>👁️ Review Test Order</h2>
 
-    <div id="reviewContent" style="margin-top:15px;"></div>
+    <div id="reviewContent"
+         style="margin-top:15px;"></div>
 
     <button class="success" onclick="submitTestOrder()">
       ✅ Submit Test Order
@@ -487,17 +513,22 @@ li{
   <div class="card center">
 
     <div class="success-box">
+
       <h2>✅ Test Order Submitted!</h2>
 
       <p style="margin-top:8px;">
         Your test order flow worked successfully.
       </p>
+
     </div>
 
     <h3>Order Number</h3>
 
     <p id="submittedOrderNumber"
-       style="font-size:24px;font-weight:bold;margin:10px 0;">
+       style="
+       font-size:24px;
+       font-weight:bold;
+       margin:10px 0;">
     </p>
 
     <p class="small">
@@ -537,11 +568,14 @@ li{
   <div id="ordersList"></div>
 
   <div class="card center" id="noOrders">
+
     <h3>📭 No Test Orders Yet</h3>
 
     <p class="small" style="margin-top:7px;">
-      When you submit a TEST order, it will appear here.
+      When you submit a TEST order,
+      it will appear here.
     </p>
+
   </div>
 
   <button class="back" onclick="goHome()">
@@ -558,7 +592,8 @@ li{
 
     <h2>📦 Order Details</h2>
 
-    <div id="orderDetailsContent" style="margin-top:15px;"></div>
+    <div id="orderDetailsContent"
+         style="margin-top:15px;"></div>
 
     <button class="back" onclick="showOrders()">
       ⬅️ Back to My Orders
@@ -569,25 +604,321 @@ li{
 </div>
 
 
-<!-- AGENT -->
+<!-- AGENT OPPORTUNITY -->
 <div id="agentView" class="hidden">
 
-  <div class="card center">
+  <div class="card">
 
     <h2>🤝 Agent Opportunity</h2>
 
-    <p class="small" style="margin-top:10px;">
-      Agent opportunities are coming soon.
+    <p class="small" style="margin-top:7px;">
+      Become an AMANA HUB Agent and earn profit
+      by reselling MONTI products.
     </p>
 
-    <p class="small" style="margin-top:10px;">
-      This section will later contain agent prices,
-      commissions, application and approval.
+    <div class="info-box" style="margin-top:15px;">
+
+      <strong>💡 How it works</strong>
+
+      <ul style="margin-top:8px;">
+        <li>Choose a MONTI product.</li>
+        <li>Get it at the Agent Price.</li>
+        <li>Resell at the recommended price.</li>
+        <li>Keep your profit.</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <!-- MONTI 7 IN 1 -->
+
+  <div class="product">
+
+    <div class="product-icon">🥣</div>
+
+    <h3>MONTI 7 in 1</h3>
+
+    <span class="agent-badge">
+      AGENT OPPORTUNITY
+    </span>
+
+    <hr>
+
+    <p class="small">Agent Price</p>
+
+    <p class="agent-price">
+      3,000 RWF
     </p>
 
-    <span class="status">COMING SOON</span>
+    <p class="small">Recommended Resell Price</p>
 
-    <button class="back" onclick="goHome()">
+    <p class="price">
+      3,300 RWF
+    </p>
+
+    <p class="small">Your Profit</p>
+
+    <p class="profit">
+      300 RWF
+    </p>
+
+    <button class="primary"
+            onclick="showAgentDetails('monti7')">
+      📋 View Details
+    </button>
+
+  </div>
+
+
+  <!-- COMPOSITE -->
+
+  <div class="product">
+
+    <div class="product-icon">🌾</div>
+
+    <h3>MONTI Composite Flour</h3>
+
+    <span class="agent-badge">
+      AGENT OPPORTUNITY
+    </span>
+
+    <hr>
+
+    <p class="small">Agent Price</p>
+
+    <p class="agent-price">
+      2,730 RWF
+    </p>
+
+    <p class="small">Recommended Resell Price</p>
+
+    <p class="price">
+      3,030 RWF
+    </p>
+
+    <p class="small">Your Profit</p>
+
+    <p class="profit">
+      300 RWF
+    </p>
+
+    <button class="primary"
+            onclick="showAgentDetails('composite')">
+      📋 View Details
+    </button>
+
+  </div>
+
+
+  <!-- SUPER 5K -->
+
+  <div class="product">
+
+    <div class="product-icon">🥜</div>
+
+    <h3>MONTI Super 5K</h3>
+
+    <span class="agent-badge">
+      AGENT OPPORTUNITY
+    </span>
+
+    <hr>
+
+    <p class="small">Agent Price</p>
+
+    <p class="agent-price">
+      10,000 RWF
+    </p>
+
+    <p class="small">Recommended Resell Price</p>
+
+    <p class="price">
+      12,500 RWF
+    </p>
+
+    <p class="small">Your Profit</p>
+
+    <p class="profit">
+      2,500 RWF
+    </p>
+
+    <button class="primary"
+            onclick="showAgentDetails('super5k')">
+      📋 View Details
+    </button>
+
+  </div>
+
+
+  <button class="back" onclick="goHome()">
+    ⬅️ Back to Home
+  </button>
+
+</div>
+
+
+<!-- AGENT DETAILS -->
+<div id="agentDetailsView" class="hidden">
+
+  <div class="card">
+
+    <div id="agentProductIcon"
+         class="product-icon"></div>
+
+    <h2 id="agentProductName"></h2>
+
+    <span class="agent-badge">
+      AGENT OPPORTUNITY
+    </span>
+
+    <hr>
+
+    <p class="small">Agent Price</p>
+
+    <p id="agentPrice"
+       class="agent-price"></p>
+
+    <p class="small">
+      Recommended Resell Price
+    </p>
+
+    <p id="resellPrice"
+       class="price"></p>
+
+    <p class="small">
+      Your Profit
+    </p>
+
+    <p id="agentProfit"
+       class="profit"></p>
+
+    <hr>
+
+    <h3>📋 Product Details</h3>
+
+    <p id="agentIngredients"
+       class="small"
+       style="margin-top:8px;"></p>
+
+    <p class="small" style="margin-top:10px;">
+      🔥 All ingredients are roasted before being processed.
+    </p>
+
+    <button class="primary"
+            onclick="showAgentApplication()">
+      📝 Apply as Agent
+    </button>
+
+    <button class="back"
+            onclick="showAgent()">
+      ⬅️ Back to Agent Opportunity
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- AGENT APPLICATION -->
+<div id="agentApplicationView" class="hidden">
+
+  <div class="card">
+
+    <h2>📝 Apply as Agent</h2>
+
+    <div class="info-box" style="margin-top:10px;">
+      Applying for:
+      <strong id="applicationProduct"></strong>
+    </div>
+
+    <p class="small" style="margin-bottom:15px;">
+      This application is currently for TEST purposes only.
+    </p>
+
+    <label>Full Name</label>
+
+    <input id="agentName"
+           type="text"
+           placeholder="Enter your full name">
+
+    <label>Phone Number</label>
+
+    <input id="agentPhone"
+           type="tel"
+           placeholder="07XXXXXXXX">
+
+    <label>Location</label>
+
+    <input id="agentLocation"
+           type="text"
+           placeholder="Enter your location">
+
+    <label>Experience (Optional)</label>
+
+    <textarea id="agentExperience"
+              rows="4"
+              placeholder="Tell us briefly about your experience"></textarea>
+
+    <button class="success"
+            onclick="submitAgentApplication()">
+      ✅ Submit Agent Application
+    </button>
+
+    <button class="back"
+            onclick="showAgentDetailsPage()">
+      ⬅️ Back
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- AGENT APPLICATION SUCCESS -->
+<div id="agentSuccessView" class="hidden">
+
+  <div class="card center">
+
+    <div class="success-box">
+
+      <h2>✅ Application Submitted!</h2>
+
+      <p style="margin-top:8px;">
+        Your Agent application has been submitted
+        successfully.
+      </p>
+
+    </div>
+
+    <p class="small">
+      Application Number
+    </p>
+
+    <p id="applicationNumber"
+       style="
+       font-size:24px;
+       font-weight:bold;
+       margin:10px 0;">
+    </p>
+
+    <span class="status">
+      PENDING REVIEW
+    </span>
+
+    <p class="small" style="margin-top:15px;">
+      TEST MODE — No real commercial agreement
+      has been created.
+    </p>
+
+    <button class="primary"
+            onclick="showAgent()">
+      🤝 Back to Agent Opportunity
+    </button>
+
+    <button class="back"
+            onclick="goHome()">
       ⬅️ Back to Home
     </button>
 
@@ -600,33 +931,44 @@ li{
 
 <script>
 
-const BACKEND_URL = "https://amana-hub.onrender.com";
+const BACKEND_URL =
+  "https://amana-hub.onrender.com";
 
 let currentUser = null;
-
 let currentProduct = null;
-
 let quantity = 1;
 
 let testCart = [];
-
 let orderItems = [];
-
 let customerData = {};
 
+let selectedAgentProduct = null;
+
 let testOrders =
-  JSON.parse(localStorage.getItem("amanaHubTestOrders")) || [];
+  JSON.parse(
+    localStorage.getItem("amanaHubTestOrders")
+  ) || [];
+
+
+let agentApplications =
+  JSON.parse(
+    localStorage.getItem("amanaHubAgentApplications")
+  ) || [];
 
 
 /* PI INITIALIZATION */
 
 try{
+
   Pi.init({
     version:"2.0",
     sandbox:true
   });
+
 }catch(error){
+
   console.log("Pi init:",error);
+
 }
 
 
@@ -634,35 +976,49 @@ try{
 
 async function loginWithPi(){
 
-  const status = document.getElementById("loginStatus");
+  const status =
+    document.getElementById("loginStatus");
 
-  status.innerText = "Connecting to Pi...";
+  status.innerText =
+    "Connecting to Pi...";
 
   try{
 
-    const authResult = await Pi.authenticate(
-      ["username","payments"],
-      onIncompletePaymentFound
-    );
+    const authResult =
+      await Pi.authenticate(
+        ["username","payments"],
+        onIncompletePaymentFound
+      );
 
-    currentUser = authResult.user;
+    currentUser =
+      authResult.user;
 
-    const accessToken = authResult.accessToken;
+    const accessToken =
+      authResult.accessToken;
 
-    const response = await fetch(
-      BACKEND_URL + "/api/auth/verify",
-      {
-        headers:{
-          Authorization:"Bearer " + accessToken
+    const response =
+      await fetch(
+        BACKEND_URL +
+        "/api/auth/verify",
+        {
+          headers:{
+            Authorization:
+              "Bearer " + accessToken
+          }
         }
-      }
-    );
+      );
 
     if(!response.ok){
-      throw new Error("Pi user verification failed");
+
+      throw new Error(
+        "Pi user verification failed"
+      );
+
     }
 
-    document.getElementById("username").innerText =
+    document.getElementById(
+      "username"
+    ).innerText =
       "@" + currentUser.username;
 
     showView("homeView");
@@ -735,7 +1091,7 @@ function showMarketplace(){
 }
 
 
-/* PRODUCT DATA */
+/* PRODUCTS */
 
 const products = {
 
@@ -770,23 +1126,34 @@ const products = {
 
 function showProduct(id){
 
-  currentProduct = products[id];
+  currentProduct =
+    products[id];
 
   quantity = 1;
 
-  document.getElementById("productIcon").innerText =
+  document.getElementById(
+    "productIcon"
+  ).innerText =
     currentProduct.icon;
 
-  document.getElementById("productName").innerText =
+  document.getElementById(
+    "productName"
+  ).innerText =
     currentProduct.name;
 
-  document.getElementById("productPrice").innerText =
+  document.getElementById(
+    "productPrice"
+  ).innerText =
     formatRWF(currentProduct.price);
 
-  document.getElementById("productIngredients").innerText =
+  document.getElementById(
+    "productIngredients"
+  ).innerText =
     currentProduct.ingredients;
 
-  document.getElementById("quantity").innerText =
+  document.getElementById(
+    "quantity"
+  ).innerText =
     quantity;
 
   updateProductTotal();
@@ -802,15 +1169,15 @@ function changeQty(change){
 
   quantity += change;
 
-  if(quantity < 1){
+  if(quantity < 1)
     quantity = 1;
-  }
 
-  if(quantity > 20){
+  if(quantity > 20)
     quantity = 20;
-  }
 
-  document.getElementById("quantity").innerText =
+  document.getElementById(
+    "quantity"
+  ).innerText =
     quantity;
 
   updateProductTotal();
@@ -820,38 +1187,52 @@ function changeQty(change){
 
 function updateProductTotal(){
 
-  if(!currentProduct) return;
+  if(!currentProduct)
+    return;
 
   const total =
-    currentProduct.price * quantity;
+    currentProduct.price *
+    quantity;
 
-  document.getElementById("productTotal").innerText =
-    "Test Total: " + formatRWF(total);
+  document.getElementById(
+    "productTotal"
+  ).innerText =
+    "Test Total: " +
+    formatRWF(total);
 
 }
 
 
-/* ADD TO CART */
+/* CART */
 
 function addToCart(){
 
-  if(!currentProduct) return;
+  if(!currentProduct)
+    return;
 
   const existing =
     testCart.find(
-      item => item.name === currentProduct.name
+      item =>
+        item.name ===
+        currentProduct.name
     );
 
   if(existing){
 
-    existing.quantity += quantity;
+    existing.quantity +=
+      quantity;
 
   }else{
 
     testCart.push({
-      name:currentProduct.name,
-      price:currentProduct.price,
-      quantity:quantity
+      name:
+        currentProduct.name,
+
+      price:
+        currentProduct.price,
+
+      quantity:
+        quantity
     });
 
   }
@@ -866,8 +1247,6 @@ function addToCart(){
 }
 
 
-/* CART */
-
 function showCart(){
 
   renderCart();
@@ -880,13 +1259,19 @@ function showCart(){
 function renderCart(){
 
   const container =
-    document.getElementById("cartItems");
+    document.getElementById(
+      "cartItems"
+    );
 
   const totalElement =
-    document.getElementById("cartTotal");
+    document.getElementById(
+      "cartTotal"
+    );
 
   const checkout =
-    document.getElementById("checkoutButton");
+    document.getElementById(
+      "checkoutButton"
+    );
 
   container.innerHTML = "";
 
@@ -898,7 +1283,6 @@ function renderCart(){
     totalElement.innerText = "";
 
     checkout.disabled = true;
-
     checkout.style.opacity = ".5";
 
     return;
@@ -906,47 +1290,54 @@ function renderCart(){
   }
 
   checkout.disabled = false;
-
   checkout.style.opacity = "1";
 
   let total = 0;
 
-  testCart.forEach((item,index)=>{
+  testCart.forEach(
+    (item,index)=>{
 
-    const itemTotal =
-      item.price * item.quantity;
+      const itemTotal =
+        item.price *
+        item.quantity;
 
-    total += itemTotal;
+      total += itemTotal;
 
-    const div =
-      document.createElement("div");
+      const div =
+        document.createElement("div");
 
-    div.className = "product";
+      div.className =
+        "product";
 
-    div.innerHTML = `
-      <h3>${item.name}</h3>
+      div.innerHTML = `
 
-      <p class="small">
-        ${formatRWF(item.price)} × ${item.quantity}
-      </p>
+        <h3>${escapeHTML(item.name)}</h3>
 
-      <p class="price">
-        ${formatRWF(itemTotal)}
-      </p>
+        <p class="small">
+          ${formatRWF(item.price)}
+          × ${item.quantity}
+        </p>
 
-      <button
-        class="danger"
-        onclick="removeCartItem(${index})">
-        🗑️ Remove
-      </button>
-    `;
+        <p class="price">
+          ${formatRWF(itemTotal)}
+        </p>
 
-    container.appendChild(div);
+        <button
+          class="danger"
+          onclick="removeCartItem(${index})">
+          🗑️ Remove
+        </button>
 
-  });
+      `;
+
+      container.appendChild(div);
+
+    }
+  );
 
   totalElement.innerText =
-    "Test Total: " + formatRWF(total);
+    "Test Total: " +
+    formatRWF(total);
 
 }
 
@@ -964,12 +1355,18 @@ function removeCartItem(index){
 
 function buyNow(){
 
-  if(!currentProduct) return;
+  if(!currentProduct)
+    return;
 
   orderItems = [{
-    name:currentProduct.name,
-    price:currentProduct.price,
-    quantity:quantity
+    name:
+      currentProduct.name,
+
+    price:
+      currentProduct.price,
+
+    quantity:
+      quantity
   }];
 
   showOrderForm();
@@ -977,56 +1374,70 @@ function buyNow(){
 }
 
 
-/* START CART ORDER */
+/* ORDER */
 
 function startOrder(){
 
   if(testCart.length === 0){
 
-    alert("Your Test Cart is empty.");
+    alert(
+      "Your Test Cart is empty."
+    );
 
     return;
 
   }
 
   orderItems =
-    JSON.parse(JSON.stringify(testCart));
+    JSON.parse(
+      JSON.stringify(testCart)
+    );
 
   showOrderForm();
 
 }
 
 
-/* ORDER FORM */
-
 function showOrderForm(){
 
-  showView("orderFormView");
+  showView(
+    "orderFormView"
+  );
 
 }
 
 
-/* REVIEW ORDER */
-
 function reviewOrder(){
 
   const name =
-    document.getElementById("customerName").value.trim();
+    document.getElementById(
+      "customerName"
+    ).value.trim();
 
   const phone =
-    document.getElementById("customerPhone").value.trim();
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
 
   const location =
-    document.getElementById("customerLocation").value.trim();
+    document.getElementById(
+      "customerLocation"
+    ).value.trim();
 
   const delivery =
-    document.getElementById("deliveryMethod").value;
+    document.getElementById(
+      "deliveryMethod"
+    ).value;
 
   const notes =
-    document.getElementById("customerNotes").value.trim();
+    document.getElementById(
+      "customerNotes"
+    ).value.trim();
 
 
-  if(!name || !phone || !location){
+  if(!name ||
+     !phone ||
+     !location){
 
     alert(
       "Please enter Customer Name, Phone Number and Location."
@@ -1038,11 +1449,11 @@ function reviewOrder(){
 
 
   customerData = {
-    name:name,
-    phone:phone,
-    location:location,
-    delivery:delivery,
-    notes:notes
+    name,
+    phone,
+    location,
+    delivery,
+    notes
   };
 
 
@@ -1053,24 +1464,38 @@ function reviewOrder(){
   orderItems.forEach(item=>{
 
     const itemTotal =
-      item.price * item.quantity;
+      item.price *
+      item.quantity;
 
     total += itemTotal;
 
     productsHTML += `
+
       <div style="margin-bottom:12px;">
-        <strong>${item.name}</strong><br>
+
+        <strong>
+          ${escapeHTML(item.name)}
+        </strong>
+
+        <br>
+
         <span class="small">
-          ${formatRWF(item.price)} × ${item.quantity}
-          = ${formatRWF(itemTotal)}
+          ${formatRWF(item.price)}
+          × ${item.quantity}
+          =
+          ${formatRWF(itemTotal)}
         </span>
+
       </div>
+
     `;
 
   });
 
 
-  document.getElementById("reviewContent").innerHTML = `
+  document.getElementById(
+    "reviewContent"
+  ).innerHTML = `
 
     <div class="product">
 
@@ -1081,7 +1506,8 @@ function reviewOrder(){
       ${productsHTML}
 
       <div class="total">
-        Test Total: ${formatRWF(total)}
+        Test Total:
+        ${formatRWF(total)}
       </div>
 
     </div>
@@ -1093,17 +1519,34 @@ function reviewOrder(){
 
       <hr>
 
-      <p><strong>Name:</strong> ${escapeHTML(name)}</p>
+      <p>
+        <strong>Name:</strong>
+        ${escapeHTML(name)}
+      </p>
 
-      <p><strong>Phone:</strong> ${escapeHTML(phone)}</p>
+      <p>
+        <strong>Phone:</strong>
+        ${escapeHTML(phone)}
+      </p>
 
-      <p><strong>Location:</strong> ${escapeHTML(location)}</p>
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(location)}
+      </p>
 
-      <p><strong>Delivery:</strong> ${escapeHTML(delivery)}</p>
+      <p>
+        <strong>Delivery:</strong>
+        ${escapeHTML(delivery)}
+      </p>
 
       ${
         notes
-        ? `<p><strong>Notes:</strong> ${escapeHTML(notes)}</p>`
+        ? `
+          <p>
+            <strong>Notes:</strong>
+            ${escapeHTML(notes)}
+          </p>
+        `
         : ""
       }
 
@@ -1122,7 +1565,9 @@ function reviewOrder(){
   `;
 
 
-  showView("reviewView");
+  showView(
+    "reviewView"
+  );
 
 }
 
@@ -1133,7 +1578,9 @@ function submitTestOrder(){
 
   if(orderItems.length === 0){
 
-    alert("No order items found.");
+    alert(
+      "No order items found."
+    );
 
     return;
 
@@ -1144,7 +1591,8 @@ function submitTestOrder(){
     "TEST-" +
     Math.floor(
       100000 +
-      Math.random() * 900000
+      Math.random() *
+      900000
     );
 
 
@@ -1157,32 +1605,38 @@ function submitTestOrder(){
   orderItems.forEach(item=>{
 
     total +=
-      item.price * item.quantity;
+      item.price *
+      item.quantity;
 
   });
 
 
   const order = {
 
-    orderNumber:orderNumber,
+    orderNumber,
 
-    date:now.toLocaleDateString(),
+    date:
+      now.toLocaleDateString(),
 
-    time:now.toLocaleTimeString(),
+    time:
+      now.toLocaleTimeString(),
 
-    timestamp:now.getTime(),
+    timestamp:
+      now.getTime(),
 
-    items:JSON.parse(
-      JSON.stringify(orderItems)
-    ),
+    items:
+      JSON.parse(
+        JSON.stringify(orderItems)
+      ),
 
-    total:total,
+    total,
 
     customer:{
       ...customerData
     },
 
-    status:"TEST / Pending"
+    status:
+      "TEST / Pending"
 
   };
 
@@ -1198,18 +1652,18 @@ function submitTestOrder(){
 
   document.getElementById(
     "submittedOrderNumber"
-  ).innerText = orderNumber;
+  ).innerText =
+    orderNumber;
 
-
-  /* CLEAR CURRENT CART */
 
   testCart = [];
-
   orderItems = [];
-
   customerData = {};
 
-  showView("submittedView");
+
+  showView(
+    "submittedView"
+  );
 
 }
 
@@ -1220,7 +1674,9 @@ function showOrders(){
 
   renderOrders();
 
-  showView("ordersView");
+  showView(
+    "ordersView"
+  );
 
 }
 
@@ -1228,86 +1684,107 @@ function showOrders(){
 function renderOrders(){
 
   const list =
-    document.getElementById("ordersList");
+    document.getElementById(
+      "ordersList"
+    );
 
   const noOrders =
-    document.getElementById("noOrders");
+    document.getElementById(
+      "noOrders"
+    );
 
   list.innerHTML = "";
 
 
   if(testOrders.length === 0){
 
-    noOrders.classList.remove("hidden");
+    noOrders.classList.remove(
+      "hidden"
+    );
 
     return;
 
   }
 
 
-  noOrders.classList.add("hidden");
+  noOrders.classList.add(
+    "hidden"
+  );
 
 
-  testOrders.forEach((order,index)=>{
+  testOrders.forEach(
+    (order,index)=>{
 
-    const div =
-      document.createElement("div");
+      const div =
+        document.createElement(
+          "div"
+        );
 
-    div.className =
-      "card order-box";
-
-
-    let productsText =
-      order.items.map(
-        item =>
-          `${item.name} × ${item.quantity}`
-      ).join(", ");
+      div.className =
+        "card order-box";
 
 
-    div.innerHTML = `
+      let productsText =
+        order.items
+        .map(
+          item =>
+            `${item.name} × ${item.quantity}`
+        )
+        .join(", ");
 
-      <h3>${order.orderNumber}</h3>
 
-      <p class="small" style="margin-top:7px;">
-        📅 ${escapeHTML(order.date)}
-        &nbsp; ${escapeHTML(order.time)}
-      </p>
+      div.innerHTML = `
 
-      <p class="small" style="margin-top:7px;">
-        🛍️ ${escapeHTML(productsText)}
-      </p>
+        <h3>
+          ${escapeHTML(
+            order.orderNumber
+          )}
+        </h3>
 
-      <p class="price">
-        ${formatRWF(order.total)}
-      </p>
+        <p class="small"
+           style="margin-top:7px;">
+          📅 ${escapeHTML(order.date)}
+          &nbsp;
+          ${escapeHTML(order.time)}
+        </p>
 
-      <span class="status">
-        ${escapeHTML(order.status)}
-      </span>
+        <p class="small"
+           style="margin-top:7px;">
+          🛍️
+          ${escapeHTML(productsText)}
+        </p>
 
-      <button
-        class="primary"
-        onclick="viewOrder(${index})">
-        👁️ View Order
-      </button>
+        <p class="price">
+          ${formatRWF(order.total)}
+        </p>
 
-    `;
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
 
-    list.appendChild(div);
+        <button
+          class="primary"
+          onclick="viewOrder(${index})">
+          👁️ View Order
+        </button>
 
-  });
+      `;
+
+      list.appendChild(div);
+
+    }
+  );
 
 }
 
-
-/* VIEW SINGLE ORDER */
 
 function viewOrder(index){
 
   const order =
     testOrders[index];
 
-  if(!order) return;
+  if(!order)
+    return;
 
 
   let productsHTML = "";
@@ -1315,7 +1792,8 @@ function viewOrder(index){
   order.items.forEach(item=>{
 
     const itemTotal =
-      item.price * item.quantity;
+      item.price *
+      item.quantity;
 
     productsHTML += `
 
@@ -1349,7 +1827,8 @@ function viewOrder(index){
 
       <strong>TEST MODE</strong><br>
 
-      Status: ${escapeHTML(order.status)}
+      Status:
+      ${escapeHTML(order.status)}
 
     </div>
 
@@ -1361,9 +1840,10 @@ function viewOrder(index){
       <p style="
         font-size:22px;
         font-weight:bold;
-        margin-top:8px;
-      ">
-        ${escapeHTML(order.orderNumber)}
+        margin-top:8px;">
+        ${escapeHTML(
+          order.orderNumber
+        )}
       </p>
 
     </div>
@@ -1373,9 +1853,13 @@ function viewOrder(index){
 
       <h3>📅 Date & Time</h3>
 
-      <p class="small" style="margin-top:8px;">
+      <p class="small"
+         style="margin-top:8px;">
+
         ${escapeHTML(order.date)}
-        — ${escapeHTML(order.time)}
+        —
+        ${escapeHTML(order.time)}
+
       </p>
 
     </div>
@@ -1407,22 +1891,30 @@ function viewOrder(index){
 
       <p>
         <strong>Name:</strong>
-        ${escapeHTML(order.customer.name)}
+        ${escapeHTML(
+          order.customer.name
+        )}
       </p>
 
       <p>
         <strong>Phone:</strong>
-        ${escapeHTML(order.customer.phone)}
+        ${escapeHTML(
+          order.customer.phone
+        )}
       </p>
 
       <p>
         <strong>Location:</strong>
-        ${escapeHTML(order.customer.location)}
+        ${escapeHTML(
+          order.customer.location
+        )}
       </p>
 
       <p>
         <strong>Delivery:</strong>
-        ${escapeHTML(order.customer.delivery)}
+        ${escapeHTML(
+          order.customer.delivery
+        )}
       </p>
 
       ${
@@ -1430,7 +1922,9 @@ function viewOrder(index){
         ? `
           <p style="margin-top:8px;">
             <strong>Notes:</strong>
-            ${escapeHTML(order.customer.notes)}
+            ${escapeHTML(
+              order.customer.notes
+            )}
           </p>
         `
         : ""
@@ -1450,16 +1944,264 @@ function viewOrder(index){
   `;
 
 
-  showView("orderDetailsView");
+  showView(
+    "orderDetailsView"
+  );
 
 }
 
 
-/* AGENT */
+/* =========================
+   AGENT OPPORTUNITY
+========================= */
+
+const agentProducts = {
+
+  monti7:{
+    name:"MONTI 7 in 1",
+    icon:"🥣",
+    agentPrice:3000,
+    resellPrice:3300,
+    profit:300,
+    ingredients:
+      "Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
+  },
+
+  composite:{
+    name:"MONTI Composite Flour",
+    icon:"🌾",
+    agentPrice:2730,
+    resellPrice:3030,
+    profit:300,
+    ingredients:
+      "Ibigori, Soya, ingano, uburo n'amasaka."
+  },
+
+  super5k:{
+    name:"MONTI Super 5K",
+    icon:"🥜",
+    agentPrice:10000,
+    resellPrice:12500,
+    profit:2500,
+    ingredients:
+      "Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
+  }
+
+};
+
+
+/* AGENT HOME */
 
 function showAgent(){
 
-  showView("agentView");
+  showView(
+    "agentView"
+  );
+
+}
+
+
+/* AGENT DETAILS */
+
+function showAgentDetails(id){
+
+  selectedAgentProduct =
+    agentProducts[id];
+
+  const product =
+    selectedAgentProduct;
+
+
+  document.getElementById(
+    "agentProductIcon"
+  ).innerText =
+    product.icon;
+
+  document.getElementById(
+    "agentProductName"
+  ).innerText =
+    product.name;
+
+  document.getElementById(
+    "agentPrice"
+  ).innerText =
+    formatRWF(product.agentPrice);
+
+  document.getElementById(
+    "resellPrice"
+  ).innerText =
+    formatRWF(product.resellPrice);
+
+  document.getElementById(
+    "agentProfit"
+  ).innerText =
+    formatRWF(product.profit);
+
+  document.getElementById(
+    "agentIngredients"
+  ).innerText =
+    "Ingredients: " +
+    product.ingredients;
+
+  showView(
+    "agentDetailsView"
+  );
+
+}
+
+
+/* AGENT APPLICATION PAGE */
+
+function showAgentApplication(){
+
+  if(!selectedAgentProduct){
+
+    alert(
+      "Please select an Agent Opportunity first."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "applicationProduct"
+  ).innerText =
+    selectedAgentProduct.name;
+
+
+  showView(
+    "agentApplicationView"
+  );
+
+}
+
+
+function showAgentDetailsPage(){
+
+  showView(
+    "agentDetailsView"
+  );
+
+}
+
+
+/* SUBMIT AGENT APPLICATION */
+
+function submitAgentApplication(){
+
+  const name =
+    document.getElementById(
+      "agentName"
+    ).value.trim();
+
+  const phone =
+    document.getElementById(
+      "agentPhone"
+    ).value.trim();
+
+  const location =
+    document.getElementById(
+      "agentLocation"
+    ).value.trim();
+
+  const experience =
+    document.getElementById(
+      "agentExperience"
+    ).value.trim();
+
+
+  if(!name ||
+     !phone ||
+     !location){
+
+    alert(
+      "Please enter Full Name, Phone Number and Location."
+    );
+
+    return;
+
+  }
+
+
+  const applicationNumber =
+    "AGENT-" +
+    Math.floor(
+      100000 +
+      Math.random() *
+      900000
+    );
+
+
+  const application = {
+
+    applicationNumber,
+
+    product:
+      selectedAgentProduct.name,
+
+    name,
+
+    phone,
+
+    location,
+
+    experience,
+
+    date:
+      new Date().toLocaleDateString(),
+
+    time:
+      new Date().toLocaleTimeString(),
+
+    status:
+      "PENDING REVIEW"
+
+  };
+
+
+  agentApplications.unshift(
+    application
+  );
+
+
+  localStorage.setItem(
+    "amanaHubAgentApplications",
+    JSON.stringify(
+      agentApplications
+    )
+  );
+
+
+  document.getElementById(
+    "applicationNumber"
+  ).innerText =
+    applicationNumber;
+
+
+  /* CLEAR FORM */
+
+  document.getElementById(
+    "agentName"
+  ).value = "";
+
+  document.getElementById(
+    "agentPhone"
+  ).value = "";
+
+  document.getElementById(
+    "agentLocation"
+  ).value = "";
+
+  document.getElementById(
+    "agentExperience"
+  ).value = "";
+
+
+  showView(
+    "agentSuccessView"
+  );
 
 }
 
@@ -1476,18 +2218,18 @@ function comingSoon(name){
 }
 
 
-/* FORMAT RWF */
+/* FORMAT */
 
 function formatRWF(amount){
 
-  return Number(amount).toLocaleString(
-    "en-US"
-  ) + " RWF";
+  return Number(amount)
+    .toLocaleString("en-US") +
+    " RWF";
 
 }
 
 
-/* SECURITY / HTML ESCAPE */
+/* HTML ESCAPE */
 
 function escapeHTML(text){
 
