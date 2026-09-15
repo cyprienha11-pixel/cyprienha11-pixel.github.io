@@ -1482,13 +1482,1930 @@ hr{
   </p>
 
 </div>
+<!-- =====================================
+     PART 3 / 3
+     AMANA HUB JAVASCRIPT
+===================================== -->
+
+<script>
+
+"use strict";
+
+/* ================================
+   AMANA HUB SETTINGS
+================================ */
+
+const BACKEND_URL = "https://amana-hub.onrender.com";
+
+let currentUser = null;
+let currentProduct = null;
+let cart = [];
+
+let testOrders =
+  JSON.parse(localStorage.getItem("amanaTestOrders") || "[]");
+
+let agentApplications =
+  JSON.parse(localStorage.getItem("amanaAgentApplications") || "[]");
+
+let agentSales =
+  JSON.parse(localStorage.getItem("amanaAgentSales") || "[]");
+
+
+/* ================================
+   PRODUCTS
+================================ */
+
+const PRODUCTS = {
+
+  monti7: {
+    id: "monti7",
+    name: "MONTI 7 in 1",
+    price: 4500,
+    icon: "🥣",
+    ingredients:
+      "Ibishyimbo bya Fer, ubunyobwa, ibigori, soya, isukari, ingano n'umuceri."
+  },
+
+  composite: {
+    id: "composite",
+    name: "MONTI Composite Flour",
+    price: 4000,
+    icon: "🌾",
+    ingredients:
+      "Amasaka, ingano, uburo, soya n'ibigori."
+  },
+
+  super5k: {
+    id: "super5k",
+    name: "MONTI Super 5K",
+    price: 15000,
+    icon: "🥜",
+    ingredients:
+      "Ibishyimbo bya Fer, soya, ibigori, isukari n'umunyu."
+  }
+
+};
+
+
+/* ================================
+   VIEW SYSTEM
+================================ */
+
+const VIEW_IDS = [
+
+  "loginView",
+  "homeView",
+  "marketplaceView",
+  "productView",
+  "cartView",
+  "orderFormView",
+  "orderReviewView",
+  "orderSubmittedView",
+  "ordersView",
+  "orderDetailsView",
+  "agentOpportunityView",
+  "agentDetailsView",
+  "agentApplicationView",
+  "agentSuccessView",
+  "agentDashboardView",
+  "businessDashboardView",
+  "notificationsView",
+  "adminView"
+
+];
+
+
+function showView(id) {
+
+  VIEW_IDS.forEach(function(viewId) {
+
+    const view =
+      document.getElementById(viewId);
+
+    if (view) {
+      view.classList.add("hidden");
+    }
+
+  });
+
+
+  const target =
+    document.getElementById(id);
+
+  if (target) {
+    target.classList.remove("hidden");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+}
+
+
+/* ================================
+   HELPERS
+================================ */
+
+function formatRWF(amount) {
+
+  return Number(amount || 0)
+    .toLocaleString("en-US") + " RWF";
+
+}
+
+
+function saveData() {
+
+  localStorage.setItem(
+    "amanaTestOrders",
+    JSON.stringify(testOrders)
+  );
+
+  localStorage.setItem(
+    "amanaAgentApplications",
+    JSON.stringify(agentApplications)
+  );
+
+  localStorage.setItem(
+    "amanaAgentSales",
+    JSON.stringify(agentSales)
+  );
+
+}
+
+
+function escapeHTML(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* ================================
+   PI LOGIN
+================================ */
+
+function loginWithPi() {
+
+  const status =
+    document.getElementById("loginStatus");
+
+
+  if (status) {
+
+    status.innerHTML =
+      "⏳ Connecting to Pi Network...";
+
+  }
+
+
+  if (typeof Pi === "undefined") {
+
+    if (status) {
+
+      status.innerHTML =
+        "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
+
+    }
+
+    return;
+
+  }
+
+
+  try {
+
+    Pi.init({
+
+      version: "2.0",
+
+      sandbox: true
+
+    });
+
+
+    Pi.authenticate(
+
+      ["username", "payments"],
+
+      function(incompletePayment) {
+
+        console.log(
+          "Incomplete TEST payment:",
+          incompletePayment
+        );
+
+      }
+
+    )
+
+    .then(function(authResult) {
+
+      currentUser =
+        authResult.user;
+
+
+      const username =
+        currentUser.username || "Pi User";
+
+
+      const usernameElement =
+        document.getElementById("username");
+
+
+      if (usernameElement) {
+
+        usernameElement.textContent =
+          "@" + username;
+
+      }
+
+
+      if (status) {
+
+        status.innerHTML =
+          "✅ Pi Connected successfully!";
+
+      }
+
+
+      showView("homeView");
+
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "Pi Login Error:",
+        error
+      );
+
+
+      if (status) {
+
+        status.innerHTML =
+          "❌ Pi Login failed. Please try again.";
+
+      }
+
+    });
+
+
+  } catch (error) {
+
+    console.error(
+      "Pi SDK Error:",
+      error
+    );
+
+
+    if (status) {
+
+      status.innerHTML =
+        "❌ Error connecting to Pi.";
+
+    }
+
+  }
+
+}
+
+
+/* ================================
+   HOME
+================================ */
+
+function goHome() {
+
+  showView("homeView");
+
+}
+
+
+/* ================================
+   MARKETPLACE
+================================ */
+
+function showMarketplace() {
+
+  showView("marketplaceView");
+
+}
+
+
+/* ================================
+   PRODUCT
+================================ */
+
+function showProduct(productId) {
+
+  const product =
+    PRODUCTS[productId];
+
+
+  if (!product) {
+
+    alert("Product not found.");
+
+    return;
+
+  }
+
+
+  currentProduct =
+    product;
+
+
+  document.getElementById(
+    "productIcon"
+  ).textContent =
+    product.icon;
+
+
+  document.getElementById(
+    "productName"
+  ).textContent =
+    product.name;
+
+
+  document.getElementById(
+    "productPrice"
+  ).textContent =
+    formatRWF(product.price);
+
+
+  document.getElementById(
+    "productIngredients"
+  ).textContent =
+    product.ingredients;
+
+
+  document.getElementById(
+    "quantityInput"
+  ).value = 1;
+
+
+  updateProductTotal();
+
+
+  showView("productView");
+
+}
+
+
+function updateProductTotal() {
+
+  if (!currentProduct) {
+    return;
+  }
+
+
+  let quantity =
+    Number(
+      document.getElementById(
+        "quantityInput"
+      ).value
+    );
+
+
+  if (!quantity || quantity < 1) {
+
+    quantity = 1;
+
+    document.getElementById(
+      "quantityInput"
+    ).value = 1;
+
+  }
+
+
+  const total =
+    currentProduct.price *
+    quantity;
+
+
+  document.getElementById(
+    "productTotal"
+  ).textContent =
+    formatRWF(total);
+
+}
+
+
+/* ================================
+   CART
+================================ */
+
+function addToCart() {
+
+  if (!currentProduct) {
+
+    alert("Please select a product.");
+
+    return;
+
+  }
+
+
+  let quantity =
+    Number(
+      document.getElementById(
+        "quantityInput"
+      ).value
+    );
+
+
+  if (!quantity || quantity < 1) {
+
+    quantity = 1;
+
+  }
+
+
+  const existing =
+    cart.find(function(item) {
+
+      return item.id ===
+        currentProduct.id;
+
+    });
+
+
+  if (existing) {
+
+    existing.quantity +=
+      quantity;
+
+  } else {
+
+    cart.push({
+
+      id: currentProduct.id,
+
+      name: currentProduct.name,
+
+      price: currentProduct.price,
+
+      icon: currentProduct.icon,
+
+      quantity: quantity
+
+    });
+
+  }
+
+
+  renderCart();
+
+
+  alert(
+    "✅ Product added to TEST Cart."
+  );
+
+
+  showView("cartView");
+
+}
+
+
+function renderCart() {
+
+  const list =
+    document.getElementById(
+      "cartList"
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  if (cart.length === 0) {
+
+    list.innerHTML =
+      '<p class="small">Your TEST Cart is empty.</p>';
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  let html = "";
+
+
+  cart.forEach(function(item) {
+
+    const itemTotal =
+      item.price *
+      item.quantity;
+
+
+    total += itemTotal;
+
+
+    html +=
+
+      '<div class="product">' +
+
+      '<div class="product-icon">' +
+      escapeHTML(item.icon) +
+      "</div>" +
+
+      "<strong>" +
+      escapeHTML(item.name) +
+      "</strong>" +
+
+      '<p class="small">' +
+      "Quantity: " +
+      item.quantity +
+      "</p>" +
+
+      '<p class="price">' +
+      formatRWF(itemTotal) +
+      "</p>" +
+
+      "</div>";
+
+  });
+
+
+  html +=
+    '<hr>' +
+    "<h3>Total: " +
+    formatRWF(total) +
+    "</h3>";
+
+
+  list.innerHTML =
+    html;
+
+}
+
+
+function showCart() {
+
+  renderCart();
+
+  showView("cartView");
+
+}
+
+
+/* ================================
+   TEST ORDER
+================================ */
+
+function showOrderForm() {
+
+  if (cart.length === 0) {
+
+    alert(
+      "TEST Cart is empty."
+    );
+
+    return;
+
+  }
+
+
+  showView("orderFormView");
+
+}
+
+
+function reviewOrder() {
+
+  const name =
+    document.getElementById(
+      "orderName"
+    ).value.trim();
+
+
+  const phone =
+    document.getElementById(
+      "orderPhone"
+    ).value.trim();
+
+
+  const location =
+    document.getElementById(
+      "orderLocation"
+    ).value.trim();
+
+
+  const notes =
+    document.getElementById(
+      "orderNotes"
+    ).value.trim();
+
+
+  if (!name || !phone || !location) {
+
+    alert(
+      "Please fill in Name, Phone and Location."
+    );
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  let itemsHTML = "";
+
+
+  cart.forEach(function(item) {
+
+    const itemTotal =
+      item.price *
+      item.quantity;
+
+
+    total += itemTotal;
+
+
+    itemsHTML +=
+
+      "<p>" +
+
+      escapeHTML(item.icon) +
+      " " +
+
+      escapeHTML(item.name) +
+
+      " × " +
+
+      item.quantity +
+
+      " — " +
+
+      formatRWF(itemTotal) +
+
+      "</p>";
+
+  });
+
+
+  const box =
+    document.getElementById(
+      "orderReviewBox"
+    );
+
+
+  box.innerHTML =
+
+    "<h3>Customer</h3>" +
+
+    "<p>" +
+    escapeHTML(name) +
+    "</p>" +
+
+    "<p>" +
+    escapeHTML(phone) +
+    "</p>" +
+
+    "<p>" +
+    escapeHTML(location) +
+    "</p>" +
+
+    (notes
+      ? "<p><strong>Notes:</strong> " +
+        escapeHTML(notes) +
+        "</p>"
+      : "") +
+
+    "<hr>" +
+
+    "<h3>Items</h3>" +
+
+    itemsHTML +
+
+    "<hr>" +
+
+    "<h2>Total: " +
+    formatRWF(total) +
+    "</h2>" +
+
+    '<div class="warning-box">' +
+
+    "<strong>🧪 TEST MODE</strong>" +
+
+    '<p class="small">' +
+
+    "No real payment will be processed." +
+
+    "</p>" +
+
+    "</div>";
+
+
+  showView(
+    "orderReviewView"
+  );
+
+}
+
+
+function submitTestOrder() {
+
+  const name =
+    document.getElementById(
+      "orderName"
+    ).value.trim();
+
+
+  const phone =
+    document.getElementById(
+      "orderPhone"
+    ).value.trim();
+
+
+  const location =
+    document.getElementById(
+      "orderLocation"
+    ).value.trim();
+
+
+  const notes =
+    document.getElementById(
+      "orderNotes"
+    ).value.trim();
+
+
+  let total = 0;
+
+
+  cart.forEach(function(item) {
+
+    total +=
+      item.price *
+      item.quantity;
+
+  });
+
+
+  const orderNumber =
+    "ORDER-" +
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    );
+
+
+  const order = {
+
+    id: orderNumber,
+
+    customer:
+      name,
+
+    phone:
+      phone,
+
+    location:
+      location,
+
+    notes:
+      notes,
+
+    items:
+      JSON.parse(
+        JSON.stringify(cart)
+      ),
+
+    total:
+      total,
+
+    status:
+      "TEST SUBMITTED",
+
+    date:
+      new Date().toLocaleString()
+
+  };
+
+
+  testOrders.push(order);
+
+
+  saveData();
+
+
+  document.getElementById(
+    "submittedOrderNumber"
+  ).textContent =
+    orderNumber;
+
+
+  cart = [];
+
+
+  renderCart();
+
+
+  showView(
+    "orderSubmittedView"
+  );
+
+}
+
+
+/* ================================
+   ORDERS
+================================ */
+
+function showOrders() {
+
+  renderOrders();
+
+  showView("ordersView");
+
+}
+
+
+function renderOrders() {
+
+  const list =
+    document.getElementById(
+      "ordersList"
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  if (testOrders.length === 0) {
+
+    list.innerHTML =
+      '<p class="small">No TEST orders yet.</p>';
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  testOrders
+    .slice()
+    .reverse()
+    .forEach(function(order) {
+
+      html +=
+
+        '<div class="product">' +
+
+        "<h3>" +
+
+        escapeHTML(order.id) +
+
+        "</h3>" +
+
+        '<p class="small">' +
+
+        escapeHTML(order.date) +
+
+        "</p>" +
+
+        "<p>" +
+
+        "<strong>Total:</strong> " +
+
+        formatRWF(order.total) +
+
+        "</p>" +
+
+        '<span class="status">' +
+
+        escapeHTML(order.status) +
+
+        "</span>" +
+
+        '<button class="primary" ' +
+
+        'onclick="showOrderDetails(\'' +
+
+        order.id +
+
+        "')\">" +
+
+        "View Details" +
+
+        "</button>" +
+
+        "</div>";
+
+    });
+
+
+  list.innerHTML =
+    html;
+
+}
+
+
+function showOrderDetails(orderId) {
+
+  const order =
+    testOrders.find(
+      function(item) {
+
+        return item.id ===
+          orderId;
+
+      }
+    );
+
+
+  if (!order) {
+
+    alert(
+      "Order not found."
+    );
+
+    return;
+
+  }
+
+
+  let itemsHTML = "";
+
+
+  order.items.forEach(
+    function(item) {
+
+      itemsHTML +=
+
+        "<p>" +
+
+        escapeHTML(item.icon) +
+        " " +
+
+        escapeHTML(item.name) +
+
+        " × " +
+
+        item.quantity +
+
+        "</p>";
+
+    }
+  );
+
+
+  document.getElementById(
+    "orderDetailsBox"
+  ).innerHTML =
+
+    "<h3>" +
+    escapeHTML(order.id) +
+    "</h3>" +
+
+    "<p><strong>Customer:</strong> " +
+    escapeHTML(order.customer) +
+    "</p>" +
+
+    "<p><strong>Phone:</strong> " +
+    escapeHTML(order.phone) +
+    "</p>" +
+
+    "<p><strong>Location:</strong> " +
+    escapeHTML(order.location) +
+    "</p>" +
+
+    "<p><strong>Date:</strong> " +
+    escapeHTML(order.date) +
+    "</p>" +
+
+    "<hr>" +
+
+    "<h3>Products</h3>" +
+
+    itemsHTML +
+
+    "<hr>" +
+
+    "<h2>Total: " +
+    formatRWF(order.total) +
+    "</h2>" +
+
+    '<span class="status">' +
+    escapeHTML(order.status) +
+    "</span>";
+
+
+  showView(
+    "orderDetailsView"
+  );
+
+}
+
+
+/* ================================
+   AGENT OPPORTUNITY
+================================ */
+
+function showAgent() {
+
+  showView(
+    "agentOpportunityView"
+  );
+
+}
+
+
+function showAgentDetails() {
+
+  const box =
+    document.getElementById(
+      "agentOpportunityProducts"
+    );
+
+
+  let html = "";
+
+
+  Object.values(PRODUCTS)
+    .forEach(function(product) {
+
+      html +=
+
+        '<div class="product">' +
+
+        '<div class="product-icon">' +
+        escapeHTML(product.icon) +
+        "</div>" +
+
+        "<h3>" +
+        escapeHTML(product.name) +
+        "</h3>" +
+
+        '<p class="price">' +
+        formatRWF(product.price) +
+        "</p>" +
+
+        '<p class="small">' +
+        escapeHTML(product.ingredients) +
+        "</p>" +
+
+        "</div>";
+
+    });
+
+
+  box.innerHTML =
+    html;
+
+
+  showView(
+    "agentDetailsView"
+  );
+
+}
+
+
+function showAgentApplication() {
+
+  showView(
+    "agentApplicationView"
+  );
+
+}
+
+
+function submitAgentApplication() {
+
+  const name =
+    document.getElementById(
+      "agentName"
+    ).value.trim();
+
+
+  const phone =
+    document.getElementById(
+      "agentPhone"
+    ).value.trim();
+
+
+  const location =
+    document.getElementById(
+      "agentLocation"
+    ).value.trim();
+
+
+  const productId =
+    document.getElementById(
+      "agentProduct"
+    ).value;
+
+
+  const experience =
+    document.getElementById(
+      "agentExperience"
+    ).value.trim();
+
+
+  if (!name || !phone || !location) {
+
+    alert(
+      "Please fill in Name, Phone and Location."
+    );
+
+    return;
+
+  }
+
+
+  const applicationNumber =
+    "AGENT-" +
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    );
+
+
+  const application = {
+
+    id:
+      applicationNumber,
+
+    name:
+      name,
+
+    phone:
+      phone,
+
+    location:
+      location,
+
+    product:
+      PRODUCTS[productId]
+        ? PRODUCTS[productId].name
+        : productId,
+
+    productId:
+      productId,
+
+    experience:
+      experience,
+
+    status:
+      "PENDING",
+
+    date:
+      new Date().toLocaleString()
+
+  };
+
+
+  agentApplications.push(
+    application
+  );
+
+
+  saveData();
+
+
+  document.getElementById(
+    "applicationNumber"
+  ).textContent =
+    applicationNumber;
+
+
+  showView(
+    "agentSuccessView"
+  );
+
+}
+
+
+/* ================================
+   AGENT DASHBOARD
+================================ */
+
+function showAgentDashboard() {
+
+  renderAgentDashboard();
+
+  showView(
+    "agentDashboardView"
+  );
+
+}
+
+
+function renderAgentDashboard() {
+
+  const count =
+    agentSales.length;
+
+
+  let salesValue = 0;
+
+  let commission = 0;
+
+
+  agentSales.forEach(
+    function(sale) {
+
+      salesValue +=
+        Number(
+          sale.total
+        ) || 0;
+
+      commission +=
+        Number(
+          sale.commission
+        ) || 0;
+
+    }
+  );
+
+
+  const countElement =
+    document.getElementById(
+      "agentSalesCount"
+    );
+
+
+  const valueElement =
+    document.getElementById(
+      "agentSalesValue"
+    );
+
+
+  const commissionElement =
+    document.getElementById(
+      "agentCommission"
+    );
+
+
+  const commissionAmount =
+    document.getElementById(
+      "commissionAmount"
+    );
+
+
+  if (countElement) {
+
+    countElement.textContent =
+      count;
+
+  }
+
+
+  if (valueElement) {
+
+    valueElement.textContent =
+      formatRWF(
+        salesValue
+      );
+
+  }
+
+
+  if (commissionElement) {
+
+    commissionElement.textContent =
+      formatRWF(
+        commission
+      );
+
+  }
+
+
+  if (commissionAmount) {
+
+    commissionAmount.textContent =
+      formatRWF(
+        commission
+      );
+
+  }
+
+
+  const profile =
+    document.getElementById(
+      "agentProfileBox"
+    );
+
+
+  if (profile) {
+
+    if (agentApplications.length > 0) {
+
+      const latest =
+        agentApplications[
+          agentApplications.length - 1
+        ];
+
+
+      profile.innerHTML =
+
+        "<p><strong>Name:</strong> " +
+        escapeHTML(latest.name) +
+        "</p>" +
+
+        "<p><strong>Phone:</strong> " +
+        escapeHTML(latest.phone) +
+        "</p>" +
+
+        "<p><strong>Location:</strong> " +
+        escapeHTML(latest.location) +
+        "</p>" +
+
+        "<p><strong>Product:</strong> " +
+        escapeHTML(latest.product) +
+        "</p>" +
+
+        '<span class="agent-badge">' +
+        escapeHTML(latest.status) +
+        "</span>";
+
+    } else {
+
+      profile.innerHTML =
+        '<p class="small">No Agent Profile yet.</p>';
+
+    }
+
+  }
+
+
+  const productsList =
+    document.getElementById(
+      "agentProductsList"
+    );
+
+
+  if (productsList) {
+
+    if (agentApplications.length > 0) {
+
+      let productsHTML = "";
+
+
+      agentApplications.forEach(
+        function(application) {
+
+          productsHTML +=
+
+            '<div class="product">' +
+
+            "<strong>" +
+
+            escapeHTML(
+              application.product
+            ) +
+
+            "</strong>" +
+
+            '<p class="small">' +
+
+            "Application: " +
+
+            escapeHTML(
+              application.id
+            ) +
+
+            "</p>" +
+
+            '<span class="status">' +
+
+            escapeHTML(
+              application.status
+            ) +
+
+            "</span>" +
+
+            "</div>";
+
+        }
+      );
+
+
+      productsList.innerHTML =
+        productsHTML;
+
+    } else {
+
+      productsList.innerHTML =
+        '<p class="small">Agent products will appear here.</p>';
+
+    }
+
+  }
+
+
+  const salesList =
+    document.getElementById(
+      "agentSalesList"
+    );
+
+
+  if (salesList) {
+
+    if (agentSales.length === 0) {
+
+      salesList.innerHTML =
+        '<p class="small">No test sales yet.</p>';
+
+    } else {
+
+      let salesHTML = "";
+
+
+      agentSales
+        .slice()
+        .reverse()
+        .forEach(function(sale) {
+
+          salesHTML +=
+
+            '<div class="product">' +
+
+            "<strong>" +
+            escapeHTML(
+              sale.product
+            ) +
+            "</strong>" +
+
+            '<p class="small">' +
+
+            "Quantity: " +
+            sale.quantity +
+
+            "<br>" +
+
+            "Sale Value: " +
+            formatRWF(
+              sale.total
+            ) +
+
+            "<br>" +
+
+            "Commission: " +
+            formatRWF(
+              sale.commission
+            ) +
+
+            "</p>" +
+
+            '<span class="status success">' +
+
+            "TEST SALE" +
+
+            "</span>" +
+
+            "</div>";
+
+        });
+
+
+      salesList.innerHTML =
+        salesHTML;
+
+    }
+
+  }
+
+}
+
+
+/* ================================
+   TEST AGENT SALE
+================================ */
+
+function addTestAgentSale() {
+
+  const product =
+    PRODUCTS.super5k;
+
+
+  const quantity = 1;
+
+
+  const total =
+    product.price *
+    quantity;
+
+
+  const commission =
+    300;
+
+
+  const sale = {
+
+    id:
+      "SALE-" +
+      Math.floor(
+        100000 +
+        Math.random() * 900000
+      ),
+
+    product:
+      product.name,
+
+    quantity:
+      quantity,
+
+    total:
+      total,
+
+    commission:
+      commission,
+
+    date:
+      new Date().toLocaleString()
+
+  };
+
+
+  agentSales.push(
+    sale
+  );
+
+
+  saveData();
+
+
+  renderAgentDashboard();
+
+
+  alert(
+    "✅ TEST Sale added. Commission: " +
+    formatRWF(commission)
+  );
+
+}
+
+
+/* ================================
+   BUSINESS DASHBOARD
+================================ */
+
+function showBusinessDashboard() {
+
+  renderBusinessDashboard();
+
+  showView(
+    "businessDashboardView"
+  );
+
+}
+
+
+function renderBusinessDashboard() {
+
+  const total =
+    agentApplications.length;
+
+
+  const pending =
+    agentApplications.filter(
+      function(application) {
+
+        return application.status ===
+          "PENDING";
+
+      }
+    ).length;
+
+
+  const approved =
+    agentApplications.filter(
+      function(application) {
+
+        return application.status ===
+          "APPROVED";
+
+      }
+    ).length;
+
+
+  const rejected =
+    agentApplications.filter(
+      function(application) {
+
+        return application.status ===
+          "REJECTED";
+
+      }
+    ).length;
+
+
+  document.getElementById(
+    "totalApplications"
+  ).textContent =
+    total;
+
+
+  document.getElementById(
+    "pendingApplications"
+  ).textContent =
+    pending;
+
+
+  document.getElementById(
+    "approvedApplications"
+  ).textContent =
+    approved;
+
+
+  document.getElementById(
+    "rejectedApplications"
+  ).textContent =
+    rejected;
+
+
+  const list =
+    document.getElementById(
+      "businessApplicationsList"
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  if (agentApplications.length === 0) {
+
+    list.innerHTML =
+      '<p class="small">No Agent Applications yet.</p>';
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  agentApplications
+    .slice()
+    .reverse()
+    .forEach(function(application) {
+
+      html +=
+
+        '<div class="product">' +
+
+        "<h3>" +
+
+        escapeHTML(
+          application.id
+        ) +
+
+        "</h3>" +
+
+        "<p>" +
+
+        "<strong>Name:</strong> " +
+
+        escapeHTML(
+          application.name
+        ) +
+
+        "</p>" +
+
+        "<p>" +
+
+        "<strong>Phone:</strong> " +
+
+        escapeHTML(
+          application.phone
+        ) +
+
+        "</p>" +
+
+        "<p>" +
+
+        "<strong>Location:</strong> " +
+
+        escapeHTML(
+          application.location
+        ) +
+
+        "</p>" +
+
+        "<p>" +
+
+        "<strong>Product:</strong> " +
+
+        escapeHTML(
+          application.product
+        ) +
+
+        "</p>" +
+
+        '<span class="status">' +
+
+        escapeHTML(
+          application.status
+        ) +
+
+        "</span>";
+
+
+      if (
+        application.status ===
+        "PENDING"
+      ) {
+
+        html +=
+
+          '<button class="success" ' +
+
+          'onclick="approveAgent(\'' +
+
+          application.id +
+
+          "')\">" +
+
+          "✅ Approve" +
+
+          "</button>" +
+
+          '<button class="danger" ' +
+
+          'onclick="rejectAgent(\'' +
+
+          application.id +
+
+          "')\">" +
+
+          "❌ Reject" +
+
+          "</button>";
+
+      }
+
+
+      html +=
+        "</div>";
+
+    });
+
+
+  list.innerHTML =
+    html;
+
+}
+
+
+function approveAgent(applicationId) {
+
+  const application =
+    agentApplications.find(
+      function(item) {
+
+        return item.id ===
+          applicationId;
+
+      }
+    );
+
+
+  if (!application) {
+    return;
+  }
+
+
+  application.status =
+    "APPROVED";
+
+
+  saveData();
+
+
+  renderBusinessDashboard();
+
+
+  alert(
+    "✅ Agent application approved."
+  );
+
+}
+
+
+function rejectAgent(applicationId) {
+
+  const application =
+    agentApplications.find(
+      function(item) {
+
+        return item.id ===
+          applicationId;
+
+      }
+    );
+
+
+  if (!application) {
+    return;
+  }
+
+
+  application.status =
+    "REJECTED";
+
+
+  saveData();
+
+
+  renderBusinessDashboard();
+
+
+  alert(
+    "Application rejected."
+  );
+
+}
+
+
+/* ================================
+   NOTIFICATIONS
+================================ */
+
+function showNotifications() {
+
+  showView(
+    "notificationsView"
+  );
+
+}
+
+
+/* ================================
+   ADMIN
+================================ */
+
+function showAdmin() {
+
+  showView(
+    "adminView"
+  );
+
+}
+
+
+/* ================================
+   COMING SOON
+================================ */
+
+function comingSoon(feature) {
+
+  alert(
+    feature +
+    " is coming in a future AMANA HUB version."
+  );
+
+}
+
+
+/* ================================
+   START APPLICATION
+================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    showView(
+      "loginView"
+    );
+
+
+    console.log(
+      "AMANA HUB TEST MODE loaded successfully."
+    );
+
+  }
+);
+
 </script>
 
 </div>
 
 </body>
-</html>      
-
-
+</html>
 
 
