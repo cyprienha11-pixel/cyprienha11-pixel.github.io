@@ -1,2337 +1,1506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>AMANA HUB</title>
-
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: #4b217a;
-      color: white;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 500px;
-      margin: auto;
-      padding: 25px 18px 40px;
-    }
-
-    .header {
-      text-align: center;
-      padding: 15px 0 25px;
-    }
-
-    .logo {
-      font-size: 48px;
-    }
-
-    h1 {
-      margin: 5px 0;
-      font-size: 34px;
-      letter-spacing: 2px;
-    }
-
-    .tagline {
-      font-size: 17px;
-      opacity: 0.9;
-    }
-
-    .welcome {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-      text-align: center;
-    }
-
-    .welcome-title {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .welcome-text {
-      margin-top: 8px;
-      font-size: 16px;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    .login-button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 17px;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      background: white;
-      color: #4b217a;
-      cursor: pointer;
-    }
-
-    .login-button:disabled {
-      opacity: 0.6;
-    }
-
-    .dashboard {
-      display: none;
-      margin-top: 25px;
-    }
-
-    .section-title {
-      font-size: 21px;
-      font-weight: bold;
-      margin: 22px 0 12px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .card {
-      min-height: 135px;
-      padding: 18px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.12);
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .card:active {
-      transform: scale(0.98);
-    }
-
-    .card-icon {
-      font-size: 38px;
-      margin-bottom: 10px;
-    }
-
-    .card-title {
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .card-text {
-      margin-top: 7px;
-      font-size: 13px;
-      opacity: 0.85;
-      line-height: 1.4;
-    }
-
-    .status {
-      margin-top: 18px;
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .footer {
-      margin-top: 35px;
-      text-align: center;
-      font-size: 13px;
-      opacity: 0.75;
-    }
-
-    .search-box {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 14px;
-      background: white;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .product-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    .product-card {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-      text-align: center;
-    }
-
-    .product-icon {
-      font-size: 45px;
-    }
-
-    .product-name {
-      margin-top: 8px;
-      font-size: 19px;
-      font-weight: bold;
-    }
-
-    .product-category {
-      margin-top: 6px;
-      font-size: 14px;
-      opacity: 0.85;
-    }
-
-    .product-price {
-      margin-top: 12px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .view-button,
-    .back-button,
-    .cart-button,
-    .order-button,
-    .submit-button {
-      width: 100%;
-      margin-top: 14px;
-      padding: 13px;
-      border: none;
-      border-radius: 10px;
-      background: white;
-      color: #4b217a;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .order-button,
-    .submit-button {
-      background: #ffd84d;
-    }
-
-    .back-button {
-      margin-top: 25px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    /* PRODUCT DETAILS */
-
-    .product-details {
-      margin-top: 18px;
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .detail-icon {
-      text-align: center;
-      font-size: 75px;
-    }
-
-    .detail-name {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .detail-category {
-      margin-top: 7px;
-      text-align: center;
-      opacity: 0.85;
-    }
-
-    .detail-price {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .test-label {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(255,216,77,0.18);
-      text-align: center;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .ingredients {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .quantity-box {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .quantity-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .quantity-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .quantity-controls button {
-      width: 45px;
-      height: 45px;
-      border: none;
-      border-radius: 50%;
-      font-size: 24px;
-      font-weight: bold;
-      background: white;
-      color: #4b217a;
-      cursor: pointer;
-    }
-
-    .quantity-number {
-      font-size: 22px;
-      font-weight: bold;
-      min-width: 35px;
-    }
-
-    .total-box {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.10);
-      text-align: center;
-      font-size: 19px;
-      font-weight: bold;
-    }
-
-    /* TEST CART */
-
-    .cart-item {
-      margin-top: 12px;
-      padding: 15px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .cart-name {
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .cart-info {
-      margin-top: 6px;
-      font-size: 14px;
-      opacity: 0.85;
-      line-height: 1.6;
-    }
-
-    .test-warning {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 12px;
-      background: rgba(255,216,77,0.18);
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    /* ORDER FORM */
-
-    .form-box {
-      margin-top: 18px;
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .form-title {
-      font-size: 22px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .form-subtitle {
-      margin-top: 8px;
-      text-align: center;
-      font-size: 14px;
-      opacity: 0.85;
-      line-height: 1.5;
-    }
-
-    .form-group {
-      margin-top: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      font-family: Arial, sans-serif;
-    }
-
-    .form-group textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    /* REVIEW */
-
-    .review-box {
-      margin-top: 18px;
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .review-row {
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      line-height: 1.5;
-    }
-
-    .review-row:last-child {
-      border-bottom: none;
-    }
-
-    .review-label {
-      font-size: 13px;
-      opacity: 0.75;
-    }
-
-    .review-value {
-      margin-top: 3px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    /* SUCCESS */
-
-    .success-box {
-      margin-top: 20px;
-      padding: 25px 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
-      text-align: center;
-    }
-
-    .success-icon {
-      font-size: 65px;
-    }
-
-    .success-title {
-      margin-top: 10px;
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .success-text {
-      margin-top: 12px;
-      font-size: 15px;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    .order-number {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.10);
-      font-weight: bold;
-    }
-
-    @media (max-width: 360px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMANA HUB – Connect • Trade • Earn</title>
+
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f7fb;
+  color:#222;
+}
+
+header{
+  background:#5b35d5;
+  color:white;
+  padding:22px 18px;
+  text-align:center;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+.tagline{
+  margin-top:5px;
+  font-size:14px;
+  opacity:.9;
+}
+
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+button{
+  width:100%;
+  border:none;
+  border-radius:12px;
+  padding:14px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.primary{
+  background:#5b35d5;
+  color:white;
+}
+
+.secondary{
+  background:#eee9ff;
+  color:#4d27bd;
+}
+
+.success{
+  background:#198754;
+  color:white;
+}
+
+.danger{
+  background:#dc3545;
+  color:white;
+}
+
+.back{
+  background:#eee;
+  color:#333;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:13px;
+  margin-top:7px;
+  margin-bottom:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:15px;
+}
+
+label{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.product{
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:14px;
+}
+
+.product-icon{
+  font-size:48px;
+  text-align:center;
+  background:#f3f0ff;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+.product h3{
+  margin-bottom:6px;
+}
+
+.price{
+  color:#5b35d5;
+  font-weight:bold;
+  font-size:18px;
+  margin:7px 0;
+}
+
+.small{
+  font-size:13px;
+  color:#666;
+  line-height:1.5;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.qty button{
+  width:45px;
+  margin:0;
+  padding:10px;
+}
+
+.qty span{
+  min-width:35px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.total{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.order-box{
+  border-left:5px solid #5b35d5;
+}
+
+.status{
+  display:inline-block;
+  background:#fff3cd;
+  color:#856404;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.center{
+  text-align:center;
+}
+
+hr{
+  border:none;
+  border-top:1px solid #eee;
+  margin:14px 0;
+}
+
+ul{
+  padding-left:20px;
+}
+
+li{
+  margin-bottom:5px;
+}
+
+.success-box{
+  background:#e8f7ee;
+  color:#176b3a;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<header>
+  <div class="logo">🟣 AMANA HUB</div>
+  <div class="tagline">Connect • Trade • Earn</div>
+</header>
 
-    <!-- HEADER -->
+<div class="container">
 
-    <div class="header">
+<!-- LOGIN -->
+<div id="loginView">
 
-      <div class="logo">🟣</div>
+  <div class="card center">
+    <h2>Welcome to AMANA HUB 👋</h2>
+    <p class="small" style="margin-top:10px;">
+      A digital marketplace connecting customers, businesses and agents.
+    </p>
 
-      <h1>AMANA HUB</h1>
+    <button class="primary" onclick="loginWithPi()">
+      🟣 Login with Pi
+    </button>
 
-      <div class="tagline">
-        Connect • Trade • Earn
-      </div>
+    <p id="loginStatus" class="small" style="margin-top:12px;"></p>
+  </div>
 
-    </div>
+</div>
 
 
-    <!-- LOGIN -->
+<!-- HOME -->
+<div id="homeView" class="hidden">
 
-    <div id="loginArea">
+  <div class="card">
+    <h2>Welcome, <span id="username"></span> 👋</h2>
+    <p class="small" style="margin-top:6px;">
+      AMANA HUB TEST MODE
+    </p>
+  </div>
 
-      <div class="welcome">
+  <div class="card">
+    <button class="primary" onclick="showMarketplace()">
+      🛍️ Marketplace
+    </button>
 
-        <div class="welcome-title">
-          🌍 Your Digital Business Hub
-        </div>
+    <button class="secondary" onclick="showAgent()">
+      🤝 Agent Opportunity
+    </button>
 
-        <div class="welcome-text">
-          Connect customers, businesses and agents
-          in one digital marketplace.
-        </div>
+    <button class="secondary" onclick="comingSoon('Businesses')">
+      🏢 Businesses
+    </button>
 
-      </div>
+    <button class="secondary" onclick="showCart()">
+      🛒 Test Cart
+    </button>
 
-      <button
-        id="loginButton"
-        class="login-button"
-        onclick="loginWithPi()"
-      >
-        Continue with Pi
-      </button>
+    <button class="secondary" onclick="showOrders()">
+      📦 My Orders
+    </button>
 
-    </div>
+    <button class="secondary" onclick="comingSoon('My Profile')">
+      👤 My Profile
+    </button>
 
+    <button class="secondary" onclick="comingSoon('Pi Payments')">
+      🟣 Pi Payments
+    </button>
+  </div>
 
-    <!-- DASHBOARD -->
+</div>
 
-    <div id="dashboard" class="dashboard">
 
-      <div class="welcome">
+<!-- MARKETPLACE -->
+<div id="marketplaceView" class="hidden">
 
-        <div
-          id="welcomeUser"
-          class="welcome-title"
-        >
-          Welcome 👋
-        </div>
+  <div class="card">
+    <h2>🛍️ MONTI Marketplace</h2>
+    <p class="small" style="margin-top:7px;">
+      Consumer prices • TEST MODE
+    </p>
+  </div>
 
-        <div class="welcome-text">
-          Welcome to your AMANA HUB.
-        </div>
+  <div class="product">
+    <div class="product-icon">🥣</div>
 
-      </div>
+    <h3>MONTI 7 in 1</h3>
 
+    <p class="price">4,500 RWF</p>
 
-      <!-- HOME -->
+    <p class="small">
+      Ingredients: Ibishyimbo bya Fer, ubunyobwa, ingano,
+      soya, ibigori, uburo n'isukali.
+    </p>
 
-      <div id="homeView">
-
-        <div class="section-title">
-          Explore AMANA HUB
-        </div>
-
-        <div class="grid">
-
-          <div
-            class="card"
-            onclick="showMarketplace()"
-          >
-            <div class="card-icon">🛒</div>
-
-            <div class="card-title">
-              Marketplace
-            </div>
-
-            <div class="card-text">
-              Discover products and services.
-            </div>
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showComingSoon('Agent Opportunity')"
-          >
-            <div class="card-icon">🤝</div>
-
-            <div class="card-title">
-              Agent Opportunity
-            </div>
-
-            <div class="card-text">
-              Become an agent and earn commission.
-            </div>
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showComingSoon('Businesses')"
-          >
-            <div class="card-icon">🏢</div>
-
-            <div class="card-title">
-              Businesses
-            </div>
-
-            <div class="card-text">
-              Discover businesses on AMANA HUB.
-            </div>
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showTestCart()"
-          >
-            <div class="card-icon">🛒</div>
-
-            <div class="card-title">
-              Test Cart
-            </div>
-
-            <div class="card-text">
-              View your test products.
-            </div>
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showComingSoon('My Profile')"
-          >
-            <div class="card-icon">👤</div>
-
-            <div class="card-title">
-              My Profile
-            </div>
-
-            <div class="card-text">
-              Manage your account.
-            </div>
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showComingSoon('Pi Payments')"
-          >
-            <div class="card-icon">💜</div>
-
-            <div class="card-title">
-              Pi Payments
-            </div>
-
-            <div class="card-text">
-              Real payments will come later.
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- MARKETPLACE -->
-
-      <div id="marketplaceView" class="hidden">
-
-        <div class="welcome">
-
-          <div class="welcome-title">
-            🛒 AMANA MARKETPLACE
-          </div>
-
-          <div class="welcome-text">
-            Discover products and services
-            from businesses on AMANA HUB.
-          </div>
-
-        </div>
-
-
-        <div class="test-warning">
-
-          🧪 <strong>TEST MODE</strong><br>
-
-          These are consumer test prices.
-          No real purchase is being made.
-
-        </div>
-
-
-        <div class="search-box">
-
-          <input
-            type="text"
-            id="searchProduct"
-            placeholder="🔎 Search products..."
-            onkeyup="searchProducts()"
-          >
-
-        </div>
-
-
-        <div class="section-title">
-          Featured Products
-        </div>
-
-
-        <div
-          id="productList"
-          class="product-list"
-        >
-
-          <!-- PRODUCT 1 -->
-
-          <div
-            class="product-card"
-            data-search="monti 7 in 1 nutrition food porridge"
-          >
-
-            <div class="product-icon">
-              🥣
-            </div>
-
-            <div class="product-name">
-              MONTI 7 in 1
-            </div>
-
-            <div class="product-category">
-              Nutrition • Food
-            </div>
-
-            <div class="product-price">
-              4,500 RWF
-            </div>
-
-            <button
-              class="view-button"
-              onclick="viewProduct('MONTI 7 in 1')"
-            >
-              View Product
-            </button>
-
-          </div>
-
-
-          <!-- PRODUCT 2 -->
-
-          <div
-            class="product-card"
-            data-search="monti composite flour nutrition food"
-          >
-
-            <div class="product-icon">
-              🌾
-            </div>
-
-            <div class="product-name">
-              MONTI Composite Flour
-            </div>
-
-            <div class="product-category">
-              Nutrition • Food
-            </div>
-
-            <div class="product-price">
-              4,000 RWF
-            </div>
-
-            <button
-              class="view-button"
-              onclick="viewProduct('MONTI Composite Flour')"
-            >
-              View Product
-            </button>
-
-          </div>
-
-
-          <!-- PRODUCT 3 -->
-
-          <div
-            class="product-card"
-            data-search="monti super 5k nutrition food"
-          >
-
-            <div class="product-icon">
-              🌱
-            </div>
-
-            <div class="product-name">
-              MONTI Super 5K
-            </div>
-
-            <div class="product-category">
-              Nutrition • Food
-            </div>
-
-            <div class="product-price">
-              15,000 RWF
-            </div>
-
-            <button
-              class="view-button"
-              onclick="viewProduct('MONTI Super 5K')"
-            >
-              View Product
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <button
-          class="back-button"
-          onclick="backToHome()"
-        >
-          ← Back to Home
-        </button>
-
-      </div>
-
-
-      <!-- PRODUCT DETAILS -->
-
-      <div
-        id="productDetailsView"
-        class="hidden"
-      >
-
-        <div class="product-details">
-
-          <div
-            id="detailIcon"
-            class="detail-icon"
-          >
-            🥣
-          </div>
-
-          <div
-            id="detailName"
-            class="detail-name"
-          >
-            MONTI 7 in 1
-          </div>
-
-          <div
-            id="detailCategory"
-            class="detail-category"
-          >
-            Nutrition • Food
-          </div>
-
-          <div
-            id="detailPrice"
-            class="detail-price"
-          >
-            4,500 RWF
-          </div>
-
-
-          <div class="test-label">
-            🧪 TEST CONSUMER PRICE
-          </div>
-
-
-          <div
-            id="detailDescription"
-            class="ingredients"
-          ></div>
-
-
-          <div class="ingredients">
-
-            <strong>🔥 Preparation:</strong><br>
-
-            All ingredients are roasted
-            before being processed.
-
-          </div>
-
-
-          <div class="quantity-box">
-
-            <div class="quantity-title">
-              Quantity
-            </div>
-
-            <div class="quantity-controls">
-
-              <button onclick="changeQuantity(-1)">
-                −
-              </button>
-
-              <div
-                id="quantityNumber"
-                class="quantity-number"
-              >
-                1
-              </div>
-
-              <button onclick="changeQuantity(1)">
-                +
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div
-            id="totalBox"
-            class="total-box"
-          >
-            Test Total: 4,500 RWF
-          </div>
-
-
-          <button
-            class="cart-button"
-            onclick="addToTestCart()"
-          >
-            🛒 Add to Test Cart
-          </button>
-
-
-          <button
-            class="order-button"
-            onclick="startDirectTestOrder()"
-          >
-            📦 Test Order
-          </button>
-
-
-          <div class="test-warning">
-
-            ⚠️ <strong>TEST ONLY</strong><br>
-
-            This does not create a real purchase
-            or payment.
-
-          </div>
-
-        </div>
-
-
-        <button
-          class="back-button"
-          onclick="backToMarketplace()"
-        >
-          ← Back to Marketplace
-        </button>
-
-      </div>
-
-
-      <!-- TEST CART -->
-
-      <div
-        id="testCartView"
-        class="hidden"
-      >
-
-        <div class="welcome">
-
-          <div class="welcome-title">
-            🛒 TEST CART
-          </div>
-
-          <div class="welcome-text">
-            This cart is only for testing
-            the AMANA HUB shopping flow.
-          </div>
-
-        </div>
-
-
-        <div id="cartList"></div>
-
-
-        <div
-          id="cartTotal"
-          class="total-box"
-        >
-          Test Total: 0 RWF
-        </div>
-
-
-        <button
-          class="order-button"
-          onclick="startCartTestOrder()"
-        >
-          📦 Test Order
-        </button>
-
-
-        <div class="test-warning">
-
-          ⚠️ No real order or payment is made.
-          This is only a demonstration.
-
-        </div>
-
-
-        <button
-          class="back-button"
-          onclick="backToHome()"
-        >
-          ← Back to Home
-        </button>
-
-      </div>
-
-
-      <!-- CUSTOMER FORM -->
-
-      <div
-        id="customerFormView"
-        class="hidden"
-      >
-
-        <div class="form-box">
-
-          <div class="form-title">
-            📦 Test Customer Order
-          </div>
-
-          <div class="form-subtitle">
-
-            Enter sample customer information
-            to test the order process.
-
-            <br><br>
-
-            🧪 TEST MODE — No real order.
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="customerName">
-              👤 Customer Name
-            </label>
-
-            <input
-              type="text"
-              id="customerName"
-              placeholder="Enter customer name"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="customerPhone">
-              📞 Phone Number
-            </label>
-
-            <input
-              type="tel"
-              id="customerPhone"
-              placeholder="Enter phone number"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="customerLocation">
-              📍 Location
-            </label>
-
-            <input
-              type="text"
-              id="customerLocation"
-              placeholder="City / District / Sector"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="deliveryOption">
-              🚚 Delivery
-            </label>
-
-            <select id="deliveryOption">
-
-              <option value="Customer pickup">
-                Customer Pickup
-              </option>
-
-              <option value="Delivery">
-                Delivery
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="customerNotes">
-              📝 Notes
-            </label>
-
-            <textarea
-              id="customerNotes"
-              placeholder="Optional notes..."
-            ></textarea>
-
-          </div>
-
-
-          <button
-            class="submit-button"
-            onclick="reviewTestOrder()"
-          >
-            Continue to Review →
-          </button>
-
-
-          <button
-            class="back-button"
-            onclick="backFromCustomerForm()"
-          >
-            ← Back
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- ORDER REVIEW -->
-
-      <div
-        id="orderReviewView"
-        class="hidden"
-      >
-
-        <div class="review-box">
-
-          <div class="form-title">
-            🔎 Review Test Order
-          </div>
-
-
-          <div class="test-warning">
-
-            🧪 <strong>TEST MODE</strong><br>
-
-            Check the information below.
-            No real purchase will be made.
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Customer
-            </div>
-
-            <div
-              id="reviewName"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Phone
-            </div>
-
-            <div
-              id="reviewPhone"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Location
-            </div>
-
-            <div
-              id="reviewLocation"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Delivery
-            </div>
-
-            <div
-              id="reviewDelivery"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Products
-            </div>
-
-            <div
-              id="reviewProducts"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Total
-            </div>
-
-            <div
-              id="reviewTotal"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <div class="review-row">
-
-            <div class="review-label">
-              Notes
-            </div>
-
-            <div
-              id="reviewNotes"
-              class="review-value"
-            ></div>
-
-          </div>
-
-
-          <button
-            class="submit-button"
-            onclick="submitTestOrder()"
-          >
-            ✅ Submit Test Order
-          </button>
-
-
-          <button
-            class="back-button"
-            onclick="backToCustomerForm()"
-          >
-            ← Edit Information
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- SUCCESS -->
-
-      <div
-        id="orderSuccessView"
-        class="hidden"
-      >
-
-        <div class="success-box">
-
-          <div class="success-icon">
-            🎉
-          </div>
-
-          <div class="success-title">
-            Test Order Submitted!
-          </div>
-
-          <div class="success-text">
-
-            Your test order flow worked successfully.
-
-            <br><br>
-
-            No real order was created.
-            No money was charged.
-            No Pi payment was made.
-
-          </div>
-
-
-          <div
-            id="testOrderNumber"
-            class="order-number"
-          >
-            TEST-000000
-          </div>
-
-
-          <div class="test-warning">
-
-            🧪 <strong>TEST MODE</strong><br>
-
-            AMANA HUB is currently being tested.
-            Real commerce will be enabled later.
-
-          </div>
-
-
-          <button
-            class="back-button"
-            onclick="backToHome()"
-          >
-            🏠 Back to Home
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div
-        id="status"
-        class="status"
-      ></div>
-
-    </div>
-
-
-    <div class="footer">
-      Secure • Simple • Connected
-    </div>
-
+    <button class="primary" onclick="showProduct('monti7')">
+      View Product
+    </button>
   </div>
 
 
-  <script>
+  <div class="product">
+    <div class="product-icon">🌾</div>
 
-    const Pi = window.Pi;
+    <h3>MONTI Composite Flour</h3>
 
-    let accessToken = null;
+    <p class="price">4,000 RWF</p>
 
-    let selectedProduct = null;
+    <p class="small">
+      Ingredients: ibigori, Soya, ingano, uburo n'amasaka.
+    </p>
 
-    let quantity = 1;
-
-    let testCart = [];
-
-    let orderItems = [];
-
-    let customerData = {};
-
-
-    // =========================
-    // PRODUCT DATA
-    // =========================
-
-    const products = {
-
-      "MONTI 7 in 1": {
-
-        icon: "🥣",
-
-        category: "Nutrition • Food",
-
-        price: 4500,
-
-        description:
-          "<strong>Ingredients:</strong><br>" +
-          "Ibishyimbo bya Fer, ubunyobwa, ingano, " +
-          "soya, ibigori, uburo n'isukali."
-
-      },
+    <button class="primary" onclick="showProduct('composite')">
+      View Product
+    </button>
+  </div>
 
 
-      "MONTI Composite Flour": {
+  <div class="product">
+    <div class="product-icon">🥜</div>
 
-        icon: "🌾",
+    <h3>MONTI Super 5K</h3>
 
-        category: "Nutrition • Food",
+    <p class="price">15,000 RWF</p>
 
-        price: 4000,
+    <p class="small">
+      Ingredients: Ibishyimbo bya Fer, isukari,
+      umunyu, soya n'ibigori.
+    </p>
 
-        description:
-          "<strong>Ingredients:</strong><br>" +
-          "Ibigori, soya, ingano, uburo n'amasaka."
+    <button class="primary" onclick="showProduct('super5k')">
+      View Product
+    </button>
+  </div>
 
-      },
+  <button class="back" onclick="goHome()">⬅️ Back to Home</button>
+
+</div>
 
 
-      "MONTI Super 5K": {
+<!-- PRODUCT DETAILS -->
+<div id="productView" class="hidden">
 
-        icon: "🌱",
+  <div class="card">
 
-        category: "Nutrition • Food",
+    <div id="productIcon" class="product-icon"></div>
 
-        price: 15000,
+    <h2 id="productName"></h2>
 
-        description:
-          "<strong>Ingredients:</strong><br>" +
-          "Ibishyimbo bya Fer, isukari, umunyu, " +
-          "soya n'ibigori."
+    <p id="productPrice" class="price"></p>
 
+    <hr>
+
+    <h3>Ingredients</h3>
+
+    <p id="productIngredients" class="small" style="margin-top:7px;"></p>
+
+    <p class="small" style="margin-top:12px;">
+      🔥 All ingredients are roasted before being processed.
+    </p>
+
+    <div class="qty">
+      <button class="secondary" onclick="changeQty(-1)">−</button>
+      <span id="quantity">1</span>
+      <button class="secondary" onclick="changeQty(1)">+</button>
+    </div>
+
+    <div id="productTotal" class="total"></div>
+
+    <button class="primary" onclick="addToCart()">
+      🛒 Add to Test Cart
+    </button>
+
+    <button class="success" onclick="buyNow()">
+      📦 Test Order
+    </button>
+
+    <button class="back" onclick="showMarketplace()">
+      ⬅️ Back to Marketplace
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CART -->
+<div id="cartView" class="hidden">
+
+  <div class="card">
+
+    <h2>🛒 Test Cart</h2>
+
+    <div id="cartItems" style="margin-top:15px;"></div>
+
+    <div id="cartTotal" class="total"></div>
+
+    <button id="checkoutButton" class="primary" onclick="startOrder()">
+      📦 Continue to Test Order
+    </button>
+
+    <button class="back" onclick="goHome()">
+      ⬅️ Back to Home
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CUSTOMER ORDER FORM -->
+<div id="orderFormView" class="hidden">
+
+  <div class="card">
+
+    <h2>📦 Test Customer Order</h2>
+
+    <p class="small" style="margin:8px 0 15px;">
+      This is only a TEST order. No money will be charged.
+    </p>
+
+    <label>Customer Name</label>
+    <input id="customerName" type="text" placeholder="Enter your name">
+
+    <label>Phone Number</label>
+    <input id="customerPhone" type="tel" placeholder="07XXXXXXXX">
+
+    <label>Location</label>
+    <input id="customerLocation" type="text" placeholder="Enter location">
+
+    <label>Delivery</label>
+    <select id="deliveryMethod">
+      <option value="Customer Pickup">Customer Pickup</option>
+      <option value="Delivery">Delivery</option>
+    </select>
+
+    <label>Notes</label>
+    <textarea id="customerNotes" rows="4"
+      placeholder="Optional notes"></textarea>
+
+    <button class="primary" onclick="reviewOrder()">
+      👁️ Review Test Order
+    </button>
+
+    <button class="back" onclick="showCart()">
+      ⬅️ Back to Cart
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- REVIEW -->
+<div id="reviewView" class="hidden">
+
+  <div class="card">
+
+    <h2>👁️ Review Test Order</h2>
+
+    <div id="reviewContent" style="margin-top:15px;"></div>
+
+    <button class="success" onclick="submitTestOrder()">
+      ✅ Submit Test Order
+    </button>
+
+    <button class="back" onclick="showOrderForm()">
+      ⬅️ Edit Order
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ORDER SUBMITTED -->
+<div id="submittedView" class="hidden">
+
+  <div class="card center">
+
+    <div class="success-box">
+      <h2>✅ Test Order Submitted!</h2>
+
+      <p style="margin-top:8px;">
+        Your test order flow worked successfully.
+      </p>
+    </div>
+
+    <h3>Order Number</h3>
+
+    <p id="submittedOrderNumber"
+       style="font-size:24px;font-weight:bold;margin:10px 0;">
+    </p>
+
+    <p class="small">
+      No real order was created.<br>
+      No money was charged.<br>
+      No Pi payment was made.
+    </p>
+
+    <span class="status">TEST MODE</span>
+
+    <button class="primary" onclick="showOrders()">
+      📦 View My Orders
+    </button>
+
+    <button class="back" onclick="goHome()">
+      ⬅️ Back to Home
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- MY ORDERS -->
+<div id="ordersView" class="hidden">
+
+  <div class="card">
+
+    <h2>📦 My Orders</h2>
+
+    <p class="small" style="margin-top:7px;">
+      Your TEST order history on this device.
+    </p>
+
+  </div>
+
+  <div id="ordersList"></div>
+
+  <div class="card center" id="noOrders">
+    <h3>📭 No Test Orders Yet</h3>
+
+    <p class="small" style="margin-top:7px;">
+      When you submit a TEST order, it will appear here.
+    </p>
+  </div>
+
+  <button class="back" onclick="goHome()">
+    ⬅️ Back to Home
+  </button>
+
+</div>
+
+
+<!-- ORDER DETAILS -->
+<div id="orderDetailsView" class="hidden">
+
+  <div class="card">
+
+    <h2>📦 Order Details</h2>
+
+    <div id="orderDetailsContent" style="margin-top:15px;"></div>
+
+    <button class="back" onclick="showOrders()">
+      ⬅️ Back to My Orders
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- AGENT -->
+<div id="agentView" class="hidden">
+
+  <div class="card center">
+
+    <h2>🤝 Agent Opportunity</h2>
+
+    <p class="small" style="margin-top:10px;">
+      Agent opportunities are coming soon.
+    </p>
+
+    <p class="small" style="margin-top:10px;">
+      This section will later contain agent prices,
+      commissions, application and approval.
+    </p>
+
+    <span class="status">COMING SOON</span>
+
+    <button class="back" onclick="goHome()">
+      ⬅️ Back to Home
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const BACKEND_URL = "https://amana-hub.onrender.com";
+
+let currentUser = null;
+
+let currentProduct = null;
+
+let quantity = 1;
+
+let testCart = [];
+
+let orderItems = [];
+
+let customerData = {};
+
+let testOrders =
+  JSON.parse(localStorage.getItem("amanaHubTestOrders")) || [];
+
+
+/* PI INITIALIZATION */
+
+try{
+  Pi.init({
+    version:"2.0",
+    sandbox:true
+  });
+}catch(error){
+  console.log("Pi init:",error);
+}
+
+
+/* LOGIN */
+
+async function loginWithPi(){
+
+  const status = document.getElementById("loginStatus");
+
+  status.innerText = "Connecting to Pi...";
+
+  try{
+
+    const authResult = await Pi.authenticate(
+      ["username","payments"],
+      onIncompletePaymentFound
+    );
+
+    currentUser = authResult.user;
+
+    const accessToken = authResult.accessToken;
+
+    const response = await fetch(
+      BACKEND_URL + "/api/auth/verify",
+      {
+        headers:{
+          Authorization:"Bearer " + accessToken
+        }
       }
+    );
 
-    };
+    if(!response.ok){
+      throw new Error("Pi user verification failed");
+    }
+
+    document.getElementById("username").innerText =
+      "@" + currentUser.username;
+
+    showView("homeView");
+
+  }catch(error){
+
+    console.log(error);
+
+    status.innerText =
+      "Login failed. Please try again.";
+
+  }
+
+}
 
 
-    // =========================
-    // PI INITIALIZATION
-    // =========================
+/* INCOMPLETE PAYMENT */
 
-    Pi.init({
+function onIncompletePaymentFound(payment){
 
-      version: "2.0",
+  console.log(
+    "Incomplete payment found:",
+    payment
+  );
 
-      sandbox: true
+}
 
+
+/* VIEW SYSTEM */
+
+function hideAllViews(){
+
+  document
+    .querySelectorAll(".container > div")
+    .forEach(view=>{
+      view.classList.add("hidden");
     });
 
-
-    // =========================
-    // PI LOGIN
-    // =========================
-
-    async function loginWithPi() {
-
-      const button =
-        document.getElementById("loginButton");
-
-      button.disabled = true;
-
-      button.innerText =
-        "Connecting to Pi...";
+}
 
 
-      try {
+function showView(id){
 
-        const auth =
-          await Pi.authenticate(
-            ["username", "payments"],
-            onIncompletePaymentFound
-          );
+  hideAllViews();
 
+  document
+    .getElementById(id)
+    .classList.remove("hidden");
 
-        accessToken =
-          auth.accessToken;
+  window.scrollTo(0,0);
 
-
-        const response =
-          await fetch(
-            "https://amana-hub.onrender.com/api/auth/verify",
-            {
-              method: "GET",
-
-              headers: {
-                "Authorization":
-                  "Bearer " + accessToken
-              }
-            }
-          );
+}
 
 
-        const data =
-          await response.json();
+/* HOME */
+
+function goHome(){
+
+  showView("homeView");
+
+}
 
 
-        if (!response.ok) {
+/* MARKETPLACE */
 
-          throw new Error(
-            data.error ||
-            "Could not verify Pi account."
-          );
+function showMarketplace(){
 
-        }
+  showView("marketplaceView");
 
-
-        document.getElementById(
-          "welcomeUser"
-        ).innerText =
-          "Welcome, @" +
-          auth.user.username +
-          " 👋";
+}
 
 
-        document.getElementById(
-          "loginArea"
-        ).style.display = "none";
+/* PRODUCT DATA */
+
+const products = {
+
+  monti7:{
+    name:"MONTI 7 in 1",
+    price:4500,
+    icon:"🥣",
+    ingredients:
+      "Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
+  },
+
+  composite:{
+    name:"MONTI Composite Flour",
+    price:4000,
+    icon:"🌾",
+    ingredients:
+      "Ibigori, Soya, ingano, uburo n'amasaka."
+  },
+
+  super5k:{
+    name:"MONTI Super 5K",
+    price:15000,
+    icon:"🥜",
+    ingredients:
+      "Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
+  }
+
+};
 
 
-        document.getElementById(
-          "dashboard"
-        ).style.display = "block";
+/* PRODUCT PAGE */
+
+function showProduct(id){
+
+  currentProduct = products[id];
+
+  quantity = 1;
+
+  document.getElementById("productIcon").innerText =
+    currentProduct.icon;
+
+  document.getElementById("productName").innerText =
+    currentProduct.name;
+
+  document.getElementById("productPrice").innerText =
+    formatRWF(currentProduct.price);
+
+  document.getElementById("productIngredients").innerText =
+    currentProduct.ingredients;
+
+  document.getElementById("quantity").innerText =
+    quantity;
+
+  updateProductTotal();
+
+  showView("productView");
+
+}
 
 
-        document.getElementById(
-          "status"
-        ).innerText =
-          "Pi Connected ✓";
+/* QUANTITY */
+
+function changeQty(change){
+
+  quantity += change;
+
+  if(quantity < 1){
+    quantity = 1;
+  }
+
+  if(quantity > 20){
+    quantity = 20;
+  }
+
+  document.getElementById("quantity").innerText =
+    quantity;
+
+  updateProductTotal();
+
+}
 
 
-      } catch (error) {
+function updateProductTotal(){
 
-        console.error(error);
+  if(!currentProduct) return;
 
-        button.disabled = false;
+  const total =
+    currentProduct.price * quantity;
 
-        button.innerText =
-          "Continue with Pi";
+  document.getElementById("productTotal").innerText =
+    "Test Total: " + formatRWF(total);
 
-        alert(
-          "Pi Login failed: " +
-          error.message
-        );
+}
 
+
+/* ADD TO CART */
+
+function addToCart(){
+
+  if(!currentProduct) return;
+
+  const existing =
+    testCart.find(
+      item => item.name === currentProduct.name
+    );
+
+  if(existing){
+
+    existing.quantity += quantity;
+
+  }else{
+
+    testCart.push({
+      name:currentProduct.name,
+      price:currentProduct.price,
+      quantity:quantity
+    });
+
+  }
+
+  alert(
+    currentProduct.name +
+    " added to Test Cart ✓"
+  );
+
+  showCart();
+
+}
+
+
+/* CART */
+
+function showCart(){
+
+  renderCart();
+
+  showView("cartView");
+
+}
+
+
+function renderCart(){
+
+  const container =
+    document.getElementById("cartItems");
+
+  const totalElement =
+    document.getElementById("cartTotal");
+
+  const checkout =
+    document.getElementById("checkoutButton");
+
+  container.innerHTML = "";
+
+  if(testCart.length === 0){
+
+    container.innerHTML =
+      '<p class="small">Your Test Cart is empty.</p>';
+
+    totalElement.innerText = "";
+
+    checkout.disabled = true;
+
+    checkout.style.opacity = ".5";
+
+    return;
+
+  }
+
+  checkout.disabled = false;
+
+  checkout.style.opacity = "1";
+
+  let total = 0;
+
+  testCart.forEach((item,index)=>{
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    total += itemTotal;
+
+    const div =
+      document.createElement("div");
+
+    div.className = "product";
+
+    div.innerHTML = `
+      <h3>${item.name}</h3>
+
+      <p class="small">
+        ${formatRWF(item.price)} × ${item.quantity}
+      </p>
+
+      <p class="price">
+        ${formatRWF(itemTotal)}
+      </p>
+
+      <button
+        class="danger"
+        onclick="removeCartItem(${index})">
+        🗑️ Remove
+      </button>
+    `;
+
+    container.appendChild(div);
+
+  });
+
+  totalElement.innerText =
+    "Test Total: " + formatRWF(total);
+
+}
+
+
+function removeCartItem(index){
+
+  testCart.splice(index,1);
+
+  renderCart();
+
+}
+
+
+/* BUY NOW */
+
+function buyNow(){
+
+  if(!currentProduct) return;
+
+  orderItems = [{
+    name:currentProduct.name,
+    price:currentProduct.price,
+    quantity:quantity
+  }];
+
+  showOrderForm();
+
+}
+
+
+/* START CART ORDER */
+
+function startOrder(){
+
+  if(testCart.length === 0){
+
+    alert("Your Test Cart is empty.");
+
+    return;
+
+  }
+
+  orderItems =
+    JSON.parse(JSON.stringify(testCart));
+
+  showOrderForm();
+
+}
+
+
+/* ORDER FORM */
+
+function showOrderForm(){
+
+  showView("orderFormView");
+
+}
+
+
+/* REVIEW ORDER */
+
+function reviewOrder(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const phone =
+    document.getElementById("customerPhone").value.trim();
+
+  const location =
+    document.getElementById("customerLocation").value.trim();
+
+  const delivery =
+    document.getElementById("deliveryMethod").value;
+
+  const notes =
+    document.getElementById("customerNotes").value.trim();
+
+
+  if(!name || !phone || !location){
+
+    alert(
+      "Please enter Customer Name, Phone Number and Location."
+    );
+
+    return;
+
+  }
+
+
+  customerData = {
+    name:name,
+    phone:phone,
+    location:location,
+    delivery:delivery,
+    notes:notes
+  };
+
+
+  let total = 0;
+
+  let productsHTML = "";
+
+  orderItems.forEach(item=>{
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    total += itemTotal;
+
+    productsHTML += `
+      <div style="margin-bottom:12px;">
+        <strong>${item.name}</strong><br>
+        <span class="small">
+          ${formatRWF(item.price)} × ${item.quantity}
+          = ${formatRWF(itemTotal)}
+        </span>
+      </div>
+    `;
+
+  });
+
+
+  document.getElementById("reviewContent").innerHTML = `
+
+    <div class="product">
+
+      <h3>🛍️ Products</h3>
+
+      <hr>
+
+      ${productsHTML}
+
+      <div class="total">
+        Test Total: ${formatRWF(total)}
+      </div>
+
+    </div>
+
+
+    <div class="product">
+
+      <h3>👤 Customer</h3>
+
+      <hr>
+
+      <p><strong>Name:</strong> ${escapeHTML(name)}</p>
+
+      <p><strong>Phone:</strong> ${escapeHTML(phone)}</p>
+
+      <p><strong>Location:</strong> ${escapeHTML(location)}</p>
+
+      <p><strong>Delivery:</strong> ${escapeHTML(delivery)}</p>
+
+      ${
+        notes
+        ? `<p><strong>Notes:</strong> ${escapeHTML(notes)}</p>`
+        : ""
       }
 
-    }
+    </div>
 
 
-    // =========================
-    // MARKETPLACE
-    // =========================
+    <div class="success-box">
 
-    function showMarketplace() {
+      <strong>TEST MODE</strong><br>
 
-      hideAllViews();
+      No real purchase will happen.
+      No money will be charged.
 
+    </div>
 
-      document.getElementById(
-        "marketplaceView"
-      ).classList.remove("hidden");
+  `;
 
 
-      document.getElementById(
-        "status"
-      ).innerText =
-        "AMANA Marketplace";
+  showView("reviewView");
+
+}
 
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+/* SUBMIT TEST ORDER */
 
-    }
+function submitTestOrder(){
 
+  if(orderItems.length === 0){
 
-    // =========================
-    // SEARCH
-    // =========================
+    alert("No order items found.");
 
-    function searchProducts() {
+    return;
 
-      const search =
-        document
-          .getElementById("searchProduct")
-          .value
-          .toLowerCase()
-          .trim();
+  }
 
 
-      const productCards =
-        document.querySelectorAll(
-          ".product-card"
-        );
+  const orderNumber =
+    "TEST-" +
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    );
 
 
-      productCards.forEach(product => {
-
-        const text =
-          product
-            .getAttribute("data-search")
-            .toLowerCase();
+  const now =
+    new Date();
 
 
-        if (text.includes(search)) {
+  let total = 0;
 
-          product.style.display =
-            "block";
+  orderItems.forEach(item=>{
 
-        } else {
+    total +=
+      item.price * item.quantity;
 
-          product.style.display =
-            "none";
-
-        }
-
-      });
-
-    }
+  });
 
 
-    // =========================
-    // PRODUCT DETAILS
-    // =========================
+  const order = {
 
-    function viewProduct(productName) {
+    orderNumber:orderNumber,
 
-      selectedProduct =
-        products[productName];
+    date:now.toLocaleDateString(),
 
-      quantity = 1;
+    time:now.toLocaleTimeString(),
 
+    timestamp:now.getTime(),
 
-      document.getElementById(
-        "detailIcon"
-      ).innerText =
-        selectedProduct.icon;
+    items:JSON.parse(
+      JSON.stringify(orderItems)
+    ),
 
+    total:total,
 
-      document.getElementById(
-        "detailName"
-      ).innerText =
-        productName;
+    customer:{
+      ...customerData
+    },
 
+    status:"TEST / Pending"
 
-      document.getElementById(
-        "detailCategory"
-      ).innerText =
-        selectedProduct.category;
+  };
 
 
-      document.getElementById(
-        "detailPrice"
-      ).innerText =
-        formatRwf(
-          selectedProduct.price
-        );
+  testOrders.unshift(order);
 
 
-      document.getElementById(
-        "detailDescription"
-      ).innerHTML =
-        selectedProduct.description;
+  localStorage.setItem(
+    "amanaHubTestOrders",
+    JSON.stringify(testOrders)
+  );
 
 
-      document.getElementById(
-        "quantityNumber"
-      ).innerText =
-        quantity;
+  document.getElementById(
+    "submittedOrderNumber"
+  ).innerText = orderNumber;
 
 
-      updateTotal();
+  /* CLEAR CURRENT CART */
+
+  testCart = [];
+
+  orderItems = [];
+
+  customerData = {};
+
+  showView("submittedView");
+
+}
 
 
-      hideAllViews();
+/* MY ORDERS */
+
+function showOrders(){
+
+  renderOrders();
+
+  showView("ordersView");
+
+}
 
 
-      document.getElementById(
-        "productDetailsView"
-      ).classList.remove("hidden");
+function renderOrders(){
+
+  const list =
+    document.getElementById("ordersList");
+
+  const noOrders =
+    document.getElementById("noOrders");
+
+  list.innerHTML = "";
 
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+  if(testOrders.length === 0){
 
-    }
+    noOrders.classList.remove("hidden");
 
+    return;
 
-    // =========================
-    // QUANTITY
-    // =========================
-
-    function changeQuantity(amount) {
-
-      quantity += amount;
+  }
 
 
-      if (quantity < 1) {
-        quantity = 1;
+  noOrders.classList.add("hidden");
+
+
+  testOrders.forEach((order,index)=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "card order-box";
+
+
+    let productsText =
+      order.items.map(
+        item =>
+          `${item.name} × ${item.quantity}`
+      ).join(", ");
+
+
+    div.innerHTML = `
+
+      <h3>${order.orderNumber}</h3>
+
+      <p class="small" style="margin-top:7px;">
+        📅 ${escapeHTML(order.date)}
+        &nbsp; ${escapeHTML(order.time)}
+      </p>
+
+      <p class="small" style="margin-top:7px;">
+        🛍️ ${escapeHTML(productsText)}
+      </p>
+
+      <p class="price">
+        ${formatRWF(order.total)}
+      </p>
+
+      <span class="status">
+        ${escapeHTML(order.status)}
+      </span>
+
+      <button
+        class="primary"
+        onclick="viewOrder(${index})">
+        👁️ View Order
+      </button>
+
+    `;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+
+/* VIEW SINGLE ORDER */
+
+function viewOrder(index){
+
+  const order =
+    testOrders[index];
+
+  if(!order) return;
+
+
+  let productsHTML = "";
+
+  order.items.forEach(item=>{
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    productsHTML += `
+
+      <div class="product">
+
+        <strong>
+          ${escapeHTML(item.name)}
+        </strong>
+
+        <p class="small">
+          ${formatRWF(item.price)}
+          × ${item.quantity}
+        </p>
+
+        <p class="price">
+          ${formatRWF(itemTotal)}
+        </p>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById(
+    "orderDetailsContent"
+  ).innerHTML = `
+
+    <div class="success-box">
+
+      <strong>TEST MODE</strong><br>
+
+      Status: ${escapeHTML(order.status)}
+
+    </div>
+
+
+    <div class="product">
+
+      <h3>Order Number</h3>
+
+      <p style="
+        font-size:22px;
+        font-weight:bold;
+        margin-top:8px;
+      ">
+        ${escapeHTML(order.orderNumber)}
+      </p>
+
+    </div>
+
+
+    <div class="product">
+
+      <h3>📅 Date & Time</h3>
+
+      <p class="small" style="margin-top:8px;">
+        ${escapeHTML(order.date)}
+        — ${escapeHTML(order.time)}
+      </p>
+
+    </div>
+
+
+    <h3 style="margin:15px 0 10px;">
+      🛍️ Products
+    </h3>
+
+    ${productsHTML}
+
+
+    <div class="product">
+
+      <h3>💰 Test Total</h3>
+
+      <p class="total">
+        ${formatRWF(order.total)}
+      </p>
+
+    </div>
+
+
+    <div class="product">
+
+      <h3>👤 Customer Information</h3>
+
+      <hr>
+
+      <p>
+        <strong>Name:</strong>
+        ${escapeHTML(order.customer.name)}
+      </p>
+
+      <p>
+        <strong>Phone:</strong>
+        ${escapeHTML(order.customer.phone)}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(order.customer.location)}
+      </p>
+
+      <p>
+        <strong>Delivery:</strong>
+        ${escapeHTML(order.customer.delivery)}
+      </p>
+
+      ${
+        order.customer.notes
+        ? `
+          <p style="margin-top:8px;">
+            <strong>Notes:</strong>
+            ${escapeHTML(order.customer.notes)}
+          </p>
+        `
+        : ""
       }
 
+    </div>
 
-      if (quantity > 20) {
-        quantity = 20;
-      }
 
+    <div class="success-box">
 
-      document.getElementById(
-        "quantityNumber"
-      ).innerText =
-        quantity;
+      No real order was created.<br>
+      No money was charged.<br>
+      No Pi payment was made.
 
+    </div>
 
-      updateTotal();
+  `;
 
-    }
 
+  showView("orderDetailsView");
 
-    // =========================
-    // TOTAL
-    // =========================
+}
 
-    function updateTotal() {
 
-      if (!selectedProduct) {
-        return;
-      }
+/* AGENT */
 
+function showAgent(){
 
-      const total =
-        selectedProduct.price *
-        quantity;
+  showView("agentView");
 
+}
 
-      document.getElementById(
-        "totalBox"
-      ).innerText =
-        "Test Total: " +
-        formatRwf(total);
 
-    }
+/* COMING SOON */
 
+function comingSoon(name){
 
-    // =========================
-    // ADD TO TEST CART
-    // =========================
+  alert(
+    name +
+    " is coming soon. AMANA HUB is currently in TEST MODE."
+  );
 
-    function addToTestCart() {
+}
 
-      if (!selectedProduct) {
-        return;
-      }
 
+/* FORMAT RWF */
 
-      testCart.push({
+function formatRWF(amount){
 
-        name:
-          document.getElementById(
-            "detailName"
-          ).innerText,
+  return Number(amount).toLocaleString(
+    "en-US"
+  ) + " RWF";
 
-        price:
-          selectedProduct.price,
+}
 
-        quantity:
-          quantity
 
-      });
+/* SECURITY / HTML ESCAPE */
 
+function escapeHTML(text){
 
-      alert(
-        "Added to TEST CART 🛒\n\n" +
-        "No real purchase was made."
-      );
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
+}
 
-      showTestCart();
-
-    }
-
-
-    // =========================
-    // TEST CART
-    // =========================
-
-    function showTestCart() {
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "testCartView"
-      ).classList.remove("hidden");
-
-
-      renderCart();
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    function renderCart() {
-
-      const cartList =
-        document.getElementById(
-          "cartList"
-        );
-
-
-      if (testCart.length === 0) {
-
-        cartList.innerHTML =
-          '<div class="welcome">' +
-          '🛒 Your test cart is empty.' +
-          '</div>';
-
-        document.getElementById(
-          "cartTotal"
-        ).innerText =
-          "Test Total: 0 RWF";
-
-        return;
-
-      }
-
-
-      let html = "";
-
-      let total = 0;
-
-
-      testCart.forEach(item => {
-
-        const itemTotal =
-          item.price *
-          item.quantity;
-
-
-        total += itemTotal;
-
-
-        html +=
-
-          '<div class="cart-item">' +
-
-            '<div class="cart-name">' +
-              item.name +
-            '</div>' +
-
-            '<div class="cart-info">' +
-              'Quantity: ' +
-              item.quantity +
-              '<br>' +
-              'Price: ' +
-              formatRwf(item.price) +
-              '<br>' +
-              'Subtotal: ' +
-              formatRwf(itemTotal) +
-            '</div>' +
-
-          '</div>';
-
-      });
-
-
-      cartList.innerHTML =
-        html;
-
-
-      document.getElementById(
-        "cartTotal"
-      ).innerText =
-        "Test Total: " +
-        formatRwf(total);
-
-    }
-
-
-    // =========================
-    // START DIRECT TEST ORDER
-    // =========================
-
-    function startDirectTestOrder() {
-
-      if (!selectedProduct) {
-        return;
-      }
-
-
-      orderItems = [
-
-        {
-          name:
-            document.getElementById(
-              "detailName"
-            ).innerText,
-
-          price:
-            selectedProduct.price,
-
-          quantity:
-            quantity
-
-        }
-
-      ];
-
-
-      openCustomerForm();
-
-    }
-
-
-    // =========================
-    // START CART TEST ORDER
-    // =========================
-
-    function startCartTestOrder() {
-
-      if (testCart.length === 0) {
-
-        alert(
-          "Your TEST CART is empty."
-        );
-
-        return;
-
-      }
-
-
-      orderItems =
-        [...testCart];
-
-
-      openCustomerForm();
-
-    }
-
-
-    // =========================
-    // CUSTOMER FORM
-    // =========================
-
-    function openCustomerForm() {
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "customerFormView"
-      ).classList.remove("hidden");
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    // =========================
-    // REVIEW ORDER
-    // =========================
-
-    function reviewTestOrder() {
-
-      const name =
-        document.getElementById(
-          "customerName"
-        ).value.trim();
-
-
-      const phone =
-        document.getElementById(
-          "customerPhone"
-        ).value.trim();
-
-
-      const location =
-        document.getElementById(
-          "customerLocation"
-        ).value.trim();
-
-
-      const delivery =
-        document.getElementById(
-          "deliveryOption"
-        ).value;
-
-
-      const notes =
-        document.getElementById(
-          "customerNotes"
-        ).value.trim();
-
-
-      if (!name || !phone || !location) {
-
-        alert(
-          "Please fill in Name, Phone and Location."
-        );
-
-        return;
-
-      }
-
-
-      customerData = {
-
-        name: name,
-
-        phone: phone,
-
-        location: location,
-
-        delivery: delivery,
-
-        notes:
-          notes || "No notes"
-
-      };
-
-
-      document.getElementById(
-        "reviewName"
-      ).innerText =
-        customerData.name;
-
-
-      document.getElementById(
-        "reviewPhone"
-      ).innerText =
-        customerData.phone;
-
-
-      document.getElementById(
-        "reviewLocation"
-      ).innerText =
-        customerData.location;
-
-
-      document.getElementById(
-        "reviewDelivery"
-      ).innerText =
-        customerData.delivery;
-
-
-      let productsText = "";
-
-      let total = 0;
-
-
-      orderItems.forEach(item => {
-
-        const subtotal =
-          item.price *
-          item.quantity;
-
-
-        total += subtotal;
-
-
-        productsText +=
-          item.name +
-          " × " +
-          item.quantity +
-          "<br>";
-
-      });
-
-
-      document.getElementById(
-        "reviewProducts"
-      ).innerHTML =
-        productsText;
-
-
-      document.getElementById(
-        "reviewTotal"
-      ).innerText =
-        formatRwf(total);
-
-
-      document.getElementById(
-        "reviewNotes"
-      ).innerText =
-        customerData.notes;
-
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "orderReviewView"
-      ).classList.remove("hidden");
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    // =========================
-    // SUBMIT TEST ORDER
-    // =========================
-
-    function submitTestOrder() {
-
-      const randomNumber =
-        Math.floor(
-          100000 +
-          Math.random() * 900000
-        );
-
-
-      const orderNumber =
-        "TEST-" +
-        randomNumber;
-
-
-      document.getElementById(
-        "testOrderNumber"
-      ).innerText =
-        orderNumber;
-
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "orderSuccessView"
-      ).classList.remove("hidden");
-
-
-      document.getElementById(
-        "status"
-      ).innerText =
-        "Test Order Submitted ✓";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-
-      console.log(
-        "TEST ORDER:",
-        {
-          orderNumber:
-            orderNumber,
-
-          customer:
-            customerData,
-
-          items:
-            orderItems
-
-        }
-      );
-
-    }
-
-
-    // =========================
-    // BACK FROM FORM
-    // =========================
-
-    function backFromCustomerForm() {
-
-      if (orderItems.length > 0) {
-
-        showTestCart();
-
-      } else {
-
-        backToMarketplace();
-
-      }
-
-    }
-
-
-    // =========================
-    // BACK TO FORM
-    // =========================
-
-    function backToCustomerForm() {
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "customerFormView"
-      ).classList.remove("hidden");
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    // =========================
-    // BACK MARKETPLACE
-    // =========================
-
-    function backToMarketplace() {
-
-      showMarketplace();
-
-    }
-
-
-    // =========================
-    // BACK HOME
-    // =========================
-
-    function backToHome() {
-
-      hideAllViews();
-
-
-      document.getElementById(
-        "homeView"
-      ).style.display =
-        "block";
-
-
-      document.getElementById(
-        "status"
-      ).innerText =
-        "Pi Connected ✓";
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    // =========================
-    // HIDE ALL VIEWS
-    // =========================
-
-    function hideAllViews() {
-
-      document.getElementById(
-        "homeView"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "marketplaceView"
-      ).classList.add("hidden");
-
-
-      document.getElementById(
-        "productDetailsView"
-      ).classList.add("hidden");
-
-
-      document.getElementById(
-        "testCartView"
-      ).classList.add("hidden");
-
-
-      document.getElementById(
-        "customerFormView"
-      ).classList.add("hidden");
-
-
-      document.getElementById(
-        "orderReviewView"
-      ).classList.add("hidden");
-
-
-      document.getElementById(
-        "orderSuccessView"
-      ).classList.add("hidden");
-
-    }
-
-
-    // =========================
-    // OTHER SECTIONS
-    // =========================
-
-    function showComingSoon(section) {
-
-      document.getElementById(
-        "status"
-      ).innerText =
-        section +
-        " is coming soon 🚀";
-
-    }
-
-
-    // =========================
-    // FORMAT RWF
-    // =========================
-
-    function formatRwf(amount) {
-
-      return new Intl.NumberFormat(
-        "en-RW"
-      ).format(amount) +
-      " RWF";
-
-    }
-
-
-    // =========================
-    // INCOMPLETE PAYMENT
-    // =========================
-
-    function onIncompletePaymentFound(payment) {
-
-      console.log(
-        "Incomplete payment found:",
-        payment
-      );
-
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
