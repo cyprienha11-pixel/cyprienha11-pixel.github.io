@@ -201,7 +201,8 @@
     .view-button,
     .back-button,
     .cart-button,
-    .order-button {
+    .order-button,
+    .submit-button {
       width: 100%;
       margin-top: 14px;
       padding: 13px;
@@ -214,7 +215,8 @@
       cursor: pointer;
     }
 
-    .order-button {
+    .order-button,
+    .submit-button {
       background: #ffd84d;
     }
 
@@ -343,6 +345,7 @@
       margin-top: 6px;
       font-size: 14px;
       opacity: 0.85;
+      line-height: 1.6;
     }
 
     .test-warning {
@@ -353,6 +356,122 @@
       text-align: center;
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    /* ORDER FORM */
+
+    .form-box {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .form-title {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .form-subtitle {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-top: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    /* REVIEW */
+
+    .review-box {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .review-row {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      line-height: 1.5;
+    }
+
+    .review-row:last-child {
+      border-bottom: none;
+    }
+
+    .review-label {
+      font-size: 13px;
+      opacity: 0.75;
+    }
+
+    .review-value {
+      margin-top: 3px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* SUCCESS */
+
+    .success-box {
+      margin-top: 20px;
+      padding: 25px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.12);
+      text-align: center;
+    }
+
+    .success-icon {
+      font-size: 65px;
+    }
+
+    .success-title {
+      margin-top: 10px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .success-text {
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .order-number {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.10);
+      font-weight: bold;
     }
 
     @media (max-width: 360px) {
@@ -531,7 +650,7 @@
             </div>
 
             <div class="card-text">
-              Test payments will come later.
+              Real payments will come later.
             </div>
           </div>
 
@@ -559,9 +678,12 @@
 
 
         <div class="test-warning">
+
           🧪 <strong>TEST MODE</strong><br>
+
           These are consumer test prices.
           No real purchase is being made.
+
         </div>
 
 
@@ -688,12 +810,6 @@
         </div>
 
 
-        <div
-          id="marketStatus"
-          class="status"
-        ></div>
-
-
         <button
           class="back-button"
           onclick="backToHome()"
@@ -750,8 +866,7 @@
           <div
             id="detailDescription"
             class="ingredients"
-          >
-          </div>
+          ></div>
 
 
           <div class="ingredients">
@@ -810,7 +925,7 @@
 
           <button
             class="order-button"
-            onclick="testOrder()"
+            onclick="startDirectTestOrder()"
           >
             📦 Test Order
           </button>
@@ -820,8 +935,8 @@
 
             ⚠️ <strong>TEST ONLY</strong><br>
 
-            This button does not create a real
-            purchase or payment.
+            This does not create a real purchase
+            or payment.
 
           </div>
 
@@ -859,9 +974,7 @@
         </div>
 
 
-        <div
-          id="cartList"
-        ></div>
+        <div id="cartList"></div>
 
 
         <div
@@ -874,7 +987,7 @@
 
         <button
           class="order-button"
-          onclick="testCartOrder()"
+          onclick="startCartTestOrder()"
         >
           📦 Test Order
         </button>
@@ -894,6 +1007,333 @@
         >
           ← Back to Home
         </button>
+
+      </div>
+
+
+      <!-- CUSTOMER FORM -->
+
+      <div
+        id="customerFormView"
+        class="hidden"
+      >
+
+        <div class="form-box">
+
+          <div class="form-title">
+            📦 Test Customer Order
+          </div>
+
+          <div class="form-subtitle">
+
+            Enter sample customer information
+            to test the order process.
+
+            <br><br>
+
+            🧪 TEST MODE — No real order.
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="customerName">
+              👤 Customer Name
+            </label>
+
+            <input
+              type="text"
+              id="customerName"
+              placeholder="Enter customer name"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="customerPhone">
+              📞 Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="customerPhone"
+              placeholder="Enter phone number"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="customerLocation">
+              📍 Location
+            </label>
+
+            <input
+              type="text"
+              id="customerLocation"
+              placeholder="City / District / Sector"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="deliveryOption">
+              🚚 Delivery
+            </label>
+
+            <select id="deliveryOption">
+
+              <option value="Customer pickup">
+                Customer Pickup
+              </option>
+
+              <option value="Delivery">
+                Delivery
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="customerNotes">
+              📝 Notes
+            </label>
+
+            <textarea
+              id="customerNotes"
+              placeholder="Optional notes..."
+            ></textarea>
+
+          </div>
+
+
+          <button
+            class="submit-button"
+            onclick="reviewTestOrder()"
+          >
+            Continue to Review →
+          </button>
+
+
+          <button
+            class="back-button"
+            onclick="backFromCustomerForm()"
+          >
+            ← Back
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ORDER REVIEW -->
+
+      <div
+        id="orderReviewView"
+        class="hidden"
+      >
+
+        <div class="review-box">
+
+          <div class="form-title">
+            🔎 Review Test Order
+          </div>
+
+
+          <div class="test-warning">
+
+            🧪 <strong>TEST MODE</strong><br>
+
+            Check the information below.
+            No real purchase will be made.
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Customer
+            </div>
+
+            <div
+              id="reviewName"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Phone
+            </div>
+
+            <div
+              id="reviewPhone"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Location
+            </div>
+
+            <div
+              id="reviewLocation"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Delivery
+            </div>
+
+            <div
+              id="reviewDelivery"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Products
+            </div>
+
+            <div
+              id="reviewProducts"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Total
+            </div>
+
+            <div
+              id="reviewTotal"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <div class="review-row">
+
+            <div class="review-label">
+              Notes
+            </div>
+
+            <div
+              id="reviewNotes"
+              class="review-value"
+            ></div>
+
+          </div>
+
+
+          <button
+            class="submit-button"
+            onclick="submitTestOrder()"
+          >
+            ✅ Submit Test Order
+          </button>
+
+
+          <button
+            class="back-button"
+            onclick="backToCustomerForm()"
+          >
+            ← Edit Information
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- SUCCESS -->
+
+      <div
+        id="orderSuccessView"
+        class="hidden"
+      >
+
+        <div class="success-box">
+
+          <div class="success-icon">
+            🎉
+          </div>
+
+          <div class="success-title">
+            Test Order Submitted!
+          </div>
+
+          <div class="success-text">
+
+            Your test order flow worked successfully.
+
+            <br><br>
+
+            No real order was created.
+            No money was charged.
+            No Pi payment was made.
+
+          </div>
+
+
+          <div
+            id="testOrderNumber"
+            class="order-number"
+          >
+            TEST-000000
+          </div>
+
+
+          <div class="test-warning">
+
+            🧪 <strong>TEST MODE</strong><br>
+
+            AMANA HUB is currently being tested.
+            Real commerce will be enabled later.
+
+          </div>
+
+
+          <button
+            class="back-button"
+            onclick="backToHome()"
+          >
+            🏠 Back to Home
+          </button>
+
+        </div>
 
       </div>
 
@@ -924,6 +1364,10 @@
     let quantity = 1;
 
     let testCart = [];
+
+    let orderItems = [];
+
+    let customerData = {};
 
 
     // =========================
@@ -1101,14 +1545,17 @@
 
       hideAllViews();
 
+
       document.getElementById(
         "marketplaceView"
       ).classList.remove("hidden");
+
 
       document.getElementById(
         "status"
       ).innerText =
         "AMANA Marketplace";
+
 
       window.scrollTo({
         top: 0,
@@ -1428,35 +1875,45 @@
 
 
     // =========================
-    // TEST ORDER
+    // START DIRECT TEST ORDER
     // =========================
 
-    function testOrder() {
+    function startDirectTestOrder() {
 
-      alert(
+      if (!selectedProduct) {
+        return;
+      }
 
-        "🧪 TEST ORDER\n\n" +
 
-        "Product: " +
-        document.getElementById(
-          "detailName"
-        ).innerText +
+      orderItems = [
 
-        "\nQuantity: " +
-        quantity +
+        {
+          name:
+            document.getElementById(
+              "detailName"
+            ).innerText,
 
-        "\n\n" +
+          price:
+            selectedProduct.price,
 
-        "This is only a test.\n" +
+          quantity:
+            quantity
 
-        "No real order or payment was made."
+        }
 
-      );
+      ];
+
+
+      openCustomerForm();
 
     }
 
 
-    function testCartOrder() {
+    // =========================
+    // START CART TEST ORDER
+    // =========================
+
+    function startCartTestOrder() {
 
       if (testCart.length === 0) {
 
@@ -1469,26 +1926,287 @@
       }
 
 
-      alert(
+      orderItems =
+        [...testCart];
 
-        "🧪 TEST ORDER\n\n" +
 
-        "Items: " +
-        testCart.length +
+      openCustomerForm();
 
-        "\n\n" +
+    }
 
-        "This is only a test.\n" +
 
-        "No real order or payment was made."
+    // =========================
+    // CUSTOMER FORM
+    // =========================
 
+    function openCustomerForm() {
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "customerFormView"
+      ).classList.remove("hidden");
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    // =========================
+    // REVIEW ORDER
+    // =========================
+
+    function reviewTestOrder() {
+
+      const name =
+        document.getElementById(
+          "customerName"
+        ).value.trim();
+
+
+      const phone =
+        document.getElementById(
+          "customerPhone"
+        ).value.trim();
+
+
+      const location =
+        document.getElementById(
+          "customerLocation"
+        ).value.trim();
+
+
+      const delivery =
+        document.getElementById(
+          "deliveryOption"
+        ).value;
+
+
+      const notes =
+        document.getElementById(
+          "customerNotes"
+        ).value.trim();
+
+
+      if (!name || !phone || !location) {
+
+        alert(
+          "Please fill in Name, Phone and Location."
+        );
+
+        return;
+
+      }
+
+
+      customerData = {
+
+        name: name,
+
+        phone: phone,
+
+        location: location,
+
+        delivery: delivery,
+
+        notes:
+          notes || "No notes"
+
+      };
+
+
+      document.getElementById(
+        "reviewName"
+      ).innerText =
+        customerData.name;
+
+
+      document.getElementById(
+        "reviewPhone"
+      ).innerText =
+        customerData.phone;
+
+
+      document.getElementById(
+        "reviewLocation"
+      ).innerText =
+        customerData.location;
+
+
+      document.getElementById(
+        "reviewDelivery"
+      ).innerText =
+        customerData.delivery;
+
+
+      let productsText = "";
+
+      let total = 0;
+
+
+      orderItems.forEach(item => {
+
+        const subtotal =
+          item.price *
+          item.quantity;
+
+
+        total += subtotal;
+
+
+        productsText +=
+          item.name +
+          " × " +
+          item.quantity +
+          "<br>";
+
+      });
+
+
+      document.getElementById(
+        "reviewProducts"
+      ).innerHTML =
+        productsText;
+
+
+      document.getElementById(
+        "reviewTotal"
+      ).innerText =
+        formatRwf(total);
+
+
+      document.getElementById(
+        "reviewNotes"
+      ).innerText =
+        customerData.notes;
+
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "orderReviewView"
+      ).classList.remove("hidden");
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    // =========================
+    // SUBMIT TEST ORDER
+    // =========================
+
+    function submitTestOrder() {
+
+      const randomNumber =
+        Math.floor(
+          100000 +
+          Math.random() * 900000
+        );
+
+
+      const orderNumber =
+        "TEST-" +
+        randomNumber;
+
+
+      document.getElementById(
+        "testOrderNumber"
+      ).innerText =
+        orderNumber;
+
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "orderSuccessView"
+      ).classList.remove("hidden");
+
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "Test Order Submitted ✓";
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+      console.log(
+        "TEST ORDER:",
+        {
+          orderNumber:
+            orderNumber,
+
+          customer:
+            customerData,
+
+          items:
+            orderItems
+
+        }
       );
 
     }
 
 
     // =========================
-    // NAVIGATION
+    // BACK FROM FORM
+    // =========================
+
+    function backFromCustomerForm() {
+
+      if (orderItems.length > 0) {
+
+        showTestCart();
+
+      } else {
+
+        backToMarketplace();
+
+      }
+
+    }
+
+
+    // =========================
+    // BACK TO FORM
+    // =========================
+
+    function backToCustomerForm() {
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "customerFormView"
+      ).classList.remove("hidden");
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    // =========================
+    // BACK MARKETPLACE
     // =========================
 
     function backToMarketplace() {
@@ -1497,6 +2215,10 @@
 
     }
 
+
+    // =========================
+    // BACK HOME
+    // =========================
 
     function backToHome() {
 
@@ -1523,6 +2245,10 @@
     }
 
 
+    // =========================
+    // HIDE ALL VIEWS
+    // =========================
+
     function hideAllViews() {
 
       document.getElementById(
@@ -1543,6 +2269,21 @@
 
       document.getElementById(
         "testCartView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "customerFormView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "orderReviewView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "orderSuccessView"
       ).classList.add("hidden");
 
     }
