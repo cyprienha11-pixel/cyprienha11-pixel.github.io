@@ -65,7 +65,7 @@
       margin-top: 8px;
       font-size: 16px;
       opacity: 0.9;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .login-button {
@@ -199,7 +199,9 @@
     }
 
     .view-button,
-    .back-button {
+    .back-button,
+    .cart-button,
+    .order-button {
       width: 100%;
       margin-top: 14px;
       padding: 13px;
@@ -212,12 +214,145 @@
       cursor: pointer;
     }
 
+    .order-button {
+      background: #ffd84d;
+    }
+
     .back-button {
       margin-top: 25px;
     }
 
     .hidden {
       display: none;
+    }
+
+    /* PRODUCT DETAILS */
+
+    .product-details {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .detail-icon {
+      text-align: center;
+      font-size: 75px;
+    }
+
+    .detail-name {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .detail-category {
+      margin-top: 7px;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .detail-price {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .test-label {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255,216,77,0.18);
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .ingredients {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .quantity-box {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .quantity-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .quantity-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .quantity-controls button {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      font-weight: bold;
+      background: white;
+      color: #4b217a;
+      cursor: pointer;
+    }
+
+    .quantity-number {
+      font-size: 22px;
+      font-weight: bold;
+      min-width: 35px;
+    }
+
+    .total-box {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.10);
+      text-align: center;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    /* TEST CART */
+
+    .cart-item {
+      margin-top: 12px;
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .cart-name {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .cart-info {
+      margin-top: 6px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .test-warning {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255,216,77,0.18);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     @media (max-width: 360px) {
@@ -247,7 +382,7 @@
     </div>
 
 
-    <!-- LOGIN AREA -->
+    <!-- LOGIN -->
 
     <div id="loginArea">
 
@@ -275,7 +410,7 @@
     </div>
 
 
-    <!-- HOME DASHBOARD -->
+    <!-- DASHBOARD -->
 
     <div id="dashboard" class="dashboard">
 
@@ -295,7 +430,7 @@
       </div>
 
 
-      <!-- HOME VIEW -->
+      <!-- HOME -->
 
       <div id="homeView">
 
@@ -303,17 +438,13 @@
           Explore AMANA HUB
         </div>
 
-
         <div class="grid">
 
           <div
             class="card"
             onclick="showMarketplace()"
           >
-
-            <div class="card-icon">
-              🛒
-            </div>
+            <div class="card-icon">🛒</div>
 
             <div class="card-title">
               Marketplace
@@ -322,7 +453,6 @@
             <div class="card-text">
               Discover products and services.
             </div>
-
           </div>
 
 
@@ -330,10 +460,7 @@
             class="card"
             onclick="showComingSoon('Agent Opportunity')"
           >
-
-            <div class="card-icon">
-              🤝
-            </div>
+            <div class="card-icon">🤝</div>
 
             <div class="card-title">
               Agent Opportunity
@@ -342,7 +469,6 @@
             <div class="card-text">
               Become an agent and earn commission.
             </div>
-
           </div>
 
 
@@ -350,10 +476,7 @@
             class="card"
             onclick="showComingSoon('Businesses')"
           >
-
-            <div class="card-icon">
-              🏢
-            </div>
+            <div class="card-icon">🏢</div>
 
             <div class="card-title">
               Businesses
@@ -362,27 +485,22 @@
             <div class="card-text">
               Discover businesses on AMANA HUB.
             </div>
-
           </div>
 
 
           <div
             class="card"
-            onclick="showComingSoon('My Orders')"
+            onclick="showTestCart()"
           >
-
-            <div class="card-icon">
-              📦
-            </div>
+            <div class="card-icon">🛒</div>
 
             <div class="card-title">
-              My Orders
+              Test Cart
             </div>
 
             <div class="card-text">
-              Track your orders and purchases.
+              View your test products.
             </div>
-
           </div>
 
 
@@ -390,10 +508,7 @@
             class="card"
             onclick="showComingSoon('My Profile')"
           >
-
-            <div class="card-icon">
-              👤
-            </div>
+            <div class="card-icon">👤</div>
 
             <div class="card-title">
               My Profile
@@ -402,7 +517,6 @@
             <div class="card-text">
               Manage your account.
             </div>
-
           </div>
 
 
@@ -410,19 +524,15 @@
             class="card"
             onclick="showComingSoon('Pi Payments')"
           >
-
-            <div class="card-icon">
-              💜
-            </div>
+            <div class="card-icon">💜</div>
 
             <div class="card-title">
               Pi Payments
             </div>
 
             <div class="card-text">
-              Secure payments with Pi.
+              Test payments will come later.
             </div>
-
           </div>
 
         </div>
@@ -430,7 +540,7 @@
       </div>
 
 
-      <!-- MARKETPLACE VIEW -->
+      <!-- MARKETPLACE -->
 
       <div id="marketplaceView" class="hidden">
 
@@ -445,6 +555,13 @@
             from businesses on AMANA HUB.
           </div>
 
+        </div>
+
+
+        <div class="test-warning">
+          🧪 <strong>TEST MODE</strong><br>
+          These are consumer test prices.
+          No real purchase is being made.
         </div>
 
 
@@ -470,7 +587,6 @@
           class="product-list"
         >
 
-
           <!-- PRODUCT 1 -->
 
           <div
@@ -491,12 +607,12 @@
             </div>
 
             <div class="product-price">
-              3,300 RWF
+              4,500 RWF
             </div>
 
             <button
               class="view-button"
-              onclick="viewProduct('MONTI 7 in 1','3,300 RWF')"
+              onclick="viewProduct('MONTI 7 in 1')"
             >
               View Product
             </button>
@@ -524,12 +640,12 @@
             </div>
 
             <div class="product-price">
-              3,030 RWF
+              4,000 RWF
             </div>
 
             <button
               class="view-button"
-              onclick="viewProduct('MONTI Composite Flour','3,030 RWF')"
+              onclick="viewProduct('MONTI Composite Flour')"
             >
               View Product
             </button>
@@ -541,7 +657,7 @@
 
           <div
             class="product-card"
-            data-search="monti super nutrition food"
+            data-search="monti super 5k nutrition food"
           >
 
             <div class="product-icon">
@@ -549,7 +665,7 @@
             </div>
 
             <div class="product-name">
-              MONTI Super
+              MONTI Super 5K
             </div>
 
             <div class="product-category">
@@ -557,18 +673,17 @@
             </div>
 
             <div class="product-price">
-              Contact Business
+              15,000 RWF
             </div>
 
             <button
               class="view-button"
-              onclick="viewProduct('MONTI Super','Contact Business')"
+              onclick="viewProduct('MONTI Super 5K')"
             >
               View Product
             </button>
 
           </div>
-
 
         </div>
 
@@ -577,6 +692,200 @@
           id="marketStatus"
           class="status"
         ></div>
+
+
+        <button
+          class="back-button"
+          onclick="backToHome()"
+        >
+          ← Back to Home
+        </button>
+
+      </div>
+
+
+      <!-- PRODUCT DETAILS -->
+
+      <div
+        id="productDetailsView"
+        class="hidden"
+      >
+
+        <div class="product-details">
+
+          <div
+            id="detailIcon"
+            class="detail-icon"
+          >
+            🥣
+          </div>
+
+          <div
+            id="detailName"
+            class="detail-name"
+          >
+            MONTI 7 in 1
+          </div>
+
+          <div
+            id="detailCategory"
+            class="detail-category"
+          >
+            Nutrition • Food
+          </div>
+
+          <div
+            id="detailPrice"
+            class="detail-price"
+          >
+            4,500 RWF
+          </div>
+
+
+          <div class="test-label">
+            🧪 TEST CONSUMER PRICE
+          </div>
+
+
+          <div
+            id="detailDescription"
+            class="ingredients"
+          >
+          </div>
+
+
+          <div class="ingredients">
+
+            <strong>🔥 Preparation:</strong><br>
+
+            All ingredients are roasted
+            before being processed.
+
+          </div>
+
+
+          <div class="quantity-box">
+
+            <div class="quantity-title">
+              Quantity
+            </div>
+
+            <div class="quantity-controls">
+
+              <button onclick="changeQuantity(-1)">
+                −
+              </button>
+
+              <div
+                id="quantityNumber"
+                class="quantity-number"
+              >
+                1
+              </div>
+
+              <button onclick="changeQuantity(1)">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="totalBox"
+            class="total-box"
+          >
+            Test Total: 4,500 RWF
+          </div>
+
+
+          <button
+            class="cart-button"
+            onclick="addToTestCart()"
+          >
+            🛒 Add to Test Cart
+          </button>
+
+
+          <button
+            class="order-button"
+            onclick="testOrder()"
+          >
+            📦 Test Order
+          </button>
+
+
+          <div class="test-warning">
+
+            ⚠️ <strong>TEST ONLY</strong><br>
+
+            This button does not create a real
+            purchase or payment.
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="back-button"
+          onclick="backToMarketplace()"
+        >
+          ← Back to Marketplace
+        </button>
+
+      </div>
+
+
+      <!-- TEST CART -->
+
+      <div
+        id="testCartView"
+        class="hidden"
+      >
+
+        <div class="welcome">
+
+          <div class="welcome-title">
+            🛒 TEST CART
+          </div>
+
+          <div class="welcome-text">
+            This cart is only for testing
+            the AMANA HUB shopping flow.
+          </div>
+
+        </div>
+
+
+        <div
+          id="cartList"
+        ></div>
+
+
+        <div
+          id="cartTotal"
+          class="total-box"
+        >
+          Test Total: 0 RWF
+        </div>
+
+
+        <button
+          class="order-button"
+          onclick="testCartOrder()"
+        >
+          📦 Test Order
+        </button>
+
+
+        <div class="test-warning">
+
+          ⚠️ No real order or payment is made.
+          This is only a demonstration.
+
+        </div>
 
 
         <button
@@ -610,14 +919,78 @@
 
     let accessToken = null;
 
+    let selectedProduct = null;
+
+    let quantity = 1;
+
+    let testCart = [];
+
+
+    // =========================
+    // PRODUCT DATA
+    // =========================
+
+    const products = {
+
+      "MONTI 7 in 1": {
+
+        icon: "🥣",
+
+        category: "Nutrition • Food",
+
+        price: 4500,
+
+        description:
+          "<strong>Ingredients:</strong><br>" +
+          "Ibishyimbo bya Fer, ubunyobwa, ingano, " +
+          "soya, ibigori, uburo n'isukali."
+
+      },
+
+
+      "MONTI Composite Flour": {
+
+        icon: "🌾",
+
+        category: "Nutrition • Food",
+
+        price: 4000,
+
+        description:
+          "<strong>Ingredients:</strong><br>" +
+          "Ibigori, soya, ingano, uburo n'amasaka."
+
+      },
+
+
+      "MONTI Super 5K": {
+
+        icon: "🌱",
+
+        category: "Nutrition • Food",
+
+        price: 15000,
+
+        description:
+          "<strong>Ingredients:</strong><br>" +
+          "Ibishyimbo bya Fer, isukari, umunyu, " +
+          "soya n'ibigori."
+
+      }
+
+    };
+
 
     // =========================
     // PI INITIALIZATION
     // =========================
 
     Pi.init({
+
       version: "2.0",
+
       sandbox: true
+
     });
 
 
@@ -701,22 +1074,14 @@
           "Pi Connected ✓";
 
 
-        console.log(
-          "Pi user:",
-          auth.user
-        );
-
-
       } catch (error) {
 
         console.error(error);
-
 
         button.disabled = false;
 
         button.innerText =
           "Continue with Pi";
-
 
         alert(
           "Pi Login failed: " +
@@ -734,21 +1099,16 @@
 
     function showMarketplace() {
 
-      document.getElementById(
-        "homeView"
-      ).style.display = "none";
-
+      hideAllViews();
 
       document.getElementById(
         "marketplaceView"
       ).classList.remove("hidden");
 
-
       document.getElementById(
         "status"
       ).innerText =
         "AMANA Marketplace";
-
 
       window.scrollTo({
         top: 0,
@@ -759,7 +1119,7 @@
 
 
     // =========================
-    // SEARCH PRODUCTS
+    // SEARCH
     // =========================
 
     function searchProducts() {
@@ -772,13 +1132,13 @@
           .trim();
 
 
-      const products =
+      const productCards =
         document.querySelectorAll(
           ".product-card"
         );
 
 
-      products.forEach(product => {
+      productCards.forEach(product => {
 
         const text =
           product
@@ -804,43 +1164,349 @@
 
 
     // =========================
-    // VIEW PRODUCT
+    // PRODUCT DETAILS
     // =========================
 
-    function viewProduct(
-      productName,
-      price
-    ) {
+    function viewProduct(productName) {
+
+      selectedProduct =
+        products[productName];
+
+      quantity = 1;
+
 
       document.getElementById(
-        "marketStatus"
+        "detailIcon"
+      ).innerText =
+        selectedProduct.icon;
+
+
+      document.getElementById(
+        "detailName"
+      ).innerText =
+        productName;
+
+
+      document.getElementById(
+        "detailCategory"
+      ).innerText =
+        selectedProduct.category;
+
+
+      document.getElementById(
+        "detailPrice"
+      ).innerText =
+        formatRwf(
+          selectedProduct.price
+        );
+
+
+      document.getElementById(
+        "detailDescription"
       ).innerHTML =
-        "🛍️ <strong>" +
-        productName +
-        "</strong><br>" +
-        "Price: " +
-        price +
-        "<br><br>" +
-        "Product details and ordering " +
-        "will be connected next 🚀";
+        selectedProduct.description;
+
+
+      document.getElementById(
+        "quantityNumber"
+      ).innerText =
+        quantity;
+
+
+      updateTotal();
+
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "productDetailsView"
+      ).classList.remove("hidden");
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
 
     // =========================
-    // BACK HOME
+    // QUANTITY
     // =========================
+
+    function changeQuantity(amount) {
+
+      quantity += amount;
+
+
+      if (quantity < 1) {
+        quantity = 1;
+      }
+
+
+      if (quantity > 20) {
+        quantity = 20;
+      }
+
+
+      document.getElementById(
+        "quantityNumber"
+      ).innerText =
+        quantity;
+
+
+      updateTotal();
+
+    }
+
+
+    // =========================
+    // TOTAL
+    // =========================
+
+    function updateTotal() {
+
+      if (!selectedProduct) {
+        return;
+      }
+
+
+      const total =
+        selectedProduct.price *
+        quantity;
+
+
+      document.getElementById(
+        "totalBox"
+      ).innerText =
+        "Test Total: " +
+        formatRwf(total);
+
+    }
+
+
+    // =========================
+    // ADD TO TEST CART
+    // =========================
+
+    function addToTestCart() {
+
+      if (!selectedProduct) {
+        return;
+      }
+
+
+      testCart.push({
+
+        name:
+          document.getElementById(
+            "detailName"
+          ).innerText,
+
+        price:
+          selectedProduct.price,
+
+        quantity:
+          quantity
+
+      });
+
+
+      alert(
+        "Added to TEST CART 🛒\n\n" +
+        "No real purchase was made."
+      );
+
+
+      showTestCart();
+
+    }
+
+
+    // =========================
+    // TEST CART
+    // =========================
+
+    function showTestCart() {
+
+      hideAllViews();
+
+
+      document.getElementById(
+        "testCartView"
+      ).classList.remove("hidden");
+
+
+      renderCart();
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function renderCart() {
+
+      const cartList =
+        document.getElementById(
+          "cartList"
+        );
+
+
+      if (testCart.length === 0) {
+
+        cartList.innerHTML =
+          '<div class="welcome">' +
+          '🛒 Your test cart is empty.' +
+          '</div>';
+
+        document.getElementById(
+          "cartTotal"
+        ).innerText =
+          "Test Total: 0 RWF";
+
+        return;
+
+      }
+
+
+      let html = "";
+
+      let total = 0;
+
+
+      testCart.forEach(item => {
+
+        const itemTotal =
+          item.price *
+          item.quantity;
+
+
+        total += itemTotal;
+
+
+        html +=
+
+          '<div class="cart-item">' +
+
+            '<div class="cart-name">' +
+              item.name +
+            '</div>' +
+
+            '<div class="cart-info">' +
+              'Quantity: ' +
+              item.quantity +
+              '<br>' +
+              'Price: ' +
+              formatRwf(item.price) +
+              '<br>' +
+              'Subtotal: ' +
+              formatRwf(itemTotal) +
+            '</div>' +
+
+          '</div>';
+
+      });
+
+
+      cartList.innerHTML =
+        html;
+
+
+      document.getElementById(
+        "cartTotal"
+      ).innerText =
+        "Test Total: " +
+        formatRwf(total);
+
+    }
+
+
+    // =========================
+    // TEST ORDER
+    // =========================
+
+    function testOrder() {
+
+      alert(
+
+        "🧪 TEST ORDER\n\n" +
+
+        "Product: " +
+        document.getElementById(
+          "detailName"
+        ).innerText +
+
+        "\nQuantity: " +
+        quantity +
+
+        "\n\n" +
+
+        "This is only a test.\n" +
+
+        "No real order or payment was made."
+
+      );
+
+    }
+
+
+    function testCartOrder() {
+
+      if (testCart.length === 0) {
+
+        alert(
+          "Your TEST CART is empty."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+
+        "🧪 TEST ORDER\n\n" +
+
+        "Items: " +
+        testCart.length +
+
+        "\n\n" +
+
+        "This is only a test.\n" +
+
+        "No real order or payment was made."
+
+      );
+
+    }
+
+
+    // =========================
+    // NAVIGATION
+    // =========================
+
+    function backToMarketplace() {
+
+      showMarketplace();
+
+    }
+
 
     function backToHome() {
 
-      document.getElementById(
-        "marketplaceView"
-      ).classList.add("hidden");
+      hideAllViews();
 
 
       document.getElementById(
         "homeView"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
 
       document.getElementById(
@@ -857,6 +1523,31 @@
     }
 
 
+    function hideAllViews() {
+
+      document.getElementById(
+        "homeView"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "marketplaceView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "productDetailsView"
+      ).classList.add("hidden");
+
+
+      document.getElementById(
+        "testCartView"
+      ).classList.add("hidden");
+
+    }
+
+
     // =========================
     // OTHER SECTIONS
     // =========================
@@ -868,6 +1559,20 @@
       ).innerText =
         section +
         " is coming soon 🚀";
+
+    }
+
+
+    // =========================
+    // FORMAT RWF
+    // =========================
+
+    function formatRwf(amount) {
+
+      return new Intl.NumberFormat(
+        "en-RW"
+      ).format(amount) +
+      " RWF";
 
     }
 
