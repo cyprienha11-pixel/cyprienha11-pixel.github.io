@@ -2,2247 +2,1741 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AMANA HUB – Connect • Trade • Earn</title>
-
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#222;
-}
-
-header{
-  background:#5b35d5;
-  color:white;
-  padding:22px 18px;
-  text-align:center;
-}
-
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#222}
+header{background:#5b35d5;color:#fff;padding:22px 18px;text-align:center}
 .logo{font-size:28px;font-weight:bold}
 .tagline{margin-top:5px;font-size:14px;opacity:.9}
-
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:18px;
-}
-
-.card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 3px 12px rgba(0,0,0,.08);
-}
-
-button{
-  width:100%;
-  border:none;
-  border-radius:12px;
-  padding:14px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.primary{background:#5b35d5;color:white}
+.container{max-width:600px;margin:auto;padding:18px}
+.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+button{width:100%;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
+.primary{background:#5b35d5;color:#fff}
 .secondary{background:#eee9ff;color:#4d27bd}
-.success{background:#198754;color:white}
-.danger{background:#dc3545;color:white}
+.success{background:#198754;color:#fff}
+.danger{background:#dc3545;color:#fff}
 .back{background:#eee;color:#333}
-
-input,select,textarea{
-  width:100%;
-  padding:13px;
-  margin-top:7px;
-  margin-bottom:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-}
-
-label{
-  font-weight:bold;
-  font-size:14px;
-}
-
-.product{
-  border:1px solid #eee;
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:14px;
-}
-
-.product-icon{
-  font-size:48px;
-  text-align:center;
-  background:#f3f0ff;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:12px;
-}
-
+input,select,textarea{width:100%;padding:13px;margin-top:7px;margin-bottom:12px;border:1px solid #ddd;border-radius:10px;font-size:15px}
+label{font-weight:bold;font-size:14px}
+.product{border:1px solid #eee;border-radius:14px;padding:14px;margin-bottom:14px}
+.product-icon{font-size:48px;text-align:center;background:#f3f0ff;border-radius:12px;padding:18px;margin-bottom:12px}
 .product h3{margin-bottom:6px}
-
-.price{
-  color:#5b35d5;
-  font-weight:bold;
-  font-size:18px;
-  margin:7px 0;
-}
-
-.agent-price{
-  color:#198754;
-  font-weight:bold;
-  font-size:18px;
-  margin:7px 0;
-}
-
-.profit{
-  color:#d17a00;
-  font-weight:bold;
-  font-size:18px;
-  margin:7px 0;
-}
-
-.small{
-  font-size:13px;
-  color:#666;
-  line-height:1.5;
-}
-
-.qty{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:10px;
-}
-
-.qty button{
-  width:45px;
-  margin:0;
-  padding:10px;
-}
-
-.qty span{
-  min-width:35px;
-  text-align:center;
-  font-weight:bold;
-}
-
-.total{
-  font-size:20px;
-  font-weight:bold;
-  margin-top:12px;
-}
-
-.order-box{
-  border-left:5px solid #5b35d5;
-}
-
-.status{
-  display:inline-block;
-  background:#fff3cd;
-  color:#856404;
-  padding:6px 10px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  margin-top:8px;
-}
-
-.agent-badge{
-  display:inline-block;
-  background:#e8f7ee;
-  color:#176b3a;
-  padding:6px 10px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  margin-top:8px;
-}
-
+.price{color:#5b35d5;font-weight:bold;font-size:18px;margin:7px 0}
+.agent-price{color:#198754;font-weight:bold;font-size:18px;margin:7px 0}
+.profit{color:#d17a00;font-weight:bold;font-size:18px;margin:7px 0}
+.small{font-size:13px;color:#666;line-height:1.5}
+.qty{display:flex;align-items:center;gap:10px;margin-top:10px}
+.qty button{width:45px;margin:0;padding:10px}
+.qty span{min-width:35px;text-align:center;font-weight:bold}
+.total{font-size:20px;font-weight:bold;margin-top:12px}
+.order-box{border-left:5px solid #5b35d5}
+.status,.agent-badge{display:inline-block;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-top:8px}
+.status{background:#fff3cd;color:#856404}
+.agent-badge{background:#e8f7ee;color:#176b3a}
 .hidden{display:none!important}
 .center{text-align:center}
-
-hr{
-  border:none;
-  border-top:1px solid #eee;
-  margin:14px 0;
-}
-
-.success-box{
-  background:#e8f7ee;
-  color:#176b3a;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
-.info-box{
-  background:#eee9ff;
-  color:#4d27bd;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
+hr{border:0;border-top:1px solid #eee;margin:14px 0}
+.success-box{background:#e8f7ee;color:#176b3a;padding:15px;border-radius:12px;margin-bottom:15px}
+.info-box{background:#eee9ff;color:#4d27bd;padding:15px;border-radius:12px;margin-bottom:15px}
 ul{padding-left:20px}
 li{margin-bottom:6px}
+.dashboard-stat{display:flex;justify-content:space-between;align-items:center;background:#f7f5ff;border-radius:12px;padding:12px;margin-top:10px}
+.stat-number{font-size:22px;font-weight:bold;color:#5b35d5}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">🟣 AMANA HUB</div>
-  <div class="tagline">Connect • Trade • Earn</div>
+<div class="logo">🟣 AMANA HUB</div>
+<div class="tagline">Connect • Trade • Earn</div>
 </header>
 
 <div class="container">
 
-<!-- LOGIN -->
 <div id="loginView">
-
-  <div class="card center">
-    <h2>Welcome to AMANA HUB 👋</h2>
-
-    <p class="small" style="margin-top:10px;">
-      A digital marketplace connecting customers,
-      businesses and agents.
-    </p>
-
-    <button class="primary" onclick="loginWithPi()">
-      🟣 Login with Pi
-    </button>
-
-    <p id="loginStatus" class="small" style="margin-top:12px;"></p>
-  </div>
-
+<div class="card center">
+<h2>Welcome to AMANA HUB 👋</h2>
+<p class="small" style="margin-top:10px">
+A digital marketplace connecting customers, businesses and agents.
+</p>
+<button class="primary" onclick="loginWithPi()">🟣 Login with Pi</button>
+<p id="loginStatus" class="small" style="margin-top:12px"></p>
+</div>
 </div>
 
-
-<!-- HOME -->
 <div id="homeView" class="hidden">
-
-  <div class="card">
-    <h2>Welcome, <span id="username"></span> 👋</h2>
-
-    <p class="small" style="margin-top:6px;">
-      AMANA HUB TEST MODE
-    </p>
-  </div>
-
-  <div class="card">
-
-    <button class="primary" onclick="showMarketplace()">
-      🛍️ Marketplace
-    </button>
-
-    <button class="secondary" onclick="showAgent()">
-      🤝 Agent Opportunity
-    </button>
-
-    <button class="secondary" onclick="comingSoon('Businesses')">
-      🏢 Businesses
-    </button>
-
-    <button class="secondary" onclick="showCart()">
-      🛒 Test Cart
-    </button>
-
-    <button class="secondary" onclick="showOrders()">
-      📦 My Orders
-    </button>
-
-    <button class="secondary" onclick="comingSoon('My Profile')">
-      👤 My Profile
-    </button>
-
-    <button class="secondary" onclick="comingSoon('Pi Payments')">
-      🟣 Pi Payments
-    </button>
-
-  </div>
-
+<div class="card">
+<h2>Welcome, <span id="username"></span> 👋</h2>
+<p class="small" style="margin-top:6px">AMANA HUB TEST MODE</p>
 </div>
 
+<div class="card">
+<button class="primary" onclick="showMarketplace()">🛍️ Marketplace</button>
+<button class="secondary" onclick="showAgent()">🤝 Agent Opportunity</button>
+<button class="secondary" onclick="showBusinessDashboard()">🏢 Business Dashboard</button>
+<button class="secondary" onclick="showCart()">🛒 Test Cart</button>
+<button class="secondary" onclick="showOrders()">📦 My Orders</button>
+<button class="secondary" onclick="comingSoon('My Profile')">👤 My Profile</button>
+<button class="secondary" onclick="comingSoon('Pi Payments')">🟣 Pi Payments</button>
+</div>
+</div>
 
-<!-- MARKETPLACE -->
 <div id="marketplaceView" class="hidden">
 
-  <div class="card">
-    <h2>🛍️ MONTI Marketplace</h2>
-
-    <p class="small" style="margin-top:7px;">
-      Consumer prices • TEST MODE
-    </p>
-  </div>
-
-
-  <div class="product">
-
-    <div class="product-icon">🥣</div>
-
-    <h3>MONTI 7 in 1</h3>
-
-    <p class="price">4,500 RWF</p>
-
-    <p class="small">
-      Ingredients: Ibishyimbo bya Fer, ubunyobwa,
-      ingano, soya, ibigori, uburo n'isukali.
-    </p>
-
-    <button class="primary" onclick="showProduct('monti7')">
-      View Product
-    </button>
-
-  </div>
-
-
-  <div class="product">
-
-    <div class="product-icon">🌾</div>
-
-    <h3>MONTI Composite Flour</h3>
-
-    <p class="price">4,000 RWF</p>
-
-    <p class="small">
-      Ingredients: ibigori, Soya, ingano,
-      uburo n'amasaka.
-    </p>
-
-    <button class="primary" onclick="showProduct('composite')">
-      View Product
-    </button>
-
-  </div>
-
-
-  <div class="product">
-
-    <div class="product-icon">🥜</div>
-
-    <h3>MONTI Super 5K</h3>
-
-    <p class="price">15,000 RWF</p>
-
-    <p class="small">
-      Ingredients: Ibishyimbo bya Fer, isukari,
-      umunyu, soya n'ibigori.
-    </p>
-
-    <button class="primary" onclick="showProduct('super5k')">
-      View Product
-    </button>
-
-  </div>
-
-
-  <button class="back" onclick="goHome()">
-    ⬅️ Back to Home
-  </button>
-
+<div class="card">
+<h2>🛍️ MONTI Marketplace</h2>
+<p class="small" style="margin-top:7px">
+Consumer prices • TEST MODE
+</p>
 </div>
 
+<div class="product">
+<div class="product-icon">🥣</div>
+<h3>MONTI 7 in 1</h3>
+<p class="price">4,500 RWF</p>
+<p class="small">
+Ingredients: Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali.
+</p>
+<button class="primary" onclick="showProduct('monti7')">
+View Product
+</button>
+</div>
 
-<!-- PRODUCT DETAILS -->
+<div class="product">
+<div class="product-icon">🌾</div>
+<h3>MONTI Composite Flour</h3>
+<p class="price">4,000 RWF</p>
+<p class="small">
+Ingredients: ibigori, Soya, ingano, uburo n'amasaka.
+</p>
+<button class="primary" onclick="showProduct('composite')">
+View Product
+</button>
+</div>
+
+<div class="product">
+<div class="product-icon">🥜</div>
+<h3>MONTI Super 5K</h3>
+<p class="price">15,000 RWF</p>
+<p class="small">
+Ingredients: Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori.
+</p>
+<button class="primary" onclick="showProduct('super5k')">
+View Product
+</button>
+</div>
+
+<button class="back" onclick="goHome()">⬅️ Back to Home</button>
+</div>
+
 <div id="productView" class="hidden">
+<div class="card">
 
-  <div class="card">
+<div id="productIcon" class="product-icon"></div>
 
-    <div id="productIcon" class="product-icon"></div>
+<h2 id="productName"></h2>
 
-    <h2 id="productName"></h2>
+<p id="productPrice" class="price"></p>
 
-    <p id="productPrice" class="price"></p>
+<hr>
 
-    <hr>
+<h3>Ingredients</h3>
 
-    <h3>Ingredients</h3>
+<p id="productIngredients" class="small" style="margin-top:7px"></p>
 
-    <p id="productIngredients"
-       class="small"
-       style="margin-top:7px;"></p>
+<p class="small" style="margin-top:12px">
+🔥 All ingredients are roasted before being processed.
+</p>
 
-    <p class="small" style="margin-top:12px;">
-      🔥 All ingredients are roasted before being processed.
-    </p>
-
-    <div class="qty">
-      <button class="secondary" onclick="changeQty(-1)">−</button>
-      <span id="quantity">1</span>
-      <button class="secondary" onclick="changeQty(1)">+</button>
-    </div>
-
-    <div id="productTotal" class="total"></div>
-
-    <button class="primary" onclick="addToCart()">
-      🛒 Add to Test Cart
-    </button>
-
-    <button class="success" onclick="buyNow()">
-      📦 Test Order
-    </button>
-
-    <button class="back" onclick="showMarketplace()">
-      ⬅️ Back to Marketplace
-    </button>
-
-  </div>
-
+<div class="qty">
+<button class="secondary" onclick="changeQty(-1)">−</button>
+<span id="quantity">1</span>
+<button class="secondary" onclick="changeQty(1)">+</button>
 </div>
 
+<div id="productTotal" class="total"></div>
 
-<!-- CART -->
+<button class="primary" onclick="addToCart()">
+🛒 Add to Test Cart
+</button>
+
+<button class="success" onclick="buyNow()">
+📦 Test Order
+</button>
+
+<button class="back" onclick="showMarketplace()">
+⬅️ Back to Marketplace
+</button>
+
+</div>
+</div>
+
 <div id="cartView" class="hidden">
+<div class="card">
 
-  <div class="card">
+<h2>🛒 Test Cart</h2>
 
-    <h2>🛒 Test Cart</h2>
+<div id="cartItems" style="margin-top:15px"></div>
 
-    <div id="cartItems" style="margin-top:15px;"></div>
+<div id="cartTotal" class="total"></div>
 
-    <div id="cartTotal" class="total"></div>
+<button id="checkoutButton" class="primary" onclick="startOrder()">
+📦 Continue to Test Order
+</button>
 
-    <button id="checkoutButton"
-            class="primary"
-            onclick="startOrder()">
-      📦 Continue to Test Order
-    </button>
-
-    <button class="back" onclick="goHome()">
-      ⬅️ Back to Home
-    </button>
-
-  </div>
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
 
 </div>
+</div>
 
-
-<!-- CUSTOMER ORDER FORM -->
 <div id="orderFormView" class="hidden">
+<div class="card">
 
-  <div class="card">
+<h2>📦 Test Customer Order</h2>
 
-    <h2>📦 Test Customer Order</h2>
+<p class="small" style="margin:8px 0 15px">
+This is only a TEST order. No money will be charged.
+</p>
 
-    <p class="small" style="margin:8px 0 15px;">
-      This is only a TEST order. No money will be charged.
-    </p>
+<label>Customer Name</label>
+<input id="customerName" type="text" placeholder="Enter your name">
 
-    <label>Customer Name</label>
-    <input id="customerName"
-           type="text"
-           placeholder="Enter your name">
+<label>Phone Number</label>
+<input id="customerPhone" type="tel" placeholder="07XXXXXXXX">
 
-    <label>Phone Number</label>
-    <input id="customerPhone"
-           type="tel"
-           placeholder="07XXXXXXXX">
+<label>Location</label>
+<input id="customerLocation" type="text" placeholder="Enter location">
 
-    <label>Location</label>
-    <input id="customerLocation"
-           type="text"
-           placeholder="Enter location">
+<label>Delivery</label>
+<select id="deliveryMethod">
+<option>Customer Pickup</option>
+<option>Delivery</option>
+</select>
 
-    <label>Delivery</label>
+<label>Notes</label>
+<textarea id="customerNotes" rows="4" placeholder="Optional notes"></textarea>
 
-    <select id="deliveryMethod">
-      <option value="Customer Pickup">
-        Customer Pickup
-      </option>
+<button class="primary" onclick="reviewOrder()">
+👁️ Review Test Order
+</button>
 
-      <option value="Delivery">
-        Delivery
-      </option>
-    </select>
-
-    <label>Notes</label>
-
-    <textarea id="customerNotes"
-              rows="4"
-              placeholder="Optional notes"></textarea>
-
-    <button class="primary" onclick="reviewOrder()">
-      👁️ Review Test Order
-    </button>
-
-    <button class="back" onclick="showCart()">
-      ⬅️ Back to Cart
-    </button>
-
-  </div>
+<button class="back" onclick="showCart()">
+⬅️ Back to Cart
+</button>
 
 </div>
-
-
-<!-- REVIEW -->
+</div>
 <div id="reviewView" class="hidden">
+<div class="card">
 
-  <div class="card">
+<h2>👁️ Review Test Order</h2>
 
-    <h2>👁️ Review Test Order</h2>
+<div id="reviewContent" style="margin-top:15px"></div>
 
-    <div id="reviewContent"
-         style="margin-top:15px;"></div>
+<button class="success" onclick="submitTestOrder()">
+✅ Submit Test Order
+</button>
 
-    <button class="success" onclick="submitTestOrder()">
-      ✅ Submit Test Order
-    </button>
-
-    <button class="back" onclick="showOrderForm()">
-      ⬅️ Edit Order
-    </button>
-
-  </div>
+<button class="back" onclick="showOrderForm()">
+⬅️ Edit Order
+</button>
 
 </div>
+</div>
 
-
-<!-- ORDER SUBMITTED -->
 <div id="submittedView" class="hidden">
+<div class="card center">
 
-  <div class="card center">
-
-    <div class="success-box">
-
-      <h2>✅ Test Order Submitted!</h2>
-
-      <p style="margin-top:8px;">
-        Your test order flow worked successfully.
-      </p>
-
-    </div>
-
-    <h3>Order Number</h3>
-
-    <p id="submittedOrderNumber"
-       style="
-       font-size:24px;
-       font-weight:bold;
-       margin:10px 0;">
-    </p>
-
-    <p class="small">
-      No real order was created.<br>
-      No money was charged.<br>
-      No Pi payment was made.
-    </p>
-
-    <span class="status">TEST MODE</span>
-
-    <button class="primary" onclick="showOrders()">
-      📦 View My Orders
-    </button>
-
-    <button class="back" onclick="goHome()">
-      ⬅️ Back to Home
-    </button>
-
-  </div>
-
+<div class="success-box">
+<h2>✅ Test Order Submitted!</h2>
+<p style="margin-top:8px">
+Your test order flow worked successfully.
+</p>
 </div>
 
+<h3>Order Number</h3>
 
-<!-- MY ORDERS -->
+<p id="submittedOrderNumber"
+style="font-size:24px;font-weight:bold;margin:10px 0"></p>
+
+<p class="small">
+No real order was created.<br>
+No money was charged.<br>
+No Pi payment was made.
+</p>
+
+<span class="status">TEST MODE</span>
+
+<button class="primary" onclick="showOrders()">
+📦 View My Orders
+</button>
+
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
+
+</div>
+</div>
+
 <div id="ordersView" class="hidden">
 
-  <div class="card">
+<div class="card">
+<h2>📦 My Orders</h2>
 
-    <h2>📦 My Orders</h2>
+<p class="small" style="margin-top:7px">
+Your TEST order history on this device.
+</p>
+</div>
 
-    <p class="small" style="margin-top:7px;">
-      Your TEST order history on this device.
-    </p>
+<div id="ordersList"></div>
 
-  </div>
+<div class="card center" id="noOrders">
+<h3>📭 No Test Orders Yet</h3>
 
-  <div id="ordersList"></div>
+<p class="small" style="margin-top:7px">
+When you submit a TEST order, it will appear here.
+</p>
+</div>
 
-  <div class="card center" id="noOrders">
-
-    <h3>📭 No Test Orders Yet</h3>
-
-    <p class="small" style="margin-top:7px;">
-      When you submit a TEST order,
-      it will appear here.
-    </p>
-
-  </div>
-
-  <button class="back" onclick="goHome()">
-    ⬅️ Back to Home
-  </button>
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
 
 </div>
 
-
-<!-- ORDER DETAILS -->
 <div id="orderDetailsView" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <h2>📦 Order Details</h2>
+<h2>📦 Order Details</h2>
 
-    <div id="orderDetailsContent"
-         style="margin-top:15px;"></div>
+<div id="orderDetailsContent" style="margin-top:15px"></div>
 
-    <button class="back" onclick="showOrders()">
-      ⬅️ Back to My Orders
-    </button>
-
-  </div>
+<button class="back" onclick="showOrders()">
+⬅️ Back to My Orders
+</button>
 
 </div>
+</div>
 
-
-<!-- AGENT OPPORTUNITY -->
 <div id="agentView" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🤝 Agent Opportunity</h2>
+<h2>🤝 Agent Opportunity</h2>
 
-    <p class="small" style="margin-top:7px;">
-      Become an AMANA HUB Agent and earn profit
-      by reselling MONTI products.
-    </p>
+<p class="small" style="margin-top:7px">
+Become an AMANA HUB Agent and earn profit by reselling MONTI products.
+</p>
 
-    <div class="info-box" style="margin-top:15px;">
+<div class="info-box" style="margin-top:15px">
 
-      <strong>💡 How it works</strong>
+<strong>💡 How it works</strong>
 
-      <ul style="margin-top:8px;">
-        <li>Choose a MONTI product.</li>
-        <li>Get it at the Agent Price.</li>
-        <li>Resell at the recommended price.</li>
-        <li>Keep your profit.</li>
-      </ul>
+<ul style="margin-top:8px">
+<li>Choose a MONTI product.</li>
+<li>Get it at the Agent Price.</li>
+<li>Resell at the recommended price.</li>
+<li>Keep your profit.</li>
+</ul>
 
-    </div>
+</div>
+</div>
 
-  </div>
+<div class="product">
 
+<div class="product-icon">🥣</div>
 
-  <!-- MONTI 7 IN 1 -->
+<h3>MONTI 7 in 1</h3>
 
-  <div class="product">
+<span class="agent-badge">AGENT OPPORTUNITY</span>
 
-    <div class="product-icon">🥣</div>
+<hr>
 
-    <h3>MONTI 7 in 1</h3>
+<p class="small">Agent Price</p>
+<p class="agent-price">3,000 RWF</p>
 
-    <span class="agent-badge">
-      AGENT OPPORTUNITY
-    </span>
+<p class="small">Recommended Resell Price</p>
+<p class="price">3,300 RWF</p>
 
-    <hr>
+<p class="small">Your Profit</p>
+<p class="profit">300 RWF</p>
 
-    <p class="small">Agent Price</p>
-
-    <p class="agent-price">
-      3,000 RWF
-    </p>
-
-    <p class="small">Recommended Resell Price</p>
-
-    <p class="price">
-      3,300 RWF
-    </p>
-
-    <p class="small">Your Profit</p>
-
-    <p class="profit">
-      300 RWF
-    </p>
-
-    <button class="primary"
-            onclick="showAgentDetails('monti7')">
-      📋 View Details
-    </button>
-
-  </div>
-
-
-  <!-- COMPOSITE -->
-
-  <div class="product">
-
-    <div class="product-icon">🌾</div>
-
-    <h3>MONTI Composite Flour</h3>
-
-    <span class="agent-badge">
-      AGENT OPPORTUNITY
-    </span>
-
-    <hr>
-
-    <p class="small">Agent Price</p>
-
-    <p class="agent-price">
-      2,730 RWF
-    </p>
-
-    <p class="small">Recommended Resell Price</p>
-
-    <p class="price">
-      3,030 RWF
-    </p>
-
-    <p class="small">Your Profit</p>
-
-    <p class="profit">
-      300 RWF
-    </p>
-
-    <button class="primary"
-            onclick="showAgentDetails('composite')">
-      📋 View Details
-    </button>
-
-  </div>
-
-
-  <!-- SUPER 5K -->
-
-  <div class="product">
-
-    <div class="product-icon">🥜</div>
-
-    <h3>MONTI Super 5K</h3>
-
-    <span class="agent-badge">
-      AGENT OPPORTUNITY
-    </span>
-
-    <hr>
-
-    <p class="small">Agent Price</p>
-
-    <p class="agent-price">
-      10,000 RWF
-    </p>
-
-    <p class="small">Recommended Resell Price</p>
-
-    <p class="price">
-      12,500 RWF
-    </p>
-
-    <p class="small">Your Profit</p>
-
-    <p class="profit">
-      2,500 RWF
-    </p>
-
-    <button class="primary"
-            onclick="showAgentDetails('super5k')">
-      📋 View Details
-    </button>
-
-  </div>
-
-
-  <button class="back" onclick="goHome()">
-    ⬅️ Back to Home
-  </button>
+<button class="primary" onclick="showAgentDetails('monti7')">
+📋 View Details
+</button>
 
 </div>
 
+<div class="product">
 
-<!-- AGENT DETAILS -->
+<div class="product-icon">🌾</div>
+
+<h3>MONTI Composite Flour</h3>
+
+<span class="agent-badge">AGENT OPPORTUNITY</span>
+
+<hr>
+
+<p class="small">Agent Price</p>
+<p class="agent-price">2,730 RWF</p>
+
+<p class="small">Recommended Resell Price</p>
+<p class="price">3,030 RWF</p>
+
+<p class="small">Your Profit</p>
+<p class="profit">300 RWF</p>
+
+<button class="primary" onclick="showAgentDetails('composite')">
+📋 View Details
+</button>
+
+</div>
+
+<div class="product">
+
+<div class="product-icon">🥜</div>
+
+<h3>MONTI Super 5K</h3>
+
+<span class="agent-badge">AGENT OPPORTUNITY</span>
+
+<hr>
+
+<p class="small">Agent Price</p>
+<p class="agent-price">10,000 RWF</p>
+
+<p class="small">Recommended Resell Price</p>
+<p class="price">12,500 RWF</p>
+
+<p class="small">Your Profit</p>
+<p class="profit">2,500 RWF</p>
+
+<button class="primary" onclick="showAgentDetails('super5k')">
+📋 View Details
+</button>
+
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
+
+</div>
+
 <div id="agentDetailsView" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <div id="agentProductIcon"
-         class="product-icon"></div>
+<div id="agentProductIcon" class="product-icon"></div>
 
-    <h2 id="agentProductName"></h2>
+<h2 id="agentProductName"></h2>
 
-    <span class="agent-badge">
-      AGENT OPPORTUNITY
-    </span>
+<span class="agent-badge">AGENT OPPORTUNITY</span>
 
-    <hr>
+<hr>
 
-    <p class="small">Agent Price</p>
+<p class="small">Agent Price</p>
+<p id="agentPrice" class="agent-price"></p>
 
-    <p id="agentPrice"
-       class="agent-price"></p>
+<p class="small">Recommended Resell Price</p>
+<p id="resellPrice" class="price"></p>
 
-    <p class="small">
-      Recommended Resell Price
-    </p>
+<p class="small">Your Profit</p>
+<p id="agentProfit" class="profit"></p>
 
-    <p id="resellPrice"
-       class="price"></p>
+<hr>
 
-    <p class="small">
-      Your Profit
-    </p>
+<h3>📋 Product Details</h3>
 
-    <p id="agentProfit"
-       class="profit"></p>
+<p id="agentIngredients"
+class="small"
+style="margin-top:8px"></p>
 
-    <hr>
+<p class="small" style="margin-top:10px">
+🔥 All ingredients are roasted before being processed.
+</p>
 
-    <h3>📋 Product Details</h3>
+<button class="primary" onclick="showAgentApplication()">
+📝 Apply as Agent
+</button>
 
-    <p id="agentIngredients"
-       class="small"
-       style="margin-top:8px;"></p>
-
-    <p class="small" style="margin-top:10px;">
-      🔥 All ingredients are roasted before being processed.
-    </p>
-
-    <button class="primary"
-            onclick="showAgentApplication()">
-      📝 Apply as Agent
-    </button>
-
-    <button class="back"
-            onclick="showAgent()">
-      ⬅️ Back to Agent Opportunity
-    </button>
-
-  </div>
+<button class="back" onclick="showAgent()">
+⬅️ Back to Agent Opportunity
+</button>
 
 </div>
+</div>
 
-
-<!-- AGENT APPLICATION -->
 <div id="agentApplicationView" class="hidden">
 
-  <div class="card">
+<div class="card">
 
-    <h2>📝 Apply as Agent</h2>
+<h2>📝 Apply as Agent</h2>
 
-    <div class="info-box" style="margin-top:10px;">
-      Applying for:
-      <strong id="applicationProduct"></strong>
-    </div>
-
-    <p class="small" style="margin-bottom:15px;">
-      This application is currently for TEST purposes only.
-    </p>
-
-    <label>Full Name</label>
-
-    <input id="agentName"
-           type="text"
-           placeholder="Enter your full name">
-
-    <label>Phone Number</label>
-
-    <input id="agentPhone"
-           type="tel"
-           placeholder="07XXXXXXXX">
-
-    <label>Location</label>
-
-    <input id="agentLocation"
-           type="text"
-           placeholder="Enter your location">
-
-    <label>Experience (Optional)</label>
-
-    <textarea id="agentExperience"
-              rows="4"
-              placeholder="Tell us briefly about your experience"></textarea>
-
-    <button class="success"
-            onclick="submitAgentApplication()">
-      ✅ Submit Agent Application
-    </button>
-
-    <button class="back"
-            onclick="showAgentDetailsPage()">
-      ⬅️ Back
-    </button>
-
-  </div>
-
+<div class="info-box" style="margin-top:10px">
+Applying for:
+<strong id="applicationProduct"></strong>
 </div>
 
+<p class="small" style="margin-bottom:15px">
+This application is currently for TEST purposes only.
+</p>
 
-<!-- AGENT APPLICATION SUCCESS -->
+<label>Full Name</label>
+<input id="agentName"
+type="text"
+placeholder="Enter your full name">
+
+<label>Phone Number</label>
+<input id="agentPhone"
+type="tel"
+placeholder="07XXXXXXXX">
+
+<label>Location</label>
+<input id="agentLocation"
+type="text"
+placeholder="Enter your location">
+
+<label>Experience (Optional)</label>
+
+<textarea id="agentExperience"
+rows="4"
+placeholder="Tell us briefly about your experience"></textarea>
+
+<button class="success" onclick="submitAgentApplication()">
+✅ Submit Agent Application
+</button>
+
+<button class="back" onclick="showAgentDetailsPage()">
+⬅️ Back
+</button>
+
+</div>
+</div>
+
 <div id="agentSuccessView" class="hidden">
 
-  <div class="card center">
+<div class="card center">
 
-    <div class="success-box">
+<div class="success-box">
 
-      <h2>✅ Application Submitted!</h2>
+<h2>✅ Application Submitted!</h2>
 
-      <p style="margin-top:8px;">
-        Your Agent application has been submitted
-        successfully.
-      </p>
+<p style="margin-top:8px">
+Your Agent application has been submitted successfully.
+</p>
 
-    </div>
+</div>
 
-    <p class="small">
-      Application Number
-    </p>
+<p class="small">Application Number</p>
 
-    <p id="applicationNumber"
-       style="
-       font-size:24px;
-       font-weight:bold;
-       margin:10px 0;">
-    </p>
+<p id="applicationNumber"
+style="font-size:24px;font-weight:bold;margin:10px 0"></p>
 
-    <span class="status">
-      PENDING REVIEW
-    </span>
+<span class="status">PENDING REVIEW</span>
 
-    <p class="small" style="margin-top:15px;">
-      TEST MODE — No real commercial agreement
-      has been created.
-    </p>
+<p class="small" style="margin-top:15px">
+TEST MODE — No real commercial agreement has been created.
+</p>
 
-    <button class="primary"
-            onclick="showAgent()">
-      🤝 Back to Agent Opportunity
-    </button>
+<button class="primary" onclick="showAgent()">
+🤝 Back to Agent Opportunity
+</button>
 
-    <button class="back"
-            onclick="goHome()">
-      ⬅️ Back to Home
-    </button>
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
 
-  </div>
+</div>
+</div>
 
+<div id="businessDashboardView" class="hidden">
+
+<div class="card">
+
+<h2>🏢 Business Dashboard</h2>
+
+<p class="small" style="margin-top:7px">
+Manage Agent Applications • TEST MODE
+</p>
+
+<div class="info-box" style="margin-top:15px">
+
+<strong>💼 Agent Management</strong>
+
+<p class="small" style="margin-top:7px">
+Review applications and approve or reject them.
+</p>
+
+</div>
+
+<div class="dashboard-stat">
+<span>📋 Total Applications</span>
+<span id="totalApplications" class="stat-number">0</span>
+</div>
+
+<div class="dashboard-stat">
+<span>🟡 Pending Review</span>
+<span id="pendingApplications" class="stat-number">0</span>
+</div>
+
+<div class="dashboard-stat">
+<span>✅ Approved</span>
+<span id="approvedApplications" class="stat-number">0</span>
+</div>
+
+<div class="dashboard-stat">
+<span>❌ Rejected</span>
+<span id="rejectedApplications" class="stat-number">0</span>
 </div>
 
 </div>
 
+<div id="businessApplicationsList"></div>
+
+<div class="card center" id="noBusinessApplications">
+
+<h3>📭 No Agent Applications</h3>
+
+<p class="small" style="margin-top:7px">
+When someone applies to become an Agent, the application will appear here.
+</p>
+
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Back to Home
+</button>
+
+</div>
+
+</div>
 
 <script>
 
-const BACKEND_URL =
-  "https://amana-hub.onrender.com";
+const BACKEND_URL="https://amana-hub.onrender.com";
 
-let currentUser = null;
-let currentProduct = null;
-let quantity = 1;
+let currentUser=null,
+currentProduct=null,
+quantity=1,
+testCart=[],
+orderItems=[],
+customerData={},
+selectedAgentProduct=null;
 
-let testCart = [];
-let orderItems = [];
-let customerData = {};
+let testOrders=
+JSON.parse(localStorage.getItem("amanaHubTestOrders"))||[];
 
-let selectedAgentProduct = null;
-
-let testOrders =
-  JSON.parse(
-    localStorage.getItem("amanaHubTestOrders")
-  ) || [];
-
-
-let agentApplications =
-  JSON.parse(
-    localStorage.getItem("amanaHubAgentApplications")
-  ) || [];
-
-
-/* PI INITIALIZATION */
+let agentApplications=
+JSON.parse(localStorage.getItem("amanaHubAgentApplications"))||[];
 
 try{
-
-  Pi.init({
-    version:"2.0",
-    sandbox:true
-  });
-
-}catch(error){
-
-  console.log("Pi init:",error);
-
+Pi.init({
+version:"2.0",
+sandbox:true
+})
+}catch(e){
+console.log(e)
 }
-
-
-/* LOGIN */
 
 async function loginWithPi(){
 
-  const status =
-    document.getElementById("loginStatus");
+const s=document.getElementById("loginStatus");
 
-  status.innerText =
-    "Connecting to Pi...";
+s.innerText="Connecting to Pi...";
 
-  try{
+try{
 
-    const authResult =
-      await Pi.authenticate(
-        ["username","payments"],
-        onIncompletePaymentFound
-      );
+const a=await Pi.authenticate(
+["username","payments"],
+onIncompletePaymentFound
+);
 
-    currentUser =
-      authResult.user;
+currentUser=a.user;
 
-    const accessToken =
-      authResult.accessToken;
+const r=await fetch(
+BACKEND_URL+"/api/auth/verify",
+{
+headers:{
+Authorization:"Bearer "+a.accessToken
+}
+}
+);
 
-    const response =
-      await fetch(
-        BACKEND_URL +
-        "/api/auth/verify",
-        {
-          headers:{
-            Authorization:
-              "Bearer " + accessToken
-          }
-        }
-      );
+if(!r.ok)
+throw Error("Pi user verification failed");
 
-    if(!response.ok){
+document.getElementById("username").innerText=
+"@"+currentUser.username;
 
-      throw new Error(
-        "Pi user verification failed"
-      );
+showView("homeView");
 
-    }
+}catch(e){
 
-    document.getElementById(
-      "username"
-    ).innerText =
-      "@" + currentUser.username;
+console.log(e);
 
-    showView("homeView");
-
-  }catch(error){
-
-    console.log(error);
-
-    status.innerText =
-      "Login failed. Please try again.";
-
-  }
+s.innerText=
+"Login failed. Please try again.";
 
 }
 
-
-/* INCOMPLETE PAYMENT */
-
-function onIncompletePaymentFound(payment){
-
-  console.log(
-    "Incomplete payment found:",
-    payment
-  );
-
 }
 
-
-/* VIEW SYSTEM */
+function onIncompletePaymentFound(p){
+console.log("Incomplete payment found:",p)
+}
 
 function hideAllViews(){
 
-  document
-    .querySelectorAll(".container > div")
-    .forEach(view=>{
-      view.classList.add("hidden");
-    });
+document.querySelectorAll(".container > div")
+.forEach(v=>v.classList.add("hidden"))
 
 }
-
 
 function showView(id){
 
-  hideAllViews();
+hideAllViews();
 
-  document
-    .getElementById(id)
-    .classList.remove("hidden");
+document.getElementById(id)
+.classList.remove("hidden");
 
-  window.scrollTo(0,0);
+window.scrollTo(0,0)
 
 }
-
-
-/* HOME */
 
 function goHome(){
-
-  showView("homeView");
-
+showView("homeView")
 }
-
-
-/* MARKETPLACE */
 
 function showMarketplace(){
-
-  showView("marketplaceView");
-
+showView("marketplaceView")
 }
 
+const products={
 
-/* PRODUCTS */
+monti7:{
+name:"MONTI 7 in 1",
+price:4500,
+icon:"🥣",
+ingredients:"Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
+},
 
-const products = {
+composite:{
+name:"MONTI Composite Flour",
+price:4000,
+icon:"🌾",
+ingredients:"Ibigori, Soya, ingano, uburo n'amasaka."
+},
 
-  monti7:{
-    name:"MONTI 7 in 1",
-    price:4500,
-    icon:"🥣",
-    ingredients:
-      "Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
-  },
-
-  composite:{
-    name:"MONTI Composite Flour",
-    price:4000,
-    icon:"🌾",
-    ingredients:
-      "Ibigori, Soya, ingano, uburo n'amasaka."
-  },
-
-  super5k:{
-    name:"MONTI Super 5K",
-    price:15000,
-    icon:"🥜",
-    ingredients:
-      "Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
-  }
+super5k:{
+name:"MONTI Super 5K",
+price:15000,
+icon:"🥜",
+ingredients:"Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
+}
 
 };
-
-
-/* PRODUCT PAGE */
 
 function showProduct(id){
 
-  currentProduct =
-    products[id];
+currentProduct=products[id];
 
-  quantity = 1;
+quantity=1;
 
-  document.getElementById(
-    "productIcon"
-  ).innerText =
-    currentProduct.icon;
+productIcon.innerText=
+currentProduct.icon;
 
-  document.getElementById(
-    "productName"
-  ).innerText =
-    currentProduct.name;
+productName.innerText=
+currentProduct.name;
 
-  document.getElementById(
-    "productPrice"
-  ).innerText =
-    formatRWF(currentProduct.price);
+productPrice.innerText=
+formatRWF(currentProduct.price);
 
-  document.getElementById(
-    "productIngredients"
-  ).innerText =
-    currentProduct.ingredients;
+productIngredients.innerText=
+currentProduct.ingredients;
 
-  document.getElementById(
-    "quantity"
-  ).innerText =
-    quantity;
+document.getElementById("quantity").innerText=1;
 
-  updateProductTotal();
+updateProductTotal();
 
-  showView("productView");
+showView("productView")
 
 }
 
+function changeQty(c){
 
-/* QUANTITY */
+quantity=
+Math.max(
+1,
+Math.min(20,quantity+c)
+);
 
-function changeQty(change){
+document.getElementById("quantity").innerText=
+quantity;
 
-  quantity += change;
-
-  if(quantity < 1)
-    quantity = 1;
-
-  if(quantity > 20)
-    quantity = 20;
-
-  document.getElementById(
-    "quantity"
-  ).innerText =
-    quantity;
-
-  updateProductTotal();
+updateProductTotal()
 
 }
-
 
 function updateProductTotal(){
 
-  if(!currentProduct)
-    return;
-
-  const total =
-    currentProduct.price *
-    quantity;
-
-  document.getElementById(
-    "productTotal"
-  ).innerText =
-    "Test Total: " +
-    formatRWF(total);
+if(currentProduct)
+productTotal.innerText=
+"Test Total: "+
+formatRWF(currentProduct.price*quantity)
 
 }
-
-
-/* CART */
 
 function addToCart(){
 
-  if(!currentProduct)
-    return;
+if(!currentProduct)return;
 
-  const existing =
-    testCart.find(
-      item =>
-        item.name ===
-        currentProduct.name
-    );
+const e=
+testCart.find(
+x=>x.name===currentProduct.name
+);
 
-  if(existing){
+if(e)
+e.quantity+=quantity;
 
-    existing.quantity +=
-      quantity;
+else
+testCart.push({
+name:currentProduct.name,
+price:currentProduct.price,
+quantity
+});
 
-  }else{
+alert(
+currentProduct.name+
+" added to Test Cart ✓"
+);
 
-    testCart.push({
-      name:
-        currentProduct.name,
-
-      price:
-        currentProduct.price,
-
-      quantity:
-        quantity
-    });
-
-  }
-
-  alert(
-    currentProduct.name +
-    " added to Test Cart ✓"
-  );
-
-  showCart();
+showCart()
 
 }
-
 
 function showCart(){
 
-  renderCart();
+renderCart();
 
-  showView("cartView");
+showView("cartView")
 
 }
-
 
 function renderCart(){
 
-  const container =
-    document.getElementById(
-      "cartItems"
-    );
+const c=
+document.getElementById("cartItems");
 
-  const totalElement =
-    document.getElementById(
-      "cartTotal"
-    );
+const t=
+document.getElementById("cartTotal");
 
-  const checkout =
-    document.getElementById(
-      "checkoutButton"
-    );
+const b=
+document.getElementById("checkoutButton");
 
-  container.innerHTML = "";
+c.innerHTML="";
 
-  if(testCart.length === 0){
+if(!testCart.length){
 
-    container.innerHTML =
-      '<p class="small">Your Test Cart is empty.</p>';
+c.innerHTML=
+'<p class="small">Your Test Cart is empty.</p>';
 
-    totalElement.innerText = "";
+t.innerText="";
 
-    checkout.disabled = true;
-    checkout.style.opacity = ".5";
+b.disabled=true;
+b.style.opacity=".5";
 
-    return;
-
-  }
-
-  checkout.disabled = false;
-  checkout.style.opacity = "1";
-
-  let total = 0;
-
-  testCart.forEach(
-    (item,index)=>{
-
-      const itemTotal =
-        item.price *
-        item.quantity;
-
-      total += itemTotal;
-
-      const div =
-        document.createElement("div");
-
-      div.className =
-        "product";
-
-      div.innerHTML = `
-
-        <h3>${escapeHTML(item.name)}</h3>
-
-        <p class="small">
-          ${formatRWF(item.price)}
-          × ${item.quantity}
-        </p>
-
-        <p class="price">
-          ${formatRWF(itemTotal)}
-        </p>
-
-        <button
-          class="danger"
-          onclick="removeCartItem(${index})">
-          🗑️ Remove
-        </button>
-
-      `;
-
-      container.appendChild(div);
-
-    }
-  );
-
-  totalElement.innerText =
-    "Test Total: " +
-    formatRWF(total);
+return
 
 }
 
+b.disabled=false;
+b.style.opacity="1";
 
-function removeCartItem(index){
+let total=0;
 
-  testCart.splice(index,1);
+testCart.forEach((x,i)=>{
 
-  renderCart();
+let it=x.price*x.quantity;
+
+total+=it;
+
+let d=
+document.createElement("div");
+
+d.className="product";
+
+d.innerHTML=`
+<h3>${escapeHTML(x.name)}</h3>
+<p class="small">${formatRWF(x.price)} × ${x.quantity}</p>
+<p class="price">${formatRWF(it)}</p>
+<button class="danger" onclick="removeCartItem(${i})">
+🗑️ Remove
+</button>
+`;
+
+c.appendChild(d)
+
+});
+
+t.innerText=
+"Test Total: "+
+formatRWF(total)
 
 }
 
+function removeCartItem(i){
 
-/* BUY NOW */
+testCart.splice(i,1);
+
+renderCart()
+
+}
 
 function buyNow(){
 
-  if(!currentProduct)
-    return;
+if(currentProduct){
 
-  orderItems = [{
-    name:
-      currentProduct.name,
+orderItems=[{
+name:currentProduct.name,
+price:currentProduct.price,
+quantity
+}];
 
-    price:
-      currentProduct.price,
-
-    quantity:
-      quantity
-  }];
-
-  showOrderForm();
+showOrderForm()
 
 }
 
-
-/* ORDER */
+}
 
 function startOrder(){
 
-  if(testCart.length === 0){
+if(!testCart.length){
 
-    alert(
-      "Your Test Cart is empty."
-    );
+alert("Your Test Cart is empty.");
 
-    return;
-
-  }
-
-  orderItems =
-    JSON.parse(
-      JSON.stringify(testCart)
-    );
-
-  showOrderForm();
+return
 
 }
 
+orderItems=
+JSON.parse(
+JSON.stringify(testCart)
+);
+
+showOrderForm()
+
+}
 
 function showOrderForm(){
 
-  showView(
-    "orderFormView"
-  );
+showView("orderFormView")
 
 }
-
 
 function reviewOrder(){
 
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
+const name=
+customerName.value.trim();
 
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
+const phone=
+customerPhone.value.trim();
 
-  const location =
-    document.getElementById(
-      "customerLocation"
-    ).value.trim();
+const location=
+customerLocation.value.trim();
 
-  const delivery =
-    document.getElementById(
-      "deliveryMethod"
-    ).value;
+const delivery=
+deliveryMethod.value;
 
-  const notes =
-    document.getElementById(
-      "customerNotes"
-    ).value.trim();
+const notes=
+customerNotes.value.trim();
 
+if(!name||!phone||!location){
 
-  if(!name ||
-     !phone ||
-     !location){
+alert(
+"Please enter Customer Name, Phone Number and Location."
+);
 
-    alert(
-      "Please enter Customer Name, Phone Number and Location."
-    );
-
-    return;
-
-  }
-
-
-  customerData = {
-    name,
-    phone,
-    location,
-    delivery,
-    notes
-  };
-
-
-  let total = 0;
-
-  let productsHTML = "";
-
-  orderItems.forEach(item=>{
-
-    const itemTotal =
-      item.price *
-      item.quantity;
-
-    total += itemTotal;
-
-    productsHTML += `
-
-      <div style="margin-bottom:12px;">
-
-        <strong>
-          ${escapeHTML(item.name)}
-        </strong>
-
-        <br>
-
-        <span class="small">
-          ${formatRWF(item.price)}
-          × ${item.quantity}
-          =
-          ${formatRWF(itemTotal)}
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-
-  document.getElementById(
-    "reviewContent"
-  ).innerHTML = `
-
-    <div class="product">
-
-      <h3>🛍️ Products</h3>
-
-      <hr>
-
-      ${productsHTML}
-
-      <div class="total">
-        Test Total:
-        ${formatRWF(total)}
-      </div>
-
-    </div>
-
-
-    <div class="product">
-
-      <h3>👤 Customer</h3>
-
-      <hr>
-
-      <p>
-        <strong>Name:</strong>
-        ${escapeHTML(name)}
-      </p>
-
-      <p>
-        <strong>Phone:</strong>
-        ${escapeHTML(phone)}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${escapeHTML(location)}
-      </p>
-
-      <p>
-        <strong>Delivery:</strong>
-        ${escapeHTML(delivery)}
-      </p>
-
-      ${
-        notes
-        ? `
-          <p>
-            <strong>Notes:</strong>
-            ${escapeHTML(notes)}
-          </p>
-        `
-        : ""
-      }
-
-    </div>
-
-
-    <div class="success-box">
-
-      <strong>TEST MODE</strong><br>
-
-      No real purchase will happen.
-      No money will be charged.
-
-    </div>
-
-  `;
-
-
-  showView(
-    "reviewView"
-  );
+return
 
 }
 
+customerData={
+name,
+phone,
+location,
+delivery,
+notes
+};
 
-/* SUBMIT TEST ORDER */
+let total=0,
+h="";
+
+orderItems.forEach(x=>{
+
+let n=x.price*x.quantity;
+
+total+=n;
+
+h+=`
+<div style="margin-bottom:12px">
+<strong>${escapeHTML(x.name)}</strong><br>
+<span class="small">
+${formatRWF(x.price)} × ${x.quantity} =
+${formatRWF(n)}
+</span>
+</div>
+`
+
+});
+
+reviewContent.innerHTML=`
+
+<div class="product">
+
+<h3>🛍️ Products</h3>
+
+<hr>
+
+${h}
+
+<div class="total">
+Test Total: ${formatRWF(total)}
+</div>
+
+</div>
+
+<div class="product">
+
+<h3>👤 Customer</h3>
+
+<hr>
+
+<p>
+<strong>Name:</strong>
+${escapeHTML(name)}
+</p>
+
+<p>
+<strong>Phone:</strong>
+${escapeHTML(phone)}
+</p>
+
+<p>
+<strong>Location:</strong>
+${escapeHTML(location)}
+</p>
+
+<p>
+<strong>Delivery:</strong>
+${escapeHTML(delivery)}
+</p>
+
+${notes?
+`<p>
+<strong>Notes:</strong>
+${escapeHTML(notes)}
+</p>`:""}
+
+</div>
+
+<div class="success-box">
+
+<strong>TEST MODE</strong><br>
+
+No real purchase will happen.
+No money will be charged.
+
+</div>
+`;
+
+showView("reviewView")
+
+}
 
 function submitTestOrder(){
 
-  if(orderItems.length === 0){
+if(!orderItems.length){
 
-    alert(
-      "No order items found."
-    );
+alert("No order items found.");
 
-    return;
-
-  }
-
-
-  const orderNumber =
-    "TEST-" +
-    Math.floor(
-      100000 +
-      Math.random() *
-      900000
-    );
-
-
-  const now =
-    new Date();
-
-
-  let total = 0;
-
-  orderItems.forEach(item=>{
-
-    total +=
-      item.price *
-      item.quantity;
-
-  });
-
-
-  const order = {
-
-    orderNumber,
-
-    date:
-      now.toLocaleDateString(),
-
-    time:
-      now.toLocaleTimeString(),
-
-    timestamp:
-      now.getTime(),
-
-    items:
-      JSON.parse(
-        JSON.stringify(orderItems)
-      ),
-
-    total,
-
-    customer:{
-      ...customerData
-    },
-
-    status:
-      "TEST / Pending"
-
-  };
-
-
-  testOrders.unshift(order);
-
-
-  localStorage.setItem(
-    "amanaHubTestOrders",
-    JSON.stringify(testOrders)
-  );
-
-
-  document.getElementById(
-    "submittedOrderNumber"
-  ).innerText =
-    orderNumber;
-
-
-  testCart = [];
-  orderItems = [];
-  customerData = {};
-
-
-  showView(
-    "submittedView"
-  );
+return
 
 }
 
+const no=
+"TEST-"+
+Math.floor(
+100000+
+Math.random()*900000
+);
 
-/* MY ORDERS */
+const now=new Date();
+
+let total=0;
+
+orderItems.forEach(x=>
+total+=x.price*x.quantity
+);
+
+testOrders.unshift({
+
+orderNumber:no,
+
+date:now.toLocaleDateString(),
+
+time:now.toLocaleTimeString(),
+
+timestamp:now.getTime(),
+
+items:
+JSON.parse(
+JSON.stringify(orderItems)
+),
+
+total,
+
+customer:{
+...customerData
+},
+
+status:"TEST / Pending"
+
+});
+
+localStorage.setItem(
+"amanaHubTestOrders",
+JSON.stringify(testOrders)
+);
+
+submittedOrderNumber.innerText=no;
+
+testCart=[];
+
+orderItems=[];
+
+customerData={};
+
+showView("submittedView")
+
+}
 
 function showOrders(){
 
-  renderOrders();
+renderOrders();
 
-  showView(
-    "ordersView"
-  );
+showView("ordersView")
 
 }
-
 
 function renderOrders(){
 
-  const list =
-    document.getElementById(
-      "ordersList"
-    );
+const l=
+document.getElementById("ordersList");
 
-  const noOrders =
-    document.getElementById(
-      "noOrders"
-    );
+const n=
+document.getElementById("noOrders");
 
-  list.innerHTML = "";
+l.innerHTML="";
 
+if(!testOrders.length){
 
-  if(testOrders.length === 0){
+n.classList.remove("hidden");
 
-    noOrders.classList.remove(
-      "hidden"
-    );
-
-    return;
-
-  }
-
-
-  noOrders.classList.add(
-    "hidden"
-  );
-
-
-  testOrders.forEach(
-    (order,index)=>{
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.className =
-        "card order-box";
-
-
-      let productsText =
-        order.items
-        .map(
-          item =>
-            `${item.name} × ${item.quantity}`
-        )
-        .join(", ");
-
-
-      div.innerHTML = `
-
-        <h3>
-          ${escapeHTML(
-            order.orderNumber
-          )}
-        </h3>
-
-        <p class="small"
-           style="margin-top:7px;">
-          📅 ${escapeHTML(order.date)}
-          &nbsp;
-          ${escapeHTML(order.time)}
-        </p>
-
-        <p class="small"
-           style="margin-top:7px;">
-          🛍️
-          ${escapeHTML(productsText)}
-        </p>
-
-        <p class="price">
-          ${formatRWF(order.total)}
-        </p>
-
-        <span class="status">
-          ${escapeHTML(order.status)}
-        </span>
-
-        <button
-          class="primary"
-          onclick="viewOrder(${index})">
-          👁️ View Order
-        </button>
-
-      `;
-
-      list.appendChild(div);
-
-    }
-  );
+return
 
 }
 
+n.classList.add("hidden");
 
-function viewOrder(index){
+testOrders.forEach((o,i)=>{
 
-  const order =
-    testOrders[index];
+let d=
+document.createElement("div");
 
-  if(!order)
-    return;
+d.className=
+"card order-box";
 
+d.innerHTML=`
 
-  let productsHTML = "";
+<h3>
+${escapeHTML(o.orderNumber)}
+</h3>
 
-  order.items.forEach(item=>{
+<p class="small" style="margin-top:7px">
+📅 ${escapeHTML(o.date)}
+&nbsp;
+${escapeHTML(o.time)}
+</p>
 
-    const itemTotal =
-      item.price *
-      item.quantity;
+<p class="small" style="margin-top:7px">
+🛍️ ${escapeHTML(
+o.items.map(
+x=>x.name+" × "+x.quantity
+).join(", ")
+)}
+</p>
 
-    productsHTML += `
+<p class="price">
+${formatRWF(o.total)}
+</p>
 
-      <div class="product">
+<span class="status">
+${escapeHTML(o.status)}
+</span>
 
-        <strong>
-          ${escapeHTML(item.name)}
-        </strong>
+<button class="primary"
+onclick="viewOrder(${i})">
+👁️ View Order
+</button>
 
-        <p class="small">
-          ${formatRWF(item.price)}
-          × ${item.quantity}
-        </p>
+`;
 
-        <p class="price">
-          ${formatRWF(itemTotal)}
-        </p>
+l.appendChild(d)
 
-      </div>
-
-    `;
-
-  });
-
-
-  document.getElementById(
-    "orderDetailsContent"
-  ).innerHTML = `
-
-    <div class="success-box">
-
-      <strong>TEST MODE</strong><br>
-
-      Status:
-      ${escapeHTML(order.status)}
-
-    </div>
-
-
-    <div class="product">
-
-      <h3>Order Number</h3>
-
-      <p style="
-        font-size:22px;
-        font-weight:bold;
-        margin-top:8px;">
-        ${escapeHTML(
-          order.orderNumber
-        )}
-      </p>
-
-    </div>
-
-
-    <div class="product">
-
-      <h3>📅 Date & Time</h3>
-
-      <p class="small"
-         style="margin-top:8px;">
-
-        ${escapeHTML(order.date)}
-        —
-        ${escapeHTML(order.time)}
-
-      </p>
-
-    </div>
-
-
-    <h3 style="margin:15px 0 10px;">
-      🛍️ Products
-    </h3>
-
-    ${productsHTML}
-
-
-    <div class="product">
-
-      <h3>💰 Test Total</h3>
-
-      <p class="total">
-        ${formatRWF(order.total)}
-      </p>
-
-    </div>
-
-
-    <div class="product">
-
-      <h3>👤 Customer Information</h3>
-
-      <hr>
-
-      <p>
-        <strong>Name:</strong>
-        ${escapeHTML(
-          order.customer.name
-        )}
-      </p>
-
-      <p>
-        <strong>Phone:</strong>
-        ${escapeHTML(
-          order.customer.phone
-        )}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${escapeHTML(
-          order.customer.location
-        )}
-      </p>
-
-      <p>
-        <strong>Delivery:</strong>
-        ${escapeHTML(
-          order.customer.delivery
-        )}
-      </p>
-
-      ${
-        order.customer.notes
-        ? `
-          <p style="margin-top:8px;">
-            <strong>Notes:</strong>
-            ${escapeHTML(
-              order.customer.notes
-            )}
-          </p>
-        `
-        : ""
-      }
-
-    </div>
-
-
-    <div class="success-box">
-
-      No real order was created.<br>
-      No money was charged.<br>
-      No Pi payment was made.
-
-    </div>
-
-  `;
-
-
-  showView(
-    "orderDetailsView"
-  );
+})
 
 }
 
+function viewOrder(i){
 
-/* =========================
-   AGENT OPPORTUNITY
-========================= */
+const o=testOrders[i];
 
-const agentProducts = {
+if(!o)return;
 
-  monti7:{
-    name:"MONTI 7 in 1",
-    icon:"🥣",
-    agentPrice:3000,
-    resellPrice:3300,
-    profit:300,
-    ingredients:
-      "Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
-  },
+let h="";
 
-  composite:{
-    name:"MONTI Composite Flour",
-    icon:"🌾",
-    agentPrice:2730,
-    resellPrice:3030,
-    profit:300,
-    ingredients:
-      "Ibigori, Soya, ingano, uburo n'amasaka."
-  },
+o.items.forEach(x=>
 
-  super5k:{
-    name:"MONTI Super 5K",
-    icon:"🥜",
-    agentPrice:10000,
-    resellPrice:12500,
-    profit:2500,
-    ingredients:
-      "Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
-  }
+h+=`
+
+<div class="product">
+
+<strong>
+${escapeHTML(x.name)}
+</strong>
+
+<p class="small">
+${formatRWF(x.price)} × ${x.quantity}
+</p>
+
+<p class="price">
+${formatRWF(x.price*x.quantity)}
+</p>
+
+</div>
+
+`
+
+);
+
+orderDetailsContent.innerHTML=`
+
+<div class="success-box">
+
+<strong>TEST MODE</strong><br>
+
+Status:
+${escapeHTML(o.status)}
+
+</div>
+
+<div class="product">
+
+<h3>Order Number</h3>
+
+<p style="font-size:22px;font-weight:bold;margin-top:8px">
+${escapeHTML(o.orderNumber)}
+</p>
+
+</div>
+
+<div class="product">
+
+<h3>📅 Date & Time</h3>
+
+<p class="small" style="margin-top:8px">
+${escapeHTML(o.date)}
+—
+${escapeHTML(o.time)}
+</p>
+
+</div>
+
+<h3 style="margin:15px 0 10px">
+🛍️ Products
+</h3>
+
+${h}
+
+<div class="product">
+
+<h3>💰 Test Total</h3>
+
+<p class="total">
+${formatRWF(o.total)}
+</p>
+
+</div>
+
+<div class="product">
+
+<h3>👤 Customer Information</h3>
+
+<hr>
+
+<p>
+<strong>Name:</strong>
+${escapeHTML(o.customer.name)}
+</p>
+
+<p>
+<strong>Phone:</strong>
+${escapeHTML(o.customer.phone)}
+</p>
+
+<p>
+<strong>Location:</strong>
+${escapeHTML(o.customer.location)}
+</p>
+
+<p>
+<strong>Delivery:</strong>
+${escapeHTML(o.customer.delivery)}
+</p>
+
+${o.customer.notes?
+`<p style="margin-top:8px">
+<strong>Notes:</strong>
+${escapeHTML(o.customer.notes)}
+</p>`:""}
+
+</div>
+
+<div class="success-box">
+
+No real order was created.<br>
+No money was charged.<br>
+No Pi payment was made.
+
+</div>
+
+`;
+
+showView("orderDetailsView")
+
+}
+const agentProducts={
+
+monti7:{
+name:"MONTI 7 in 1",
+icon:"🥣",
+agentPrice:3000,
+resellPrice:3300,
+profit:300,
+ingredients:"Ibishyimbo bya Fer, ubunyobwa, ingano, soya, ibigori, uburo n'isukali."
+},
+
+composite:{
+name:"MONTI Composite Flour",
+icon:"🌾",
+agentPrice:2730,
+resellPrice:3030,
+profit:300,
+ingredients:"Ibigori, Soya, ingano, uburo n'amasaka."
+},
+
+super5k:{
+name:"MONTI Super 5K",
+icon:"🥜",
+agentPrice:10000,
+resellPrice:12500,
+profit:2500,
+ingredients:"Ibishyimbo bya Fer, isukari, umunyu, soya n'ibigori."
+}
 
 };
 
-
-/* AGENT HOME */
-
 function showAgent(){
-
-  showView(
-    "agentView"
-  );
-
+showView("agentView")
 }
-
-
-/* AGENT DETAILS */
 
 function showAgentDetails(id){
 
-  selectedAgentProduct =
-    agentProducts[id];
+selectedAgentProduct=
+agentProducts[id];
 
-  const product =
-    selectedAgentProduct;
+const p=selectedAgentProduct;
 
+agentProductIcon.innerText=p.icon;
 
-  document.getElementById(
-    "agentProductIcon"
-  ).innerText =
-    product.icon;
+agentProductName.innerText=p.name;
 
-  document.getElementById(
-    "agentProductName"
-  ).innerText =
-    product.name;
+agentPrice.innerText=
+formatRWF(p.agentPrice);
 
-  document.getElementById(
-    "agentPrice"
-  ).innerText =
-    formatRWF(product.agentPrice);
+resellPrice.innerText=
+formatRWF(p.resellPrice);
 
-  document.getElementById(
-    "resellPrice"
-  ).innerText =
-    formatRWF(product.resellPrice);
+agentProfit.innerText=
+formatRWF(p.profit);
 
-  document.getElementById(
-    "agentProfit"
-  ).innerText =
-    formatRWF(product.profit);
+agentIngredients.innerText=
+"Ingredients: "+p.ingredients;
 
-  document.getElementById(
-    "agentIngredients"
-  ).innerText =
-    "Ingredients: " +
-    product.ingredients;
-
-  showView(
-    "agentDetailsView"
-  );
+showView("agentDetailsView")
 
 }
-
-
-/* AGENT APPLICATION PAGE */
 
 function showAgentApplication(){
 
-  if(!selectedAgentProduct){
+if(!selectedAgentProduct){
 
-    alert(
-      "Please select an Agent Opportunity first."
-    );
+alert(
+"Please select an Agent Opportunity first."
+);
 
-    return;
-
-  }
-
-
-  document.getElementById(
-    "applicationProduct"
-  ).innerText =
-    selectedAgentProduct.name;
-
-
-  showView(
-    "agentApplicationView"
-  );
+return
 
 }
 
+applicationProduct.innerText=
+selectedAgentProduct.name;
+
+showView("agentApplicationView")
+
+}
 
 function showAgentDetailsPage(){
 
-  showView(
-    "agentDetailsView"
-  );
+showView("agentDetailsView")
 
 }
-
-
-/* SUBMIT AGENT APPLICATION */
 
 function submitAgentApplication(){
 
-  const name =
-    document.getElementById(
-      "agentName"
-    ).value.trim();
+const name=
+agentName.value.trim();
 
-  const phone =
-    document.getElementById(
-      "agentPhone"
-    ).value.trim();
+const phone=
+agentPhone.value.trim();
 
-  const location =
-    document.getElementById(
-      "agentLocation"
-    ).value.trim();
+const location=
+agentLocation.value.trim();
 
-  const experience =
-    document.getElementById(
-      "agentExperience"
-    ).value.trim();
+const experience=
+agentExperience.value.trim();
 
+if(!name||!phone||!location){
 
-  if(!name ||
-     !phone ||
-     !location){
+alert(
+"Please enter Full Name, Phone Number and Location."
+);
 
-    alert(
-      "Please enter Full Name, Phone Number and Location."
-    );
-
-    return;
-
-  }
-
-
-  const applicationNumber =
-    "AGENT-" +
-    Math.floor(
-      100000 +
-      Math.random() *
-      900000
-    );
-
-
-  const application = {
-
-    applicationNumber,
-
-    product:
-      selectedAgentProduct.name,
-
-    name,
-
-    phone,
-
-    location,
-
-    experience,
-
-    date:
-      new Date().toLocaleDateString(),
-
-    time:
-      new Date().toLocaleTimeString(),
-
-    status:
-      "PENDING REVIEW"
-
-  };
-
-
-  agentApplications.unshift(
-    application
-  );
-
-
-  localStorage.setItem(
-    "amanaHubAgentApplications",
-    JSON.stringify(
-      agentApplications
-    )
-  );
-
-
-  document.getElementById(
-    "applicationNumber"
-  ).innerText =
-    applicationNumber;
-
-
-  /* CLEAR FORM */
-
-  document.getElementById(
-    "agentName"
-  ).value = "";
-
-  document.getElementById(
-    "agentPhone"
-  ).value = "";
-
-  document.getElementById(
-    "agentLocation"
-  ).value = "";
-
-  document.getElementById(
-    "agentExperience"
-  ).value = "";
-
-
-  showView(
-    "agentSuccessView"
-  );
+return
 
 }
 
+const no=
+"AGENT-"+
+Math.floor(
+100000+
+Math.random()*900000
+);
 
-/* COMING SOON */
+const now=new Date();
 
-function comingSoon(name){
+agentApplications.unshift({
 
-  alert(
-    name +
-    " is coming soon. AMANA HUB is currently in TEST MODE."
-  );
+applicationNumber:no,
+
+product:
+selectedAgentProduct.name,
+
+name,
+
+phone,
+
+location,
+
+experience,
+
+date:
+now.toLocaleDateString(),
+
+time:
+now.toLocaleTimeString(),
+
+status:
+"PENDING REVIEW"
+
+});
+
+localStorage.setItem(
+"amanaHubAgentApplications",
+JSON.stringify(agentApplications)
+);
+
+applicationNumber.innerText=no;
+
+agentName.value="";
+
+agentPhone.value="";
+
+agentLocation.value="";
+
+agentExperience.value="";
+
+showView("agentSuccessView")
 
 }
 
+function showBusinessDashboard(){
 
-/* FORMAT */
+renderBusinessApplications();
 
-function formatRWF(amount){
-
-  return Number(amount)
-    .toLocaleString("en-US") +
-    " RWF";
+showView("businessDashboardView")
 
 }
 
+function renderBusinessApplications(){
 
-/* HTML ESCAPE */
+const l=
+document.getElementById(
+"businessApplicationsList"
+);
 
-function escapeHTML(text){
+const e=
+document.getElementById(
+"noBusinessApplications"
+);
 
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+l.innerHTML="";
+
+let p=0,
+a=0,
+r=0;
+
+agentApplications.forEach(x=>{
+
+if(x.status==="PENDING REVIEW")
+p++;
+
+else if(x.status==="APPROVED")
+a++;
+
+else if(x.status==="REJECTED")
+r++;
+
+});
+
+totalApplications.innerText=
+agentApplications.length;
+
+pendingApplications.innerText=p;
+
+approvedApplications.innerText=a;
+
+rejectedApplications.innerText=r;
+
+if(!agentApplications.length){
+
+e.classList.remove("hidden");
+
+return
+
+}
+
+e.classList.add("hidden");
+
+agentApplications.forEach((x,i)=>{
+
+let d=
+document.createElement("div");
+
+d.className="card";
+
+let cls=
+x.status==="APPROVED"
+?"agent-badge"
+:"status";
+
+let buttons=
+x.status==="PENDING REVIEW"
+
+?`
+
+<button class="success"
+onclick="approveAgent(${i})">
+✅ Approve Agent
+</button>
+
+<button class="danger"
+onclick="rejectAgent(${i})">
+❌ Reject Application
+</button>
+
+`
+
+:"";
+
+d.innerHTML=`
+
+<h3>👤 ${escapeHTML(x.name)}</h3>
+
+<span class="${cls}">
+${escapeHTML(x.status)}
+</span>
+
+<hr>
+
+<p>
+<strong>Application:</strong><br>
+${escapeHTML(x.applicationNumber)}
+</p>
+
+<p style="margin-top:7px">
+<strong>📦 Product:</strong><br>
+${escapeHTML(x.product)}
+</p>
+
+<p style="margin-top:7px">
+<strong>📞 Phone:</strong><br>
+${escapeHTML(x.phone)}
+</p>
+
+<p style="margin-top:7px">
+<strong>📍 Location:</strong><br>
+${escapeHTML(x.location)}
+</p>
+
+<p class="small" style="margin-top:8px">
+📅 ${escapeHTML(x.date)}
+&nbsp;
+${escapeHTML(x.time)}
+</p>
+
+${x.experience?
+
+`
+
+<div class="info-box"
+style="margin-top:12px">
+
+<strong>💼 Experience</strong>
+
+<p class="small"
+style="margin-top:6px">
+
+${escapeHTML(x.experience)}
+
+</p>
+
+</div>
+
+`
+
+:""}
+
+${buttons}
+
+`;
+
+l.appendChild(d)
+
+})
+
+}
+
+function approveAgent(i){
+
+if(!agentApplications[i])
+return;
+
+if(!confirm(
+"Approve this Agent application?"
+))
+return;
+
+agentApplications[i].status=
+"APPROVED";
+
+localStorage.setItem(
+"amanaHubAgentApplications",
+JSON.stringify(agentApplications)
+);
+
+alert(
+"Agent application approved ✓"
+);
+
+renderBusinessApplications()
+
+}
+
+function rejectAgent(i){
+
+if(!agentApplications[i])
+return;
+
+if(!confirm(
+"Reject this Agent application?"
+))
+return;
+
+agentApplications[i].status=
+"REJECTED";
+
+localStorage.setItem(
+"amanaHubAgentApplications",
+JSON.stringify(agentApplications)
+);
+
+alert(
+"Agent application rejected."
+);
+
+renderBusinessApplications()
+
+}
+
+function comingSoon(n){
+
+alert(
+n+
+" is coming soon. AMANA HUB is currently in TEST MODE."
+)
+
+}
+
+function formatRWF(n){
+
+return Number(n)
+.toLocaleString("en-US")
++" RWF"
+
+}
+
+function escapeHTML(t){
+
+return String(t)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;")
 
 }
 
 </script>
 
 </body>
-</html>
+</html>  
+
