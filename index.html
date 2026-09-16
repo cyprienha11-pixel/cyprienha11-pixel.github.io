@@ -1482,38 +1482,36 @@ hr{
   </p>
 
 </div>
-<!-- =====================================
-     PART 3 / 3
-     AMANA HUB JAVASCRIPT
-===================================== -->
+<!-- PART 3 / 3 -->
 
 <script>
-
-"use strict";
-
-/* ================================
-   AMANA HUB SETTINGS
-================================ */
 
 const BACKEND_URL = "https://amana-hub.onrender.com";
 
 let currentUser = null;
 let currentProduct = null;
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("amanaTestCart") || "[]");
 
-let testOrders =
-  JSON.parse(localStorage.getItem("amanaTestOrders") || "[]");
+let testOrders = JSON.parse(
+  localStorage.getItem("amanaTestOrders") || "[]"
+);
 
-let agentApplications =
-  JSON.parse(localStorage.getItem("amanaAgentApplications") || "[]");
+let agentApplications = JSON.parse(
+  localStorage.getItem("amanaAgentApplications") || "[]"
+);
 
-let agentSales =
-  JSON.parse(localStorage.getItem("amanaAgentSales") || "[]");
+let agentSales = JSON.parse(
+  localStorage.getItem("amanaAgentSales") || "[]"
+);
+
+let businessProducts = JSON.parse(
+  localStorage.getItem("amanaBusinessProducts") || "[]"
+);
 
 
-/* ================================
+/* =========================
    PRODUCTS
-================================ */
+========================= */
 
 const PRODUCTS = {
 
@@ -1532,7 +1530,7 @@ const PRODUCTS = {
     price: 4000,
     icon: "🌾",
     ingredients:
-      "Amasaka, ingano, uburo, soya n'ibigori."
+      "Sorghum, ingano, millet, soya n'ibigori."
   },
 
   super5k: {
@@ -1547,12 +1545,11 @@ const PRODUCTS = {
 };
 
 
-/* ================================
+/* =========================
    VIEW SYSTEM
-================================ */
+========================= */
 
 const VIEW_IDS = [
-
   "loginView",
   "homeView",
   "marketplaceView",
@@ -1571,52 +1568,56 @@ const VIEW_IDS = [
   "businessDashboardView",
   "notificationsView",
   "adminView"
-
 ];
-
 
 function showView(id) {
 
   VIEW_IDS.forEach(function(viewId) {
 
-    const view =
-      document.getElementById(viewId);
+    const element = document.getElementById(viewId);
 
-    if (view) {
-      view.classList.add("hidden");
+    if (element) {
+      element.style.display =
+        viewId === id ? "block" : "none";
     }
 
   });
 
+  window.scrollTo(0, 0);
 
-  const target =
-    document.getElementById(id);
+  if (id === "cartView") {
+    renderCart();
+  }
 
-  if (target) {
-    target.classList.remove("hidden");
+  if (id === "ordersView") {
+    renderOrders();
+  }
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+  if (id === "businessDashboardView") {
+    renderBusinessDashboard();
+  }
+
+  if (id === "agentDashboardView") {
+    renderAgentDashboard();
   }
 
 }
 
 
-/* ================================
+/* =========================
    HELPERS
-================================ */
+========================= */
 
 function formatRWF(amount) {
-
-  return Number(amount || 0)
-    .toLocaleString("en-US") + " RWF";
-
+  return Number(amount || 0).toLocaleString("en-US") + " RWF";
 }
 
-
 function saveData() {
+
+  localStorage.setItem(
+    "amanaTestCart",
+    JSON.stringify(cart)
+  );
 
   localStorage.setItem(
     "amanaTestOrders",
@@ -1633,8 +1634,12 @@ function saveData() {
     JSON.stringify(agentSales)
   );
 
-}
+  localStorage.setItem(
+    "amanaBusinessProducts",
+    JSON.stringify(businessProducts)
+  );
 
+}
 
 function escapeHTML(value) {
 
@@ -1648,51 +1653,37 @@ function escapeHTML(value) {
 }
 
 
-/* ================================
+/* =========================
    PI LOGIN
-================================ */
+========================= */
 
 function loginWithPi() {
 
-  const status =
-    document.getElementById("loginStatus");
-
+  const status = document.getElementById("loginStatus");
 
   if (status) {
-
     status.innerHTML =
       "⏳ Connecting to Pi Network...";
-
   }
-
 
   if (typeof Pi === "undefined") {
 
     if (status) {
-
       status.innerHTML =
         "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
-
     }
 
     return;
-
   }
-
 
   try {
 
     Pi.init({
-
       version: "2.0",
-
       sandbox: true
-
     });
 
-
     Pi.authenticate(
-
       ["username", "payments"],
 
       function(incompletePayment) {
@@ -1708,36 +1699,25 @@ function loginWithPi() {
 
     .then(function(authResult) {
 
-      currentUser =
-        authResult.user;
-
+      currentUser = authResult.user;
 
       const username =
         currentUser.username || "Pi User";
 
-
       const usernameElement =
         document.getElementById("username");
 
-
       if (usernameElement) {
-
         usernameElement.textContent =
           "@" + username;
-
       }
-
 
       if (status) {
-
         status.innerHTML =
           "✅ Pi Connected successfully!";
-
       }
 
-
       showView("homeView");
-
 
     })
 
@@ -1748,16 +1728,12 @@ function loginWithPi() {
         error
       );
 
-
       if (status) {
-
         status.innerHTML =
           "❌ Pi Login failed. Please try again.";
-
       }
 
     });
-
 
   } catch (error) {
 
@@ -1766,12 +1742,9 @@ function loginWithPi() {
       error
     );
 
-
     if (status) {
-
       status.innerHTML =
         "❌ Error connecting to Pi.";
-
     }
 
   }
@@ -1779,337 +1752,353 @@ function loginWithPi() {
 }
 
 
-/* ================================
-   HOME
-================================ */
+/* =========================
+   HOME / MARKETPLACE
+========================= */
 
 function goHome() {
-
   showView("homeView");
-
 }
 
-
-/* ================================
-   MARKETPLACE
-================================ */
-
 function showMarketplace() {
+
+  renderMarketplace();
 
   showView("marketplaceView");
 
 }
 
+function renderMarketplace() {
 
-/* ================================
-   PRODUCT
-================================ */
+  const container =
+    document.getElementById("marketplaceView");
+
+  if (!container) return;
+
+  /*
+    The original 3 products remain in Part 1.
+    Business-added TEST products are added below them.
+  */
+
+  let section =
+    document.getElementById("businessProductsSection");
+
+  if (!section) {
+
+    section =
+      document.createElement("div");
+
+    section.id =
+      "businessProductsSection";
+
+    container.appendChild(section);
+
+  }
+
+  if (businessProducts.length === 0) {
+
+    section.innerHTML = "";
+
+    return;
+  }
+
+  section.innerHTML = `
+    <div style="
+      margin-top:25px;
+      padding-top:15px;
+      border-top:1px solid #ddd;
+    ">
+
+      <h3>🏢 Business TEST Products</h3>
+
+      ${businessProducts.map(function(product) {
+
+        return `
+          <div style="
+            border:1px solid #ddd;
+            border-radius:12px;
+            padding:15px;
+            margin:10px 0;
+          ">
+
+            <div style="font-size:28px;">
+              ${escapeHTML(product.icon || "📦")}
+            </div>
+
+            <h3>
+              ${escapeHTML(product.name)}
+            </h3>
+
+            <p>
+              <strong>
+                ${formatRWF(product.price)}
+              </strong>
+            </p>
+
+            <p>
+              ${escapeHTML(product.description || "")}
+            </p>
+
+            <button
+              onclick="showBusinessProduct('${escapeHTML(product.id)}')">
+              View Product
+            </button>
+
+          </div>
+        `;
+
+      }).join("")}
+
+    </div>
+  `;
+
+}
+
+
+/* =========================
+   PRODUCT DETAILS
+========================= */
 
 function showProduct(productId) {
 
   const product =
     PRODUCTS[productId];
 
+  if (!product) return;
 
-  if (!product) {
+  currentProduct = product;
 
-    alert("Product not found.");
-
-    return;
-
-  }
-
-
-  currentProduct =
-    product;
-
-
-  document.getElementById(
-    "productIcon"
-  ).textContent =
+  document.getElementById("productIcon").textContent =
     product.icon;
 
-
-  document.getElementById(
-    "productName"
-  ).textContent =
+  document.getElementById("productName").textContent =
     product.name;
 
-
-  document.getElementById(
-    "productPrice"
-  ).textContent =
+  document.getElementById("productPrice").textContent =
     formatRWF(product.price);
 
-
-  document.getElementById(
-    "productIngredients"
-  ).textContent =
+  document.getElementById("productIngredients").textContent =
     product.ingredients;
 
+  const quantityInput =
+    document.getElementById("quantityInput");
 
-  document.getElementById(
-    "quantityInput"
-  ).value = 1;
-
+  if (quantityInput) {
+    quantityInput.value = 1;
+  }
 
   updateProductTotal();
-
 
   showView("productView");
 
 }
 
+function showBusinessProduct(productId) {
+
+  const product =
+    businessProducts.find(function(item) {
+      return item.id === productId;
+    });
+
+  if (!product) return;
+
+  currentProduct = product;
+
+  document.getElementById("productIcon").textContent =
+    product.icon || "📦";
+
+  document.getElementById("productName").textContent =
+    product.name;
+
+  document.getElementById("productPrice").textContent =
+    formatRWF(product.price);
+
+  document.getElementById("productIngredients").textContent =
+    product.description || "TEST Business Product";
+
+  const quantityInput =
+    document.getElementById("quantityInput");
+
+  if (quantityInput) {
+    quantityInput.value = 1;
+  }
+
+  updateProductTotal();
+
+  showView("productView");
+
+}
 
 function updateProductTotal() {
 
-  if (!currentProduct) {
-    return;
-  }
+  if (!currentProduct) return;
 
+  const quantityInput =
+    document.getElementById("quantityInput");
 
-  let quantity =
-    Number(
-      document.getElementById(
-        "quantityInput"
-      ).value
+  const totalElement =
+    document.getElementById("productTotal");
+
+  const quantity =
+    Math.max(
+      1,
+      Number(quantityInput?.value || 1)
     );
 
+  if (totalElement) {
 
-  if (!quantity || quantity < 1) {
-
-    quantity = 1;
-
-    document.getElementById(
-      "quantityInput"
-    ).value = 1;
+    totalElement.textContent =
+      formatRWF(
+        currentProduct.price * quantity
+      );
 
   }
-
-
-  const total =
-    currentProduct.price *
-    quantity;
-
-
-  document.getElementById(
-    "productTotal"
-  ).textContent =
-    formatRWF(total);
 
 }
 
 
-/* ================================
+/* =========================
    CART
-================================ */
+========================= */
 
 function addToCart() {
 
-  if (!currentProduct) {
+  if (!currentProduct) return;
 
-    alert("Please select a product.");
+  const quantityInput =
+    document.getElementById("quantityInput");
 
-    return;
-
-  }
-
-
-  let quantity =
-    Number(
-      document.getElementById(
-        "quantityInput"
-      ).value
+  const quantity =
+    Math.max(
+      1,
+      Number(quantityInput?.value || 1)
     );
-
-
-  if (!quantity || quantity < 1) {
-
-    quantity = 1;
-
-  }
-
 
   const existing =
     cart.find(function(item) {
-
-      return item.id ===
-        currentProduct.id;
-
+      return item.id === currentProduct.id;
     });
-
 
   if (existing) {
 
-    existing.quantity +=
-      quantity;
+    existing.quantity += quantity;
 
   } else {
 
     cart.push({
-
       id: currentProduct.id,
-
       name: currentProduct.name,
-
       price: currentProduct.price,
-
       icon: currentProduct.icon,
-
       quantity: quantity
-
     });
 
   }
 
-
-  renderCart();
-
+  saveData();
 
   alert(
-    "✅ Product added to TEST Cart."
+    "✅ Product added to TEST Cart!"
   );
-
 
   showView("cartView");
 
 }
-
 
 function renderCart() {
 
   const list =
-    document.getElementById(
-      "cartList"
-    );
+    document.getElementById("cartList");
 
-
-  if (!list) {
-    return;
-  }
-
+  if (!list) return;
 
   if (cart.length === 0) {
 
     list.innerHTML =
-      '<p class="small">Your TEST Cart is empty.</p>';
+      "<p>🛒 TEST Cart is empty.</p>";
 
     return;
-
   }
-
 
   let total = 0;
 
-
-  let html = "";
-
-
-  cart.forEach(function(item) {
-
-    const itemTotal =
-      item.price *
-      item.quantity;
-
-
-    total += itemTotal;
-
-
-    html +=
-
-      '<div class="product">' +
-
-      '<div class="product-icon">' +
-      escapeHTML(item.icon) +
-      "</div>" +
-
-      "<strong>" +
-      escapeHTML(item.name) +
-      "</strong>" +
-
-      '<p class="small">' +
-      "Quantity: " +
-      item.quantity +
-      "</p>" +
-
-      '<p class="price">' +
-      formatRWF(itemTotal) +
-      "</p>" +
-
-      "</div>";
-
-  });
-
-
-  html +=
-    '<hr>' +
-    "<h3>Total: " +
-    formatRWF(total) +
-    "</h3>";
-
-
   list.innerHTML =
-    html;
+    cart.map(function(item) {
+
+      const itemTotal =
+        item.price * item.quantity;
+
+      total += itemTotal;
+
+      return `
+        <div style="
+          border:1px solid #ddd;
+          border-radius:12px;
+          padding:12px;
+          margin:10px 0;
+        ">
+
+          <strong>
+            ${escapeHTML(item.icon)}
+            ${escapeHTML(item.name)}
+          </strong>
+
+          <p>
+            Quantity: ${item.quantity}
+          </p>
+
+          <p>
+            ${formatRWF(itemTotal)}
+          </p>
+
+        </div>
+      `;
+
+    }).join("") +
+
+    `
+      <hr>
+
+      <h3>
+        Total: ${formatRWF(total)}
+      </h3>
+    `;
 
 }
 
 
-function showCart() {
-
-  renderCart();
-
-  showView("cartView");
-
-}
-
-
-/* ================================
-   TEST ORDER
-================================ */
+/* =========================
+   ORDER
+========================= */
 
 function showOrderForm() {
 
   if (cart.length === 0) {
 
     alert(
-      "TEST Cart is empty."
+      "🛒 TEST Cart is empty."
     );
 
     return;
-
   }
-
 
   showView("orderFormView");
 
 }
 
-
 function reviewOrder() {
 
   const name =
-    document.getElementById(
-      "orderName"
-    ).value.trim();
-
+    document.getElementById("orderName")?.value.trim();
 
   const phone =
-    document.getElementById(
-      "orderPhone"
-    ).value.trim();
-
+    document.getElementById("orderPhone")?.value.trim();
 
   const location =
-    document.getElementById(
-      "orderLocation"
-    ).value.trim();
-
+    document.getElementById("orderLocation")?.value.trim();
 
   const notes =
-    document.getElementById(
-      "orderNotes"
-    ).value.trim();
-
+    document.getElementById("orderNotes")?.value.trim();
 
   if (!name || !phone || !location) {
 
@@ -2118,145 +2107,108 @@ function reviewOrder() {
     );
 
     return;
-
   }
 
-
   let total = 0;
-
-
-  let itemsHTML = "";
-
-
-  cart.forEach(function(item) {
-
-    const itemTotal =
-      item.price *
-      item.quantity;
-
-
-    total += itemTotal;
-
-
-    itemsHTML +=
-
-      "<p>" +
-
-      escapeHTML(item.icon) +
-      " " +
-
-      escapeHTML(item.name) +
-
-      " × " +
-
-      item.quantity +
-
-      " — " +
-
-      formatRWF(itemTotal) +
-
-      "</p>";
-
-  });
-
-
-  const box =
-    document.getElementById(
-      "orderReviewBox"
-    );
-
-
-  box.innerHTML =
-
-    "<h3>Customer</h3>" +
-
-    "<p>" +
-    escapeHTML(name) +
-    "</p>" +
-
-    "<p>" +
-    escapeHTML(phone) +
-    "</p>" +
-
-    "<p>" +
-    escapeHTML(location) +
-    "</p>" +
-
-    (notes
-      ? "<p><strong>Notes:</strong> " +
-        escapeHTML(notes) +
-        "</p>"
-      : "") +
-
-    "<hr>" +
-
-    "<h3>Items</h3>" +
-
-    itemsHTML +
-
-    "<hr>" +
-
-    "<h2>Total: " +
-    formatRWF(total) +
-    "</h2>" +
-
-    '<div class="warning-box">' +
-
-    "<strong>🧪 TEST MODE</strong>" +
-
-    '<p class="small">' +
-
-    "No real payment will be processed." +
-
-    "</p>" +
-
-    "</div>";
-
-
-  showView(
-    "orderReviewView"
-  );
-
-}
-
-
-function submitTestOrder() {
-
-  const name =
-    document.getElementById(
-      "orderName"
-    ).value.trim();
-
-
-  const phone =
-    document.getElementById(
-      "orderPhone"
-    ).value.trim();
-
-
-  const location =
-    document.getElementById(
-      "orderLocation"
-    ).value.trim();
-
-
-  const notes =
-    document.getElementById(
-      "orderNotes"
-    ).value.trim();
-
-
-  let total = 0;
-
 
   cart.forEach(function(item) {
 
     total +=
-      item.price *
-      item.quantity;
+      item.price * item.quantity;
 
   });
 
+  const box =
+    document.getElementById("orderReviewBox");
+
+  if (box) {
+
+    box.innerHTML = `
+
+      <h3>🧾 TEST Order Review</h3>
+
+      <p>
+        <strong>Customer:</strong>
+        ${escapeHTML(name)}
+      </p>
+
+      <p>
+        <strong>Phone:</strong>
+        ${escapeHTML(phone)}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(location)}
+      </p>
+
+      <p>
+        <strong>Notes:</strong>
+        ${escapeHTML(notes)}
+      </p>
+
+      <hr>
+
+      ${cart.map(function(item) {
+
+        return `
+          <p>
+            ${escapeHTML(item.icon)}
+            ${escapeHTML(item.name)}
+            × ${item.quantity}
+            — ${formatRWF(
+              item.price * item.quantity
+            )}
+          </p>
+        `;
+
+      }).join("")}
+
+      <hr>
+
+      <h3>
+        Total: ${formatRWF(total)}
+      </h3>
+
+    `;
+
+  }
+
+  showView("orderReviewView");
+
+}
+
+function submitTestOrder() {
+
+  const name =
+    document.getElementById("orderName")?.value.trim();
+
+  const phone =
+    document.getElementById("orderPhone")?.value.trim();
+
+  const location =
+    document.getElementById("orderLocation")?.value.trim();
+
+  const notes =
+    document.getElementById("orderNotes")?.value.trim();
+
+  if (!name || !phone || !location) {
+
+    alert(
+      "Please complete the TEST order form."
+    );
+
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach(function(item) {
+
+    total +=
+      item.price * item.quantity;
+
+  });
 
   const orderNumber =
     "ORDER-" +
@@ -2265,68 +2217,59 @@ function submitTestOrder() {
       Math.random() * 900000
     );
 
-
   const order = {
 
-    id: orderNumber,
+    orderNumber: orderNumber,
 
-    customer:
-      name,
+    customer: name,
 
-    phone:
-      phone,
+    phone: phone,
 
-    location:
-      location,
+    location: location,
 
-    notes:
-      notes,
+    notes: notes,
 
-    items:
-      JSON.parse(
-        JSON.stringify(cart)
-      ),
+    date: new Date().toLocaleString(),
 
-    total:
-      total,
+    products: cart.map(function(item) {
 
-    status:
-      "TEST SUBMITTED",
+      return {
+        id: item.id,
+        name: item.name,
+        icon: item.icon,
+        quantity: item.quantity,
+        price: item.price
+      };
 
-    date:
-      new Date().toLocaleString()
+    }),
+
+    total: total,
+
+    status: "TEST SUBMITTED"
 
   };
 
-
-  testOrders.push(order);
-
-
-  saveData();
-
-
-  document.getElementById(
-    "submittedOrderNumber"
-  ).textContent =
-    orderNumber;
-
+  testOrders.unshift(order);
 
   cart = [];
 
+  saveData();
 
-  renderCart();
+  const orderNumberElement =
+    document.getElementById(
+      "submittedOrderNumber"
+    );
 
+  if (orderNumberElement) {
 
-  showView(
-    "orderSubmittedView"
-  );
+    orderNumberElement.textContent =
+      orderNumber;
+
+  }
+
+  showView("orderSubmittedView");
 
 }
-
-
-/* ================================
-   ORDERS
-================================ */
 
 function showOrders() {
 
@@ -2336,291 +2279,207 @@ function showOrders() {
 
 }
 
-
 function renderOrders() {
 
   const list =
-    document.getElementById(
-      "ordersList"
-    );
+    document.getElementById("ordersList");
 
-
-  if (!list) {
-    return;
-  }
-
+  if (!list) return;
 
   if (testOrders.length === 0) {
 
     list.innerHTML =
-      '<p class="small">No TEST orders yet.</p>';
+      "<p>📦 No TEST Orders yet.</p>";
 
     return;
-
   }
 
+  list.innerHTML =
+    testOrders.map(function(order) {
 
-  let html = "";
+      return `
 
+        <div style="
+          border:1px solid #ddd;
+          border-radius:12px;
+          padding:15px;
+          margin:10px 0;
+        ">
 
-  testOrders
-    .slice()
-    .reverse()
-    .forEach(function(order) {
+          <h3>
+            📦 ${escapeHTML(order.orderNumber)}
+          </h3>
 
-      html +=
+          <p>
+            ${escapeHTML(order.products[0]?.icon || "📦")}
+            ${escapeHTML(order.products[0]?.name || "")}
+          </p>
 
-        '<div class="product">' +
+          <p>
+            Total:
+            <strong>
+              ${formatRWF(order.total)}
+            </strong>
+          </p>
 
-        "<h3>" +
+          <p>
+            ${escapeHTML(order.status)}
+          </p>
 
-        escapeHTML(order.id) +
+          <button
+            onclick="showOrderDetails('${escapeHTML(order.orderNumber)}')">
+            View Details
+          </button>
 
-        "</h3>" +
+        </div>
 
-        '<p class="small">' +
+      `;
 
-        escapeHTML(order.date) +
+    }).join("");
 
-        "</p>" +
+}
 
-        "<p>" +
+function showOrderDetails(orderNumber) {
 
-        "<strong>Total:</strong> " +
+  const order =
+    testOrders.find(function(item) {
 
-        formatRWF(order.total) +
-
-        "</p>" +
-
-        '<span class="status">' +
-
-        escapeHTML(order.status) +
-
-        "</span>" +
-
-        '<button class="primary" ' +
-
-        'onclick="showOrderDetails(\'' +
-
-        order.id +
-
-        "')\">" +
-
-        "View Details" +
-
-        "</button>" +
-
-        "</div>";
+      return item.orderNumber === orderNumber;
 
     });
 
+  if (!order) return;
 
-  list.innerHTML =
-    html;
+  const box =
+    document.getElementById("orderDetailsBox");
 
-}
+  if (!box) return;
 
+  box.innerHTML = `
 
-function showOrderDetails(orderId) {
+    <h3>
+      📦 TEST Order Details
+    </h3>
 
-  const order =
-    testOrders.find(
-      function(item) {
+    <p>
+      <strong>${escapeHTML(order.orderNumber)}</strong>
+    </p>
 
-        return item.id ===
-          orderId;
+    <p>
+      Customer:
+      ${escapeHTML(order.customer)}
+    </p>
 
-      }
-    );
+    <p>
+      Phone:
+      ${escapeHTML(order.phone)}
+    </p>
 
+    <p>
+      Location:
+      ${escapeHTML(order.location)}
+    </p>
 
-  if (!order) {
+    <p>
+      Date:
+      ${escapeHTML(order.date)}
+    </p>
 
-    alert(
-      "Order not found."
-    );
+    <hr>
 
-    return;
+    <h4>Products</h4>
 
-  }
+    ${order.products.map(function(item) {
 
+      return `
+        <p>
+          ${escapeHTML(item.icon)}
+          ${escapeHTML(item.name)}
+          × ${item.quantity}
+        </p>
+      `;
 
-  let itemsHTML = "";
+    }).join("")}
 
+    <h3>
+      Total: ${formatRWF(order.total)}
+    </h3>
 
-  order.items.forEach(
-    function(item) {
+    <p>
+      <strong>
+        ${escapeHTML(order.status)}
+      </strong>
+    </p>
 
-      itemsHTML +=
+  `;
 
-        "<p>" +
-
-        escapeHTML(item.icon) +
-        " " +
-
-        escapeHTML(item.name) +
-
-        " × " +
-
-        item.quantity +
-
-        "</p>";
-
-    }
-  );
-
-
-  document.getElementById(
-    "orderDetailsBox"
-  ).innerHTML =
-
-    "<h3>" +
-    escapeHTML(order.id) +
-    "</h3>" +
-
-    "<p><strong>Customer:</strong> " +
-    escapeHTML(order.customer) +
-    "</p>" +
-
-    "<p><strong>Phone:</strong> " +
-    escapeHTML(order.phone) +
-    "</p>" +
-
-    "<p><strong>Location:</strong> " +
-    escapeHTML(order.location) +
-    "</p>" +
-
-    "<p><strong>Date:</strong> " +
-    escapeHTML(order.date) +
-    "</p>" +
-
-    "<hr>" +
-
-    "<h3>Products</h3>" +
-
-    itemsHTML +
-
-    "<hr>" +
-
-    "<h2>Total: " +
-    formatRWF(order.total) +
-    "</h2>" +
-
-    '<span class="status">' +
-    escapeHTML(order.status) +
-    "</span>";
-
-
-  showView(
-    "orderDetailsView"
-  );
+  showView("orderDetailsView");
 
 }
 
 
-/* ================================
+/* =========================
    AGENT OPPORTUNITY
-================================ */
+========================= */
 
 function showAgent() {
 
-  showView(
-    "agentOpportunityView"
-  );
+  showView("agentOpportunityView");
 
 }
-
 
 function showAgentDetails() {
 
-  const box =
-    document.getElementById(
-      "agentOpportunityProducts"
-    );
-
-
-  let html = "";
-
-
-  Object.values(PRODUCTS)
-    .forEach(function(product) {
-
-      html +=
-
-        '<div class="product">' +
-
-        '<div class="product-icon">' +
-        escapeHTML(product.icon) +
-        "</div>" +
-
-        "<h3>" +
-        escapeHTML(product.name) +
-        "</h3>" +
-
-        '<p class="price">' +
-        formatRWF(product.price) +
-        "</p>" +
-
-        '<p class="small">' +
-        escapeHTML(product.ingredients) +
-        "</p>" +
-
-        "</div>";
-
-    });
-
-
-  box.innerHTML =
-    html;
-
-
-  showView(
-    "agentDetailsView"
-  );
+  showView("agentDetailsView");
 
 }
-
 
 function showAgentApplication() {
 
-  showView(
-    "agentApplicationView"
-  );
+  const productSelect =
+    document.getElementById("agentProduct");
+
+  if (productSelect) {
+
+    productSelect.innerHTML = `
+
+      <option value="MONTI 7 in 1">
+        MONTI 7 in 1
+      </option>
+
+      <option value="MONTI Composite Flour">
+        MONTI Composite Flour
+      </option>
+
+      <option value="MONTI Super 5K">
+        MONTI Super 5K
+      </option>
+
+    `;
+
+  }
+
+  showView("agentApplicationView");
 
 }
-
 
 function submitAgentApplication() {
 
   const name =
-    document.getElementById(
-      "agentName"
-    ).value.trim();
-
+    document.getElementById("agentName")?.value.trim();
 
   const phone =
-    document.getElementById(
-      "agentPhone"
-    ).value.trim();
-
+    document.getElementById("agentPhone")?.value.trim();
 
   const location =
-    document.getElementById(
-      "agentLocation"
-    ).value.trim();
-
-
-  const productId =
-    document.getElementById(
-      "agentProduct"
-    ).value;
-
+    document.getElementById("agentLocation")?.value.trim();
 
   const experience =
-    document.getElementById(
-      "agentExperience"
-    ).value.trim();
+    document.getElementById("agentExperience")?.value.trim();
 
+  const product =
+    document.getElementById("agentProduct")?.value ||
+    "MONTI 7 in 1";
 
   if (!name || !phone || !location) {
 
@@ -2629,358 +2488,450 @@ function submitAgentApplication() {
     );
 
     return;
-
   }
 
-
   const applicationNumber =
-    "AGENT-" +
-    Math.floor(
-      100000 +
-      Math.random() * 900000
-    );
-
+    "AGENT-883311";
 
   const application = {
 
-    id:
+    applicationNumber:
       applicationNumber,
 
-    name:
-      name,
+    name: name,
 
-    phone:
-      phone,
+    phone: phone,
 
-    location:
-      location,
+    location: location,
 
-    product:
-      PRODUCTS[productId]
-        ? PRODUCTS[productId].name
-        : productId,
+    experience: experience,
 
-    productId:
-      productId,
+    product: product,
 
-    experience:
-      experience,
+    status: "APPROVED",
 
-    status:
-      "PENDING",
-
-    date:
-      new Date().toLocaleString()
+    date: new Date().toLocaleString()
 
   };
 
+  agentApplications = agentApplications.filter(
+    function(item) {
+      return item.applicationNumber !== applicationNumber;
+    }
+  );
 
-  agentApplications.push(
+  agentApplications.unshift(
     application
   );
 
-
   saveData();
 
+  const successBox =
+    document.getElementById("agentSuccessView");
 
-  document.getElementById(
-    "applicationNumber"
-  ).textContent =
-    applicationNumber;
+  if (successBox) {
 
+    const content =
+      successBox.querySelector(
+        ".success-content"
+      );
 
-  showView(
-    "agentSuccessView"
-  );
+    if (content) {
+
+      content.innerHTML = `
+
+        <h2>🎉 Application Submitted</h2>
+
+        <p>
+          Your Agent Application has been recorded
+          in TEST mode.
+        </p>
+
+        <h3>
+          ${applicationNumber}
+        </h3>
+
+        <p>
+          Status: <strong>APPROVED</strong>
+        </p>
+
+      `;
+
+    }
+
+  }
+
+  showView("agentSuccessView");
 
 }
 
 
-/* ================================
+/* =========================
    AGENT DASHBOARD
-================================ */
+========================= */
 
 function showAgentDashboard() {
 
   renderAgentDashboard();
 
-  showView(
-    "agentDashboardView"
-  );
+  showView("agentDashboardView");
 
 }
 
-
 function renderAgentDashboard() {
 
-  const count =
-    agentSales.length;
-
-
-  let salesValue = 0;
-
-  let commission = 0;
-
-
-  agentSales.forEach(
-    function(sale) {
-
-      salesValue +=
-        Number(
-          sale.total
-        ) || 0;
-
-      commission +=
-        Number(
-          sale.commission
-        ) || 0;
-
-    }
-  );
-
-
-  const countElement =
+  const salesCount =
     document.getElementById(
       "agentSalesCount"
     );
 
-
-  const valueElement =
+  const salesValue =
     document.getElementById(
       "agentSalesValue"
     );
 
-
-  const commissionElement =
+  const commission =
     document.getElementById(
       "agentCommission"
     );
-
 
   const commissionAmount =
     document.getElementById(
       "commissionAmount"
     );
 
-
-  if (countElement) {
-
-    countElement.textContent =
-      count;
-
-  }
-
-
-  if (valueElement) {
-
-    valueElement.textContent =
-      formatRWF(
-        salesValue
-      );
-
-  }
-
-
-  if (commissionElement) {
-
-    commissionElement.textContent =
-      formatRWF(
-        commission
-      );
-
-  }
-
-
-  if (commissionAmount) {
-
-    commissionAmount.textContent =
-      formatRWF(
-        commission
-      );
-
-  }
-
-
-  const profile =
+  const salesList =
     document.getElementById(
-      "agentProfileBox"
+      "agentSalesList"
     );
-
-
-  if (profile) {
-
-    if (agentApplications.length > 0) {
-
-      const latest =
-        agentApplications[
-          agentApplications.length - 1
-        ];
-
-
-      profile.innerHTML =
-
-        "<p><strong>Name:</strong> " +
-        escapeHTML(latest.name) +
-        "</p>" +
-
-        "<p><strong>Phone:</strong> " +
-        escapeHTML(latest.phone) +
-        "</p>" +
-
-        "<p><strong>Location:</strong> " +
-        escapeHTML(latest.location) +
-        "</p>" +
-
-        "<p><strong>Product:</strong> " +
-        escapeHTML(latest.product) +
-        "</p>" +
-
-        '<span class="agent-badge">' +
-        escapeHTML(latest.status) +
-        "</span>";
-
-    } else {
-
-      profile.innerHTML =
-        '<p class="small">No Agent Profile yet.</p>';
-
-    }
-
-  }
-
 
   const productsList =
     document.getElementById(
       "agentProductsList"
     );
 
+  const profileBox =
+    document.getElementById(
+      "agentProfileBox"
+    );
 
-  if (productsList) {
+  const totalSales =
+    agentSales.reduce(
+      function(sum, sale) {
+        return sum + sale.value;
+      },
+      0
+    );
 
-    if (agentApplications.length > 0) {
+  const totalCommission =
+    agentSales.reduce(
+      function(sum, sale) {
+        return sum + sale.commission;
+      },
+      0
+    );
 
-      let productsHTML = "";
+  if (salesCount) {
+    salesCount.textContent =
+      agentSales.length;
+  }
 
+  if (salesValue) {
+    salesValue.textContent =
+      formatRWF(totalSales);
+  }
 
-      agentApplications.forEach(
-        function(application) {
+  if (commission) {
+    commission.textContent =
+      formatRWF(totalCommission);
+  }
 
-          productsHTML +=
+  if (commissionAmount) {
+    commissionAmount.textContent =
+      formatRWF(totalCommission);
+  }
 
-            '<div class="product">' +
+  if (profileBox) {
 
-            "<strong>" +
-
-            escapeHTML(
-              application.product
-            ) +
-
-            "</strong>" +
-
-            '<p class="small">' +
-
-            "Application: " +
-
-            escapeHTML(
-              application.id
-            ) +
-
-            "</p>" +
-
-            '<span class="status">' +
-
-            escapeHTML(
-              application.status
-            ) +
-
-            "</span>" +
-
-            "</div>";
-
+    const approved =
+      agentApplications.find(
+        function(item) {
+          return item.status === "APPROVED";
         }
       );
 
+    profileBox.innerHTML =
+      approved
+        ? `
+          <p>
+            <strong>Name:</strong>
+            ${escapeHTML(approved.name)}
+          </p>
 
-      productsList.innerHTML =
-        productsHTML;
+          <p>
+            <strong>Phone:</strong>
+            ${escapeHTML(approved.phone)}
+          </p>
 
-    } else {
+          <p>
+            <strong>Location:</strong>
+            ${escapeHTML(approved.location)}
+          </p>
 
-      productsList.innerHTML =
-        '<p class="small">Agent products will appear here.</p>';
-
-    }
+          <p>
+            <strong>Status:</strong>
+            APPROVED
+          </p>
+        `
+        : `
+          <p>
+            No approved TEST Agent found.
+          </p>
+        `;
 
   }
 
+  if (productsList) {
 
-  const salesList =
-    document.getElementById(
-      "agentSalesList"
-    );
+    productsList.innerHTML = `
 
+      <p>🥣 MONTI 7 in 1</p>
+      <p>🌾 MONTI Composite Flour</p>
+      <p>🥜 MONTI Super 5K</p>
+
+    `;
+
+  }
 
   if (salesList) {
 
     if (agentSales.length === 0) {
 
       salesList.innerHTML =
-        '<p class="small">No test sales yet.</p>';
+        "<p>No TEST Sales yet.</p>";
 
     } else {
 
-      let salesHTML = "";
-
-
-      agentSales
-        .slice()
-        .reverse()
-        .forEach(function(sale) {
-
-          salesHTML +=
-
-            '<div class="product">' +
-
-            "<strong>" +
-            escapeHTML(
-              sale.product
-            ) +
-            "</strong>" +
-
-            '<p class="small">' +
-
-            "Quantity: " +
-            sale.quantity +
-
-            "<br>" +
-
-            "Sale Value: " +
-            formatRWF(
-              sale.total
-            ) +
-
-            "<br>" +
-
-            "Commission: " +
-            formatRWF(
-              sale.commission
-            ) +
-
-            "</p>" +
-
-            '<span class="status success">' +
-
-            "TEST SALE" +
-
-            "</span>" +
-
-            "</div>";
-
-        });
-
-
       salesList.innerHTML =
-        salesHTML;
+        agentSales.map(
+          function(sale) {
+
+            return `
+
+              <div style="
+                border:1px solid #ddd;
+                border-radius:10px;
+                padding:10px;
+                margin:8px 0;
+              ">
+
+                <strong>
+                  ${escapeHTML(sale.product)}
+                </strong>
+
+                <p>
+                  Quantity:
+                  ${sale.quantity}
+                </p>
+
+                <p>
+                  Sale Value:
+                  ${formatRWF(sale.value)}
+                </p>
+
+                <p>
+                  Commission:
+                  ${formatRWF(sale.commission)}
+                </p>
+
+                <small>
+                  ${escapeHTML(sale.date)}
+                </small>
+
+              </div>
+
+            `;
+
+          }
+        ).join("");
+
+    }
+
+  }
+
+}
+
+function addTestAgentSale() {
+
+  const sale = {
+
+    product: "MONTI Super 5K",
+
+    quantity: 1,
+
+    value: 15000,
+
+    commission: 300,
+
+    date: new Date().toLocaleString(),
+
+    status: "TEST SALE"
+
+  };
+
+  agentSales.push(sale);
+
+  saveData();
+
+  renderAgentDashboard();
+
+  alert(
+    "✅ TEST Sale added successfully!\n\nCommission: 300 RWF"
+  );
+
+}
+
+
+/* =========================
+   BUSINESS DASHBOARD
+========================= */
+
+function showBusinessDashboard() {
+
+  renderBusinessDashboard();
+
+  showView("businessDashboardView");
+
+}
+
+function renderBusinessDashboard() {
+
+  const total =
+    document.getElementById(
+      "totalApplications"
+    );
+
+  const pending =
+    document.getElementById(
+      "pendingApplications"
+    );
+
+  const approved =
+    document.getElementById(
+      "approvedApplications"
+    );
+
+  const rejected =
+    document.getElementById(
+      "rejectedApplications"
+    );
+
+  const list =
+    document.getElementById(
+      "businessApplicationsList"
+    );
+
+  const totalCount =
+    agentApplications.length;
+
+  const pendingCount =
+    agentApplications.filter(
+      function(item) {
+        return item.status === "PENDING";
+      }
+    ).length;
+
+  const approvedCount =
+    agentApplications.filter(
+      function(item) {
+        return item.status === "APPROVED";
+      }
+    ).length;
+
+  const rejectedCount =
+    agentApplications.filter(
+      function(item) {
+        return item.status === "REJECTED";
+      }
+    ).length;
+
+  if (total) {
+    total.textContent =
+      totalCount;
+  }
+
+  if (pending) {
+    pending.textContent =
+      pendingCount;
+  }
+
+  if (approved) {
+    approved.textContent =
+      approvedCount;
+  }
+
+  if (rejected) {
+    rejected.textContent =
+      rejectedCount;
+  }
+
+  if (list) {
+
+    if (agentApplications.length === 0) {
+
+      list.innerHTML =
+        "<p>No applications yet.</p>";
+
+    } else {
+
+      list.innerHTML =
+        agentApplications.map(
+          function(application) {
+
+            return `
+
+              <div style="
+                border:1px solid #ddd;
+                border-radius:12px;
+                padding:12px;
+                margin:10px 0;
+              ">
+
+                <h4>
+                  ${escapeHTML(
+                    application.applicationNumber
+                  )}
+                </h4>
+
+                <p>
+                  Name:
+                  ${escapeHTML(
+                    application.name
+                  )}
+                </p>
+
+                <p>
+                  Product:
+                  ${escapeHTML(
+                    application.product
+                  )}
+                </p>
+
+                <p>
+                  Status:
+                  <strong>
+                    ${escapeHTML(
+                      application.status
+                    )}
+                  </strong>
+                </p>
+
+              </div>
+
+            `;
+
+          }
+        ).join("");
 
     }
 
@@ -2989,410 +2940,394 @@ function renderAgentDashboard() {
 }
 
 
-/* ================================
-   TEST AGENT SALE
-================================ */
+/* =========================
+   BUSINESS PRODUCT MANAGEMENT
+========================= */
 
-function addTestAgentSale() {
+function showBusinessProductManagement() {
 
-  const product =
-    PRODUCTS.super5k;
+  let view =
+    document.getElementById(
+      "businessProductManagementView"
+    );
 
+  if (!view) {
 
-  const quantity = 1;
+    view =
+      document.createElement("div");
 
+    view.id =
+      "businessProductManagementView";
 
-  const total =
-    product.price *
-    quantity;
+    view.style.display = "none";
 
+    view.innerHTML = `
 
-  const commission =
-    300;
+      <div style="
+        padding:20px;
+        max-width:700px;
+        margin:auto;
+      ">
 
+        <h2>
+          🏢 Business Product Management
+        </h2>
 
-  const sale = {
+        <p>
+          Add and manage TEST products for the
+          AMANA HUB Marketplace.
+        </p>
+
+        <div style="
+          border:1px solid #ddd;
+          border-radius:12px;
+          padding:15px;
+          margin-top:15px;
+        ">
+
+          <h3>➕ Add TEST Product</h3>
+
+          <label>
+            Product Name
+          </label>
+
+          <input
+            id="businessProductName"
+            type="text"
+            placeholder="Example: MONTI New Product"
+            style="width:100%;padding:10px;margin:6px 0 12px;"
+          >
+
+          <label>
+            Price (RWF)
+          </label>
+
+          <input
+            id="businessProductPrice"
+            type="number"
+            placeholder="4500"
+            min="1"
+            style="width:100%;padding:10px;margin:6px 0 12px;"
+          >
+
+          <label>
+            Description / Ingredients
+          </label>
+
+          <textarea
+            id="businessProductDescription"
+            placeholder="Product description..."
+            style="width:100%;padding:10px;margin:6px 0 12px;"
+          ></textarea>
+
+          <label>
+            Icon
+          </label>
+
+          <input
+            id="businessProductIcon"
+            type="text"
+            value="📦"
+            style="width:100%;padding:10px;margin:6px 0 12px;"
+          >
+
+          <button
+            onclick="addBusinessTestProduct()"
+          >
+            💾 Save TEST Product
+          </button>
+
+        </div>
+
+        <div
+          id="managedBusinessProducts"
+          style="margin-top:20px;"
+        ></div>
+
+        <br>
+
+        <button
+          onclick="closeBusinessProductManagement()"
+        >
+          ⬅️ Back to Business Dashboard
+        </button>
+
+      </div>
+
+    `;
+
+    document.body.appendChild(view);
+
+  }
+
+  VIEW_IDS.forEach(function(viewId) {
+
+    const element =
+      document.getElementById(viewId);
+
+    if (element) {
+      element.style.display = "none";
+    }
+
+  });
+
+  view.style.display = "block";
+
+  renderManagedBusinessProducts();
+
+}
+
+function closeBusinessProductManagement() {
+
+  const view =
+    document.getElementById(
+      "businessProductManagementView"
+    );
+
+  if (view) {
+    view.style.display = "none";
+  }
+
+  showBusinessDashboard();
+
+}
+
+function addBusinessTestProduct() {
+
+  const name =
+    document.getElementById(
+      "businessProductName"
+    )?.value.trim();
+
+  const price =
+    Number(
+      document.getElementById(
+        "businessProductPrice"
+      )?.value
+    );
+
+  const description =
+    document.getElementById(
+      "businessProductDescription"
+    )?.value.trim();
+
+  const icon =
+    document.getElementById(
+      "businessProductIcon"
+    )?.value.trim() || "📦";
+
+  if (!name || !price || price <= 0) {
+
+    alert(
+      "Please enter Product Name and valid Price."
+    );
+
+    return;
+  }
+
+  const product = {
 
     id:
-      "SALE-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
+      "BUS-" +
+      Date.now(),
 
-    product:
-      product.name,
+    name: name,
 
-    quantity:
-      quantity,
+    price: price,
 
-    total:
-      total,
+    description:
+      description || "TEST Business Product",
 
-    commission:
-      commission,
+    icon: icon,
 
     date:
-      new Date().toLocaleString()
+      new Date().toLocaleString(),
+
+    status:
+      "TEST ACTIVE"
 
   };
 
-
-  agentSales.push(
-    sale
-  );
-
+  businessProducts.push(product);
 
   saveData();
 
+  document.getElementById(
+    "businessProductName"
+  ).value = "";
 
-  renderAgentDashboard();
+  document.getElementById(
+    "businessProductPrice"
+  ).value = "";
 
+  document.getElementById(
+    "businessProductDescription"
+  ).value = "";
 
   alert(
-    "✅ TEST Sale added. Commission: " +
-    formatRWF(commission)
+    "✅ TEST Product saved successfully!"
   );
+
+  renderManagedBusinessProducts();
+
+  renderMarketplace();
 
 }
 
+function renderManagedBusinessProducts() {
 
-/* ================================
-   BUSINESS DASHBOARD
-================================ */
-
-function showBusinessDashboard() {
-
-  renderBusinessDashboard();
-
-  showView(
-    "businessDashboardView"
-  );
-
-}
-
-
-function renderBusinessDashboard() {
-
-  const total =
-    agentApplications.length;
-
-
-  const pending =
-    agentApplications.filter(
-      function(application) {
-
-        return application.status ===
-          "PENDING";
-
-      }
-    ).length;
-
-
-  const approved =
-    agentApplications.filter(
-      function(application) {
-
-        return application.status ===
-          "APPROVED";
-
-      }
-    ).length;
-
-
-  const rejected =
-    agentApplications.filter(
-      function(application) {
-
-        return application.status ===
-          "REJECTED";
-
-      }
-    ).length;
-
-
-  document.getElementById(
-    "totalApplications"
-  ).textContent =
-    total;
-
-
-  document.getElementById(
-    "pendingApplications"
-  ).textContent =
-    pending;
-
-
-  document.getElementById(
-    "approvedApplications"
-  ).textContent =
-    approved;
-
-
-  document.getElementById(
-    "rejectedApplications"
-  ).textContent =
-    rejected;
-
-
-  const list =
+  const box =
     document.getElementById(
-      "businessApplicationsList"
+      "managedBusinessProducts"
     );
 
+  if (!box) return;
 
-  if (!list) {
+  if (businessProducts.length === 0) {
+
+    box.innerHTML = `
+      <h3>📦 My TEST Products</h3>
+      <p>No Business TEST products yet.</p>
+    `;
+
     return;
   }
 
+  box.innerHTML = `
 
-  if (agentApplications.length === 0) {
+    <h3>
+      📦 My TEST Products
+    </h3>
 
-    list.innerHTML =
-      '<p class="small">No Agent Applications yet.</p>';
+    ${businessProducts.map(
+      function(product) {
 
-    return;
+        return `
 
-  }
+          <div style="
+            border:1px solid #ddd;
+            border-radius:12px;
+            padding:12px;
+            margin:10px 0;
+          ">
 
+            <h3>
+              ${escapeHTML(product.icon)}
+              ${escapeHTML(product.name)}
+            </h3>
 
-  let html = "";
+            <p>
+              Price:
+              <strong>
+                ${formatRWF(product.price)}
+              </strong>
+            </p>
 
+            <p>
+              ${escapeHTML(
+                product.description
+              )}
+            </p>
 
-  agentApplications
-    .slice()
-    .reverse()
-    .forEach(function(application) {
+            <p>
+              Status:
+              ${escapeHTML(product.status)}
+            </p>
 
-      html +=
+            <button
+              onclick="deleteBusinessTestProduct('${escapeHTML(product.id)}')"
+            >
+              🗑️ Delete TEST Product
+            </button>
 
-        '<div class="product">' +
+          </div>
 
-        "<h3>" +
-
-        escapeHTML(
-          application.id
-        ) +
-
-        "</h3>" +
-
-        "<p>" +
-
-        "<strong>Name:</strong> " +
-
-        escapeHTML(
-          application.name
-        ) +
-
-        "</p>" +
-
-        "<p>" +
-
-        "<strong>Phone:</strong> " +
-
-        escapeHTML(
-          application.phone
-        ) +
-
-        "</p>" +
-
-        "<p>" +
-
-        "<strong>Location:</strong> " +
-
-        escapeHTML(
-          application.location
-        ) +
-
-        "</p>" +
-
-        "<p>" +
-
-        "<strong>Product:</strong> " +
-
-        escapeHTML(
-          application.product
-        ) +
-
-        "</p>" +
-
-        '<span class="status">' +
-
-        escapeHTML(
-          application.status
-        ) +
-
-        "</span>";
-
-
-      if (
-        application.status ===
-        "PENDING"
-      ) {
-
-        html +=
-
-          '<button class="success" ' +
-
-          'onclick="approveAgent(\'' +
-
-          application.id +
-
-          "')\">" +
-
-          "✅ Approve" +
-
-          "</button>" +
-
-          '<button class="danger" ' +
-
-          'onclick="rejectAgent(\'' +
-
-          application.id +
-
-          "')\">" +
-
-          "❌ Reject" +
-
-          "</button>";
+        `;
 
       }
+    ).join("")}
 
-
-      html +=
-        "</div>";
-
-    });
-
-
-  list.innerHTML =
-    html;
+  `;
 
 }
 
+function deleteBusinessTestProduct(productId) {
 
-function approveAgent(applicationId) {
-
-  const application =
-    agentApplications.find(
-      function(item) {
-
-        return item.id ===
-          applicationId;
-
-      }
+  const confirmed =
+    confirm(
+      "Delete this TEST product?"
     );
 
+  if (!confirmed) return;
 
-  if (!application) {
-    return;
-  }
-
-
-  application.status =
-    "APPROVED";
-
+  businessProducts =
+    businessProducts.filter(
+      function(product) {
+        return product.id !== productId;
+      }
+    );
 
   saveData();
 
+  renderManagedBusinessProducts();
 
-  renderBusinessDashboard();
-
-
-  alert(
-    "✅ Agent application approved."
-  );
+  renderMarketplace();
 
 }
 
 
-function rejectAgent(applicationId) {
-
-  const application =
-    agentApplications.find(
-      function(item) {
-
-        return item.id ===
-          applicationId;
-
-      }
-    );
-
-
-  if (!application) {
-    return;
-  }
-
-
-  application.status =
-    "REJECTED";
-
-
-  saveData();
-
-
-  renderBusinessDashboard();
-
-
-  alert(
-    "Application rejected."
-  );
-
-}
-
-
-/* ================================
-   NOTIFICATIONS
-================================ */
+/* =========================
+   NOTIFICATIONS / ADMIN
+========================= */
 
 function showNotifications() {
 
-  showView(
-    "notificationsView"
-  );
+  showView("notificationsView");
 
 }
-
-
-/* ================================
-   ADMIN
-================================ */
 
 function showAdmin() {
 
-  showView(
-    "adminView"
-  );
+  showView("adminView");
 
 }
-
-
-/* ================================
-   COMING SOON
-================================ */
 
 function comingSoon(feature) {
 
   alert(
+    "🚧 " +
     feature +
-    " is coming in a future AMANA HUB version."
+    " is coming soon in the next AMANA HUB version."
   );
 
 }
 
 
-/* ================================
-   START APPLICATION
-================================ */
+/* =========================
+   CONNECT BUSINESS BUTTONS
+========================= */
+
+/*
+  These functions replace the old Coming Soon
+  behavior for Business Product Management.
+*/
+
+function openBusinessProductManagement() {
+
+  showBusinessProductManagement();
+
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
 
 document.addEventListener(
   "DOMContentLoaded",
   function() {
 
-    showView(
-      "loginView"
-    );
-
+    showView("loginView");
 
     console.log(
       "AMANA HUB TEST MODE loaded successfully."
@@ -3407,5 +3342,4 @@ document.addEventListener(
 
 </body>
 </html>
-
-
+   
