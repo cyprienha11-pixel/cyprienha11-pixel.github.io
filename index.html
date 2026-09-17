@@ -1714,6 +1714,80 @@ function loginWithPi() {
           "✅ Pi Connected successfully!";
       }
 
+      showView("homeView");
+    })
+    .catch(function(error) {
+
+      console.error("Pi Login Error:", error);
+
+      if (status) {
+        status.innerHTML =
+          "❌ Pi Login failed. Please try again.";
+      }
+    });
+
+  } catch (error) {
+
+    console.error("Pi SDK Error:", error);
+
+    if (status) {
+      status.innerHTML =
+        "❌ Error connecting to Pi.";
+    }
+  }
+}
+
+  if (typeof Pi === "undefined") {
+    if (status) {
+      status.innerHTML =
+        "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
+    }
+    return;
+  }
+
+  try {
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+
+    Pi.authenticate(
+      ["username", "payments"],
+      function(incompletePayment) {
+        console.log(
+          "Incomplete TEST payment:",
+          incompletePayment
+        );
+      }
+    )
+    .then(function(authResult) {
+
+      console.log("PI AUTH RESULT:", authResult);
+
+      if (!authResult) {
+        throw new Error("Pi authentication returned no result.");
+      }
+
+      currentUser = authResult.user || {};
+
+      const username =
+        currentUser.username ||
+        authResult.username ||
+        "Pi User";
+
+      const usernameElement =
+        document.getElementById("username");
+
+      if (usernameElement) {
+        usernameElement.textContent =
+          "@" + username;
+      }
+
+      if (status) {
+        status.innerHTML =
+          "✅ Pi Connected successfully!";
+      }
+
       // IMPORTANT: show Home
       showView("homeView");
     })
