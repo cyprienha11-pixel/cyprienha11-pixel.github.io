@@ -1709,12 +1709,11 @@ function loginWithPi() {
           "@" + username;
       }
 
-      if (status) {
-        status.innerHTML =
-          "✅ Pi Connected successfully!";
-      }
+      document.getElementById("loginView").style.display = "none";
+document.getElementById("homeView").style.display = "block";
 
-      showView("homeView");
+      document.getElementById("loginView").style.display = "none";
+document.getElementById("homeView").style.display = "block";
     })
     .catch(function(error) {
 
