@@ -2178,6 +2178,18 @@ function startOrder() {
 
   }
 
+  const orderForm =
+    document.getElementById("orderFormView");
+
+  if (!orderForm) {
+
+    alert(
+      "❌ Order Form ntibonetse muri Part 1."
+    );
+
+    return;
+
+  }
 
   showView("orderFormView");
 
