@@ -1595,11 +1595,17 @@ function showView(id) {
 
   VIEW_IDS.forEach(function(viewId) {
 
-    const element = document.getElementById(viewId);
+    const element =
+      document.getElementById(viewId);
 
     if (element) {
-      element.style.display =
-        viewId === id ? "block" : "none";
+
+      if (viewId === id) {
+        element.classList.remove("hidden");
+      } else {
+        element.classList.add("hidden");
+      }
+
     }
 
   });
