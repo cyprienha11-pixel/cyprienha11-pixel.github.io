@@ -2708,34 +2708,23 @@ function startAgentApplication() {
 /* =====================================
    AGENT APPLICATION
 ===================================== */
-
 function submitAgentApplication() {
 
   const name =
-    document.getElementById(
-      "agentApplicantName"
-    );
-
+    document.getElementById("agentApplicantName");
 
   const phone =
-    document.getElementById(
-      "agentApplicantPhone"
-    );
-
+    document.getElementById("agentApplicantPhone");
 
   const location =
-    document.getElementById(
-      "agentApplicantLocation"
-    );
+    document.getElementById("agentApplicantLocation");
 
 
   const applicantName =
     name ? name.value.trim() : "";
 
-
   const applicantPhone =
     phone ? phone.value.trim() : "";
-
 
   const applicantLocation =
     location ? location.value.trim() : "";
@@ -2824,8 +2813,9 @@ function submitAgentApplication() {
   showView("agentSuccessView");
 
 }
+  
 
-
+      
 /* =====================================
    AGENT DASHBOARD
 ===================================== */
