@@ -2711,107 +2711,59 @@ function startAgentApplication() {
 function submitAgentApplication() {
 
   const name =
-    document.getElementById("agentApplicantName");
+    document.getElementById("agentName").value.trim();
 
   const phone =
-    document.getElementById("agentApplicantPhone");
+    document.getElementById("agentPhone").value.trim();
 
   const location =
-    document.getElementById("agentApplicantLocation");
+    document.getElementById("agentLocation").value.trim();
 
+  const product =
+    document.getElementById("agentProduct").value;
 
-  const applicantName =
-    name ? name.value.trim() : "";
+  const experience =
+    document.getElementById("agentExperience").value.trim();
 
-  const applicantPhone =
-    phone ? phone.value.trim() : "";
-
-  const applicantLocation =
-    location ? location.value.trim() : "";
-
-
-  if (
-    !applicantName ||
-    !applicantPhone ||
-    !applicantLocation
-  ) {
+  if (!name || !phone || !location) {
 
     alert(
-      "Please complete all application fields."
+      "⚠️ Please fill in Full Name, Phone and Location."
     );
 
     return;
-
   }
-
 
   const application = {
 
     id:
       "APP-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
+      Date.now(),
 
-    name:
-      applicantName,
+    name: name,
 
-    phone:
-      applicantPhone,
+    phone: phone,
 
-    location:
-      applicantLocation,
+    location: location,
 
-    status:
-      "PENDING",
+    product: product,
 
-    createdAt:
+    experience: experience,
+
+    status: "Pending",
+
+    date:
       new Date().toLocaleString()
 
   };
 
+  agentApplications.push(application);
 
-  agentApplications.unshift(
-    application
+  alert(
+    "✅ TEST Application submitted successfully!"
   );
 
-
-  saveData();
-
-
-  const success =
-    document.getElementById(
-      "agentApplicationSuccess"
-    );
-
-
-  if (success) {
-
-    success.innerHTML = `
-
-      <p>
-        ✅ Application submitted successfully.
-      </p>
-
-      <p>
-        Application ID:
-        <strong>
-          ${escapeHTML(application.id)}
-        </strong>
-      </p>
-
-      <p class="small">
-        Status: PENDING
-      </p>
-
-    `;
-
-  }
-
-
   showView("agentSuccessView");
-
 }
   
 
