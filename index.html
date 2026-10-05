@@ -1076,33 +1076,107 @@ hr{
 
 
     <label>
-      Experience
-    </label>
+  Experience
+</label>
 
-    <textarea
-      id="agentExperience"
-      placeholder="Tell us briefly about your experience">
-    </textarea>
+<textarea
+  id="agentExperience"
+  placeholder="Tell us briefly about your experience">
+</textarea>
+
+
+<button
+  class="primary"
+  onclick="submitAgentApplication()">
+
+  Submit TEST Application
+
+</button>
+
+</div>
+
+
+<button
+  class="back"
+  onclick="showAgentDetails()">
+
+  ⬅️ Back
+
+</button>
+
+</div>
+
+
+<!-- =====================================
+     AGENT SUCCESS VIEW
+===================================== -->
+
+<div
+  id="agentSuccessView"
+  class="hidden">
+
+  <div class="card center">
+
+    <div class="success-box">
+
+      <h2>
+        ✅ Application Submitted!
+      </h2>
+
+      <p>
+        Your Agent application has
+        been submitted successfully.
+      </p>
+
+    </div>
+
+
+    <p class="small">
+      Application Number
+    </p>
+
+    <p
+      id="applicationNumber"
+      style="
+      font-size:24px;
+      font-weight:bold;
+      margin:10px 0;">
+    </p>
+
+
+    <span class="status">
+      PENDING REVIEW
+    </span>
+
+
+    <p
+      class="small"
+      style="margin-top:15px">
+
+      TEST MODE — No real commercial
+      agreement has been created.
+
+    </p>
 
 
     <button
       class="primary"
-      onclick="submitAgentApplication()">
+      onclick="showAgent()">
 
-      Submit TEST Application
+      🤝 Back to Agent Opportunity
+
+    </button>
+
+
+    <button
+      class="back"
+      onclick="showView('homeView')">
+
+      ⬅️ Back to Home
 
     </button>
 
   </div>
-
-
-  <button
-    class="back"
-    onclick="showAgentDetails()">
-
-    ⬅️ Back
-
-  </button>
 
 </div>
 
