@@ -2273,133 +2273,88 @@ function startOrder() {
 function reviewOrder() {
 
   if (cart.length === 0) {
-
     alert("🛒 Test Cart is empty.");
-
     return;
-
   }
 
-
-  const name =
-    document.getElementById("customerName");
-
-  const phone =
-    document.getElementById("customerPhone");
-
-  const location =
-    document.getElementById("customerLocation");
-
-
   const customerName =
-    name ? name.value.trim() : "";
-
+    document.getElementById("orderName").value.trim();
 
   const customerPhone =
-    phone ? phone.value.trim() : "";
-
+    document.getElementById("orderPhone").value.trim();
 
   const customerLocation =
-    location ? location.value.trim() : "";
+    document.getElementById("orderLocation").value.trim();
 
+  const customerNotes =
+    document.getElementById("orderNotes").value.trim();
 
   if (
     !customerName ||
     !customerPhone ||
     !customerLocation
   ) {
-
-    alert(
-      "Please fill in Name, Phone and Location."
-    );
-
+    alert("Please fill in Name, Phone and Location.");
     return;
-
   }
 
-
   const review =
-    document.getElementById(
-      "orderReviewContent"
-    );
+    document.getElementById("orderReviewBox");
 
+  if (!review) {
+    alert("❌ Order Review section not found.");
+    return;
+  }
 
   let html = "";
-
   let total = 0;
-
 
   cart.forEach(function(item) {
 
     const itemTotal =
       item.price * item.quantity;
 
-
     total += itemTotal;
 
-
     html += `
-
       <p>
         ${item.icon || "📦"}
-        <strong>
-          ${escapeHTML(item.name)}
-        </strong>
-
+        <strong>${escapeHTML(item.name)}</strong>
         × ${item.quantity}
-
-        —
-        ${formatRWF(itemTotal)}
+        — ${formatRWF(itemTotal)}
       </p>
-
     `;
-
   });
 
-
   html += `
-
     <hr>
 
-    <p>
-      <strong>
-        Total:
-        ${formatRWF(total)}
-      </strong>
+    <p><strong>Total: ${formatRWF(total)}</strong></p>
+
+    <p class="small">
+      Customer: ${escapeHTML(customerName)}
     </p>
 
     <p class="small">
-      Customer:
-      ${escapeHTML(customerName)}
+      Phone: ${escapeHTML(customerPhone)}
     </p>
 
     <p class="small">
-      Phone:
-      ${escapeHTML(customerPhone)}
+      Location: ${escapeHTML(customerLocation)}
     </p>
 
     <p class="small">
-      Location:
-      ${escapeHTML(customerLocation)}
+      Notes: ${escapeHTML(customerNotes || "None")}
     </p>
 
     <p class="small">
       🧪 TEST ORDER ONLY
     </p>
-
   `;
 
-
-  if (review) {
-
-    review.innerHTML =
-      html;
-
-  }
-
+  review.innerHTML = html;
 
   showView("orderReviewView");
-
 }
 
 
@@ -2419,13 +2374,13 @@ function submitTestOrder() {
 
 
   const name =
-    document.getElementById("customerName");
+    document.getElementById("orderName");
 
   const phone =
-    document.getElementById("customerPhone");
+    document.getElementById("orderPhone");
 
   const location =
-    document.getElementById("customerLocation");
+    document.getElementById("orderLocation");
 
 
   const customerName =
