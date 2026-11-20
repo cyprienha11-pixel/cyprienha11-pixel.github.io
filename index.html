@@ -2755,47 +2755,35 @@ function submitAgentApplication() {
     document.getElementById("agentExperience").value.trim();
 
   if (!name || !phone || !location) {
-
-    alert(
-      "⚠️ Please fill in Full Name, Phone and Location."
-    );
-
+    alert("⚠️ Please fill in Full Name, Phone and Location.");
     return;
   }
 
   const application = {
 
-    id:
-      "APP-" +
-      Date.now(),
+    id: "APP-" + Date.now(),
 
     name: name,
-
     phone: phone,
-
     location: location,
-
     product: product,
-
     experience: experience,
 
-    status: "Pending",
+    status: "PENDING",
 
-    date:
-      new Date().toLocaleString()
+    date: new Date().toLocaleString()
 
   };
 
   agentApplications.push(application);
 
-  alert(
-    "✅ TEST Application submitted successfully!"
-  );
+  saveData();
+
+  alert("✅ TEST Application submitted successfully!");
 
   showView("agentSuccessView");
-}
-  
 
+      }
       
 /* =====================================
    AGENT DASHBOARD
