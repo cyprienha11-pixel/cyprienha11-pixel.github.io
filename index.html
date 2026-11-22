@@ -2836,15 +2836,19 @@ function renderAgentDashboard() {
 
 
   const commission =
-    agentSales.reduce(
-      function(total, sale) {
+  agentSales.reduce(
+    function(total, sale) {
 
-        return total +
-          Number(sale.commission || 0);
+      if (sale.status !== "VERIFIED") {
+        return total;
+      }
 
-      },
-      0
-    );
+      return total +
+        Number(sale.commission || 0);
+
+    },
+    0
+  );
 
 
   const idElement =
