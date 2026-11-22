@@ -3071,51 +3071,56 @@ function renderAgentDashboard() {
    TEST SALE
 ===================================== */
 
-function addTestAgentSale() {
+function submitAgentSale() {
+  const productSelect = document.getElementById("agentSaleProduct");
+  const quantityInput = document.getElementById("agentSaleQuantity");
 
-  const sale = {
+  const quantity = Number(quantityInput.value);
 
-    id:
-      "SALE-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
+  if (!quantity || quantity <= 0) {
+    alert("Please enter a valid quantity in KG.");
+    return;
+  }
 
-    productId:
-      "super5k",
-
-    productName:
-      "MONTI Super 5K",
-
-    quantity:
-      1,
-
-    salesValue:
-      15000,
-
-    commission:
-      300,
-
-    status:
-      "TEST SALE",
-
-    createdAt:
-      new Date().toLocaleString()
-
+  const products = {
+    monti7: "MONTI 7-in-1",
+    composite: "MONTI Composite Flour",
+    super: "MONTI Super"
   };
 
+  const productId = productSelect.value;
+  const productName = products[productId];
+
+  if (!productName) {
+    alert("Please select a valid product.");
+    return;
+  }
+
+  const commission = quantity * 300;
+
+  const sale = {
+    id: "SALE-" + Math.floor(100000 + Math.random() * 900000),
+    productId: productId,
+    productName: productName,
+    quantity: quantity,
+    commission: commission,
+    status: "PENDING",
+    createdAt: new Date().toLocaleString()
+  };
 
   agentSales.unshift(sale);
 
   saveData();
-
   renderAgentDashboard();
 
-  alert(
-    "✅ TEST SALE added.\nCommission: 300 RWF"
-  );
+  quantityInput.value = "";
 
+  alert(
+    "Sale submitted successfully!\n" +
+    "Quantity: " + quantity + " KG\n" +
+    "Expected commission: " + commission + " RWF\n" +
+    "Status: PENDING BUSINESS VERIFICATION"
+  );
 }
 
 
