@@ -1325,18 +1325,33 @@ Peanut , Millet, Soya beans, Maize,
   <div class="card">
     <h3>📊 Test Sales</h3>
 
-    <div id="agentSalesList">
-      <p class="small">No test sales yet.</p>
-    </div>
+    <div class="card">
+  <h3>🛒 Submit New Sale</h3><label>Select Product</label>
+<select id="agentSaleProduct">
+<option value="monti7">MONTI 7-in-1</option>
+<option value="composite">MONTI Composite Flour</option>
+<option value="super">MONTI Super</option>
+</select>
 
-    <button onclick="addTestAgentSale()">
-      ➕ Add Test Sale
-    </button>
+<label>Quantity (KG)</label>
+<input
+type="number"
+id="agentSaleQuantity"
+min="1"
+step="1"
+placeholder="Enter quantity in KG"
+
+«»
+
+  <p>
+    Commission Rate: <strong>300 RWF / KG</strong>
+  </p>  <button onclick="submitAgentSale()">
+    📤 Submit Sale for Verification
+  </button>  <h3>📊 My Sales</h3>
+  <div id="agentSalesList">
+    <p class="small">No sales submitted yet.</p>
   </div>
-
-  <button class="secondary" onclick="showView('homeView')">
-    ← Back Home
-  </button>
+    </div>
 
 </div>
 
