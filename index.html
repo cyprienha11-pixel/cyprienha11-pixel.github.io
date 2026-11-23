@@ -3132,7 +3132,102 @@ function submitAgentSale() {
     "Status: PENDING BUSINESS VERIFICATION"
   );
 }
+function renderBusinessSales() {
 
+  const salesList =
+    document.getElementById("businessSalesList");
+
+  if (!salesList) return;
+
+  if (agentSales.length === 0) {
+    salesList.innerHTML =
+      "<p class='small'>No sales submitted yet.</p>";
+    return;
+  }
+
+  let html = "";
+
+  agentSales.forEach(function(sale) {
+
+    html += `
+      <div class="card">
+
+        <h3>${escapeHTML(sale.productName)}</h3>
+
+        <p>Quantity: ${sale.quantity} KG</p>
+
+        <p>Commission:
+          ${formatRWF(sale.commission)}
+        </p>
+
+        <p>Status:
+          <strong>${escapeHTML(sale.status)}</strong>
+        </p>
+
+        ${
+          sale.status === "PENDING"
+          ? `
+            <button
+              onclick="approveAgentSale('${sale.id}')">
+              ✅ APPROVE SALE
+            </button>
+
+            <button
+              class="secondary"
+              onclick="rejectAgentSale('${sale.id}')">
+              ❌ REJECT SALE
+            </button>
+          `
+          : ""
+        }
+
+      </div>
+    `;
+
+  });
+
+  salesList.innerHTML = html;
+}
+
+
+function approveAgentSale(saleId) {
+
+  const sale = agentSales.find(
+    function(item) {
+      return item.id === saleId;
+    }
+  );
+
+  if (!sale || sale.status !== "PENDING") return;
+
+  sale.status = "VERIFIED";
+
+  saveData();
+
+  renderBusinessSales();
+
+  alert("✅ Sale verified successfully!");
+}
+
+
+function rejectAgentSale(saleId) {
+
+  const sale = agentSales.find(
+    function(item) {
+      return item.id === saleId;
+    }
+  );
+
+  if (!sale || sale.status !== "PENDING") return;
+
+  sale.status = "REJECTED";
+
+  saveData();
+
+  renderBusinessSales();
+
+  alert("❌ Sale rejected.");
+}
 
 /* =====================================
    BUSINESS DASHBOARD
