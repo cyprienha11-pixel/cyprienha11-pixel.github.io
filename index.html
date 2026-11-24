@@ -1977,11 +1977,12 @@ function showProduct(productId) {
 
 
   const quantity =
-  document.getElementById("quantityInput"); {
+  document.getElementById("quantityInput");
 
-    quantity.value = 1;
+if (quantity) {
+  quantity.value = 1;
+}
 
-  }
 
 
   const total =
