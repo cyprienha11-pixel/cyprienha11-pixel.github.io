@@ -2997,8 +2997,21 @@ function renderAgentDashboard() {
               )}
             </p>
 
+                        <p class="small">
+              Status:
+              <strong>
+                ${escapeHTML(sale.status || "PENDING")}
+              </strong>
+            </p>
+
             <p class="small">
-              🧪 TEST SALE
+              ${
+                sale.status === "VERIFIED"
+                ? "✅ Sale Verified — Commission Approved"
+                : sale.status === "REJECTED"
+                ? "❌ Sale Rejected — No Commission"
+                : "⏳ Pending Business Verification"
+              }
             </p>
 
           </div>
