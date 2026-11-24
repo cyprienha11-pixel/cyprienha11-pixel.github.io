@@ -1259,11 +1259,14 @@ Peanut , Millet, Soya beans, Maize,
      ========================= -->
 
 <!-- AGENT DASHBOARD -->
+<!-- AGENT DASHBOARD -->
 <div id="agentDashboardView" class="hidden">
 
   <div class="card">
     <h2>🤝 Agent Dashboard</h2>
-    <p class="small">Manage your agent profile, sales and commissions.</p>
+    <p class="small">
+      Manage your agent profile, sales and commissions.
+    </p>
   </div>
 
   <div class="dashboard-grid">
@@ -1279,11 +1282,6 @@ Peanut , Millet, Soya beans, Maize,
     </div>
 
     <div class="dashboard-stat">
-      <div class="small">Sales Value</div>
-      <strong id="agentSalesValue">0 RWF</strong>
-    </div>
-
-    <div class="dashboard-stat">
       <div class="small">Commission</div>
       <strong id="agentCommission">0 RWF</strong>
     </div>
@@ -1292,6 +1290,7 @@ Peanut , Millet, Soya beans, Maize,
 
   <div class="card">
     <h3>👤 Agent Profile</h3>
+
     <div id="agentProfileBox">
       <p class="small">No Agent Profile yet.</p>
     </div>
@@ -1316,38 +1315,56 @@ Peanut , Millet, Soya beans, Maize,
     <h3>📦 Agent Products</h3>
 
     <div id="agentProductsList">
-      <p class="small">
-        Agent products will appear here.
-      </p>
+      <p class="small">Agent products will appear here.</p>
     </div>
   </div>
 
   <div class="card">
-    <h3>📊 Test Sales</h3>
+    <h3>🛒 Submit New Sale</h3>
 
-    <div class="card">
-  <h3>🛒 Submit New Sale</h3><label>Select Product</label>
-<select id="agentSaleProduct">
-<option value="monti7">MONTI 7-in-1</option>
-<option value="composite">MONTI Composite Flour</option>
-<option value="super">MONTI Super</option>
-</select>
+    <label>Select Product</label>
 
-<label>Quantity (KG)</label>
-<input
-type="number"
-id="agentSaleQuantity"
-min="1"
-step="1"
-placeholder="Enter quantity in KG"
-<input
-  type="number"
-  id="agentSaleQuantity"
-  min="1"
-  step="1"
-  placeholder="Enter quantity in KG">
+    <select id="agentSaleProduct">
+      <option value="monti7">MONTI 7-in-1</option>
+      <option value="composite">MONTI Composite Flour</option>
+      <option value="super">MONTI Super</option>
+    </select>
 
+    <label>Quantity (KG)</label>
 
+    <input
+      type="number"
+      id="agentSaleQuantity"
+      min="1"
+      step="1"
+      placeholder="Enter quantity in KG">
+
+    <p class="small">
+      Commission: 300 RWF per KG.
+    </p>
+
+    <button
+      class="primary"
+      onclick="submitAgentSale()">
+      📤 Submit Sale
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>📊 My Sales</h3>
+
+    <div id="agentSalesList">
+      <p class="small">No sales submitted yet.</p>
+    </div>
+  </div>
+
+  <button
+    class="secondary"
+    onclick="showView('homeView')">
+    ← Back to Home
+  </button>
+
+</div>
 <!-- BUSINESS DASHBOARD -->
 <div id="businessDashboardView" class="hidden">
 
