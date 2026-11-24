@@ -1363,7 +1363,7 @@ placeholder="Enter quantity in KG"
     <h2>🏢 Business Dashboard</h2>
 
     <p class="small">
-      Review and manage Agent Applications.
+      Review and manage Agent Applications and Sales.
     </p>
 
     <div class="status warning">
@@ -1396,30 +1396,30 @@ placeholder="Enter quantity in KG"
   </div>
 
   <div class="card">
-
     <h3>🤝 Agent Applications</h3>
 
     <div id="businessApplicationsList">
-      <p class="small">
-        No Agent Applications yet.
-      </p>
+      <p class="small">No Agent Applications yet.</p>
     </div>
-
-<div class="card"><h3>💰 Agent Sales Verification</h3>
-
-<p class="small">
-  Review Agent sales before approving commissions.
-</p>
-
-<div id="businessSalesList">
-  <p class="small">No sales submitted yet.</p>
-</div>
-
   </div>
 
+  <div class="card">
+    <h3>💰 Agent Sales Verification</h3>
+
     <p class="small">
-      Products and Agent Opportunities will be managed
-      here in the future.
+      Review Agent sales before approving commissions.
+    </p>
+
+    <div id="businessSalesList">
+      <p class="small">No sales submitted yet.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📦 Business Opportunities</h3>
+
+    <p class="small">
+      Products and Agent Opportunities will be managed here.
     </p>
 
     <button onclick="comingSoon('Business Product Management')">
@@ -1429,7 +1429,6 @@ placeholder="Enter quantity in KG"
     <button onclick="comingSoon('Agent Opportunity Management')">
       🤝 Manage Agent Opportunities
     </button>
-
   </div>
 
   <button class="secondary" onclick="showView('homeView')">
@@ -1437,46 +1436,6 @@ placeholder="Enter quantity in KG"
   </button>
 
 </div>
-
-
-<!-- NOTIFICATIONS -->
-<div id="notificationsView" class="hidden">
-
-  <div class="card">
-
-    <h2>🔔 Notifications</h2>
-
-    <div class="notice">
-      <strong>Welcome to AMANA HUB!</strong>
-      <p class="small">
-        Your TEST account is ready.
-      </p>
-    </div>
-
-    <div class="notice">
-      <strong>🤝 Agent Opportunity</strong>
-      <p class="small">
-        You can apply to become an Agent and test
-        the Agent Dashboard.
-      </p>
-    </div>
-
-    <div class="notice">
-      <strong>🧪 TEST MODE</strong>
-      <p class="small">
-        AMANA HUB is currently being developed and tested.
-        No real sales or real payments are active.
-      </p>
-    </div>
-
-  </div>
-
-  <button class="secondary" onclick="showView('homeView')">
-    ← Back Home
-  </button>
-
-</div>
-
 
 <!-- ADMIN DASHBOARD -->
 <div id="adminView" class="hidden">
