@@ -321,10 +321,10 @@ hr{
   <div class="card">
 
     <button
-  class="primary"
-  onclick="showMarketplace()">
+      class="primary"
+      onclick="showMarketplace()">
 
-  🛍️ Marketplace
+      🛍️ Marketplace
 
     </button>
 
@@ -444,8 +444,7 @@ hr{
   </div>
 
 
-  <div
-    class="product">
+  <div class="product">
 
     <div class="product-icon">
       🥣
@@ -461,7 +460,7 @@ hr{
 
     <p class="small">
       Ingredients: High iron Beans,
-Peanut , Millet, Soya beans, Maize,
+      Peanut, Millet, Soya beans, Maize,
       Wheat and Sugar.
     </p>
 
@@ -476,8 +475,7 @@ Peanut , Millet, Soya beans, Maize,
   </div>
 
 
-  <div
-    class="product">
+  <div class="product">
 
     <div class="product-icon">
       🌾
@@ -507,8 +505,7 @@ Peanut , Millet, Soya beans, Maize,
   </div>
 
 
-  <div
-    class="product">
+  <div class="product">
 
     <div class="product-icon">
       🥜
@@ -615,14 +612,14 @@ Peanut , Millet, Soya beans, Maize,
     </p>
 
 
-<button
-  type="button"
-  class="primary"
-  onclick="alert('BUTTON IS WORKING'); addToCart();">
+    <button
+      type="button"
+      class="primary"
+      onclick="addToCart()">
 
-  🛒 Add to TEST Cart
+      🛒 Add to TEST Cart
 
-</button>
+    </button>
 
   </div>
 
@@ -656,12 +653,12 @@ Peanut , Millet, Soya beans, Maize,
 
 
   <button
-  class="primary"
-  onclick="startOrder()">
+    class="primary"
+    onclick="startOrder()">
 
-  Continue to TEST Order
+    Continue to TEST Order
 
-</button>
+  </button>
 
 
   <button
@@ -989,23 +986,23 @@ Peanut , Millet, Soya beans, Maize,
 
 
     <button
-  class="primary"
-  onclick="startAgentApplication()">
+      class="primary"
+      onclick="startAgentApplication()">
 
-  Apply as Agent
+      Apply as Agent
 
-</button>
+    </button>
 
   </div>
 
 
-<button
-  class="back"
-  onclick="showAgent()">
+  <button
+    class="back"
+    onclick="showAgent()">
 
-  ⬅️ Back
+    ⬅️ Back
 
-</button>
+  </button>
 
 </div>
 
@@ -1077,107 +1074,33 @@ Peanut , Millet, Soya beans, Maize,
 
 
     <label>
-  Experience
-</label>
+      Experience
+    </label>
 
-<textarea
-  id="agentExperience"
-  placeholder="Tell us briefly about your experience">
-</textarea>
-
-
-<button
-  class="primary"
-  onclick="submitAgentApplication()">
-
-  Submit TEST Application
-
-</button>
-
-</div>
-
-
-<button
-  class="back"
-  onclick="startAgentApplication()"
-
-  ⬅️ Back
-
-</button>
-
-</div>
-
-
-<!-- =====================================
-     AGENT SUCCESS VIEW
-===================================== -->
-
-<div
-  id="agentSuccessView"
-  class="hidden">
-
-  <div class="card center">
-
-    <div class="success-box">
-
-      <h2>
-        ✅ Application Submitted!
-      </h2>
-
-      <p>
-        Your Agent application has
-        been submitted successfully.
-      </p>
-
-    </div>
-
-
-    <p class="small">
-      Application Number
-    </p>
-
-    <p
-      id="applicationNumber"
-      style="
-      font-size:24px;
-      font-weight:bold;
-      margin:10px 0;">
-    </p>
-
-
-    <span class="status">
-      PENDING REVIEW
-    </span>
-
-
-    <p
-      class="small"
-      style="margin-top:15px">
-
-      TEST MODE — No real commercial
-      agreement has been created.
-
-    </p>
+    <textarea
+      id="agentExperience"
+      placeholder="Tell us briefly about your experience">
+    </textarea>
 
 
     <button
       class="primary"
-      onclick="showAgent()">
+      onclick="submitAgentApplication()">
 
-      🤝 Back to Agent Opportunity
-
-    </button>
-
-
-    <button
-      class="back"
-      onclick="showView('homeView')">
-
-      ⬅️ Back to Home
+      Submit TEST Application
 
     </button>
 
   </div>
+
+
+  <button
+    class="back"
+    onclick="showView('agentDetailsView')">
+
+    ⬅️ Back
+
+  </button>
 
 </div>
 
@@ -1254,50 +1177,78 @@ Peanut , Millet, Soya beans, Maize,
   </div>
 
 </div>
+      
 <!-- =========================
      PART 2 / 3
      AMANA HUB
-     ========================= -->
+========================= -->
+
 
 <!-- AGENT DASHBOARD -->
-<!-- AGENT DASHBOARD -->
+
 <div id="agentDashboardView" class="hidden">
 
   <div class="card">
+
     <h2>🤝 Agent Dashboard</h2>
+
     <p class="small">
       Manage your agent profile, sales and commissions.
     </p>
+
   </div>
+
 
   <div class="dashboard-grid">
 
     <div class="dashboard-stat">
+
       <div class="small">Agent ID</div>
-      <strong id="agentIdDisplay">AGENT-883311</strong>
+
+      <strong id="agentIdDisplay">
+        AGENT-883311
+      </strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Total Sales</div>
+
       <strong id="agentSalesCount">0</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Commission</div>
+
       <strong id="agentCommission">0 RWF</strong>
+
     </div>
 
   </div>
 
+
   <div class="card">
+
     <h3>👤 Agent Profile</h3>
 
     <div id="agentProfileBox">
-      <p class="small">No Agent Profile yet.</p>
+
+      <p class="small">
+        No Agent Profile yet.
+      </p>
+
     </div>
+
   </div>
 
+
   <div class="card">
+
     <h3>💰 Commission Status</h3>
 
     <div class="status success">
@@ -1310,26 +1261,47 @@ Peanut , Millet, Soya beans, Maize,
     </p>
 
     <h2 id="commissionAmount">0 RWF</h2>
+
   </div>
 
+
   <div class="card">
+
     <h3>📦 Agent Products</h3>
 
     <div id="agentProductsList">
-      <p class="small">Agent products will appear here.</p>
+
+      <p class="small">
+        Agent products will appear here.
+      </p>
+
     </div>
+
   </div>
 
+
   <div class="card">
+
     <h3>🛒 Submit New Sale</h3>
 
     <label>Select Product</label>
 
     <select id="agentSaleProduct">
-      <option value="monti7">MONTI 7-in-1</option>
-      <option value="composite">MONTI Composite Flour</option>
-      <option value="super">MONTI Super</option>
+
+      <option value="monti7">
+        MONTI 7-in-1
+      </option>
+
+      <option value="composite">
+        MONTI Composite Flour
+      </option>
+
+      <option value="super">
+        MONTI Super
+      </option>
+
     </select>
+
 
     <label>Quantity (KG)</label>
 
@@ -1340,36 +1312,56 @@ Peanut , Millet, Soya beans, Maize,
       step="1"
       placeholder="Enter quantity in KG">
 
+
     <p class="small">
       Commission: 300 RWF per KG.
     </p>
 
+
     <button
       class="primary"
       onclick="submitAgentSale()">
+
       📤 Submit Sale
+
     </button>
+
   </div>
 
+
   <div class="card">
+
     <h3>📊 My Sales</h3>
 
     <div id="agentSalesList">
-      <p class="small">No sales submitted yet.</p>
+
+      <p class="small">
+        No sales submitted yet.
+      </p>
+
     </div>
+
   </div>
+
 
   <button
     class="secondary"
     onclick="showView('homeView')">
+
     ← Back to Home
+
   </button>
 
 </div>
+
+
+
 <!-- BUSINESS DASHBOARD -->
+
 <div id="businessDashboardView" class="hidden">
 
   <div class="card">
+
     <h2>🏢 Business Dashboard</h2>
 
     <p class="small">
@@ -1379,41 +1371,67 @@ Peanut , Millet, Soya beans, Maize,
     <div class="status warning">
       TEST MODE
     </div>
+
   </div>
+
 
   <div class="dashboard-grid">
 
     <div class="dashboard-stat">
+
       <div class="small">Total Applications</div>
+
       <strong id="totalApplications">0</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Pending Review</div>
+
       <strong id="pendingApplications">0</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Approved</div>
+
       <strong id="approvedApplications">0</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Rejected</div>
+
       <strong id="rejectedApplications">0</strong>
+
     </div>
 
   </div>
 
+
   <div class="card">
+
     <h3>🤝 Agent Applications</h3>
 
     <div id="businessApplicationsList">
-      <p class="small">No Agent Applications yet.</p>
+
+      <p class="small">
+        No Agent Applications yet.
+      </p>
+
     </div>
+
   </div>
 
+
   <div class="card">
+
     <h3>💰 Agent Sales Verification</h3>
 
     <p class="small">
@@ -1421,33 +1439,59 @@ Peanut , Millet, Soya beans, Maize,
     </p>
 
     <div id="businessSalesList">
-      <p class="small">No sales submitted yet.</p>
+
+      <p class="small">
+        No sales submitted yet.
+      </p>
+
     </div>
+
   </div>
 
+
   <div class="card">
+
     <h3>📦 Business Opportunities</h3>
 
     <p class="small">
       Products and Agent Opportunities will be managed here.
     </p>
 
-    <button onclick="comingSoon('Business Product Management')">
+
+    <button
+      class="primary"
+      onclick="comingSoon('Business Product Management')">
+
       📦 Manage Products
+
     </button>
 
-    <button onclick="comingSoon('Agent Opportunity Management')">
+
+    <button
+      class="secondary"
+      onclick="comingSoon('Agent Opportunity Management')">
+
       🤝 Manage Agent Opportunities
+
     </button>
+
   </div>
 
-  <button class="secondary" onclick="showView('homeView')">
+
+  <button
+    class="secondary"
+    onclick="showView('homeView')">
+
     ← Back Home
+
   </button>
 
 </div>
 
+
+
 <!-- ADMIN DASHBOARD -->
+
 <div id="adminView" class="hidden">
 
   <div class="card">
@@ -1464,51 +1508,89 @@ Peanut , Millet, Soya beans, Maize,
 
   </div>
 
+
   <div class="dashboard-grid">
 
     <div class="dashboard-stat">
+
       <div class="small">Users</div>
+
       <strong>TEST</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Businesses</div>
+
       <strong>TEST</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Agents</div>
+
       <strong>TEST</strong>
+
     </div>
 
+
     <div class="dashboard-stat">
+
       <div class="small">Orders</div>
+
       <strong>TEST</strong>
+
     </div>
 
   </div>
+
 
   <div class="card">
 
     <h3>⚙️ System Management</h3>
 
-    <button onclick="comingSoon('User Management')">
+
+    <button
+      class="primary"
+      onclick="comingSoon('User Management')">
+
       👥 User Management
+
     </button>
 
-    <button onclick="comingSoon('Business Management')">
+
+    <button
+      class="secondary"
+      onclick="comingSoon('Business Management')">
+
       🏢 Business Management
+
     </button>
 
-    <button onclick="comingSoon('Agent Management')">
+
+    <button
+      class="secondary"
+      onclick="comingSoon('Agent Management')">
+
       🤝 Agent Management
+
     </button>
 
-    <button onclick="comingSoon('Order Management')">
+
+    <button
+      class="secondary"
+      onclick="comingSoon('Order Management')">
+
       📦 Order Management
+
     </button>
 
   </div>
+
 
   <div class="card">
 
@@ -1521,14 +1603,21 @@ Peanut , Millet, Soya beans, Maize,
 
   </div>
 
-  <button class="secondary" onclick="showView('homeView')">
+
+  <button
+    class="secondary"
+    onclick="showView('homeView')">
+
     ← Back Home
+
   </button>
 
 </div>
 
 
+
 <!-- FOOTER -->
+
 <div class="footer">
 
   <strong>🟣 AMANA HUB</strong>
@@ -1547,42 +1636,27 @@ Peanut , Millet, Soya beans, Maize,
 
 </div>
 <!-- =====================================
-     PART 3 / 3
+     PART 3A / 2
      AMANA HUB JAVASCRIPT
 ===================================== -->
 
 <script>
 "use strict";
 
-/* =====================================
-   AMANA HUB CONFIG
-===================================== */
+/* CONFIG */
 
 const BACKEND_URL = "https://amana-hub.onrender.com";
 
 let currentUser = null;
 let currentProduct = null;
 
-let cart = JSON.parse(
-  localStorage.getItem("amanaCart") || "[]"
-);
-
-let testOrders = JSON.parse(
-  localStorage.getItem("amanaTestOrders") || "[]"
-);
-
-let agentApplications = JSON.parse(
-  localStorage.getItem("amanaAgentApplications") || "[]"
-);
-
-let agentSales = JSON.parse(
-  localStorage.getItem("amanaAgentSales") || "[]"
-);
+let cart = JSON.parse(localStorage.getItem("amanaCart") || "[]");
+let testOrders = JSON.parse(localStorage.getItem("amanaTestOrders") || "[]");
+let agentApplications = JSON.parse(localStorage.getItem("amanaAgentApplications") || "[]");
+let agentSales = JSON.parse(localStorage.getItem("amanaAgentSales") || "[]");
 
 
-/* =====================================
-   PRODUCTS
-===================================== */
+/* PRODUCTS */
 
 const PRODUCTS = {
 
@@ -1591,8 +1665,7 @@ const PRODUCTS = {
     name: "MONTI 7 in 1",
     price: 4500,
     icon: "🥣",
-    ingredients:
-      "Ibishyimbo bya Fer, ubunyobwa, ibigori, soya, isukari, ingano n'umuceri."
+    ingredients: "Ibishyimbo bya Fer, ubunyobwa, ibigori, soya, isukari, ingano n'umuceri."
   },
 
   composite: {
@@ -1600,8 +1673,7 @@ const PRODUCTS = {
     name: "MONTI Composite Flour",
     price: 4000,
     icon: "🌾",
-    ingredients:
-      "Amasaka, ingano, uburo, soya n'ibigori."
+    ingredients: "Amasaka, ingano, uburo, soya n'ibigori."
   },
 
   super5k: {
@@ -1609,129 +1681,80 @@ const PRODUCTS = {
     name: "MONTI Super 5K",
     price: 15000,
     icon: "🥜",
-    ingredients:
-      "Ibishyimbo bya Fer, soya, ibigori, isukari n'umunyu."
+    ingredients: "Ibishyimbo bya Fer, soya, ibigori, isukari n'umunyu."
   }
 
 };
 
 
-/* =====================================
-   VIEW IDs
-===================================== */
+/* VIEW IDS */
 
 const VIEW_IDS = [
-
   "loginView",
   "homeView",
-
   "marketplaceView",
   "productView",
-
   "cartView",
-
   "orderFormView",
   "orderReviewView",
   "orderSubmittedView",
-
   "ordersView",
   "orderDetailsView",
-
   "agentOpportunityView",
   "agentDetailsView",
   "agentApplicationView",
   "agentSuccessView",
-
   "agentDashboardView",
-
   "businessDashboardView",
-
   "notificationsView",
-
   "adminView"
-
 ];
 
 
-/* =====================================
-   SHOW VIEW
-===================================== */
+/* SHOW VIEW */
 
 function showView(id) {
 
   VIEW_IDS.forEach(function(viewId) {
 
-    const element =
-      document.getElementById(viewId);
+    const element = document.getElementById(viewId);
 
     if (element) {
-
       if (viewId === id) {
         element.classList.remove("hidden");
       } else {
         element.classList.add("hidden");
       }
-
     }
 
   });
 
   window.scrollTo(0, 0);
 
-  if (id === "cartView") {
-    renderCart();
-  }
-
-  if (id === "ordersView") {
-    renderOrders();
-  }
-
-  if (id === "businessDashboardView") {
-    renderBusinessDashboard();
-  }
-
-  if (id === "agentDashboardView") {
-    renderAgentDashboard();
-  }
+  if (id === "cartView") renderCart();
+  if (id === "ordersView") renderOrders();
+  if (id === "businessDashboardView") renderBusinessDashboard();
+  if (id === "agentDashboardView") renderAgentDashboard();
 
 }
 
 
-/* =====================================
-   HELPERS
-===================================== */
+/* HELPERS */
 
 function formatRWF(amount) {
-
-  return Number(amount || 0)
-    .toLocaleString("en-US") + " RWF";
-
+  return Number(amount || 0).toLocaleString("en-US") + " RWF";
 }
 
 
 function saveData() {
 
-  localStorage.setItem(
-    "amanaTestOrders",
-    JSON.stringify(testOrders)
-  );
-
-  localStorage.setItem(
-    "amanaAgentApplications",
-    JSON.stringify(agentApplications)
-  );
-
-  localStorage.setItem(
-    "amanaAgentSales",
-    JSON.stringify(agentSales)
-  );
-
-  localStorage.setItem(
-    "amanaCart",
-    JSON.stringify(cart)
-  );
+  localStorage.setItem("amanaTestOrders", JSON.stringify(testOrders));
+  localStorage.setItem("amanaAgentApplications", JSON.stringify(agentApplications));
+  localStorage.setItem("amanaAgentSales", JSON.stringify(agentSales));
+  localStorage.setItem("amanaCart", JSON.stringify(cart));
 
 }
+
 
 function escapeHTML(value) {
 
@@ -1745,110 +1768,65 @@ function escapeHTML(value) {
 }
 
 
-/* =====================================
-   PI LOGIN
-===================================== */
+/* PI LOGIN */
 
 function loginWithPi() {
 
-  const status =
-    document.getElementById("loginStatus");
+  const status = document.getElementById("loginStatus");
 
   if (status) {
-
-    status.innerHTML =
-      "⏳ Connecting to Pi Network...";
-
+    status.innerHTML = "⏳ Connecting to Pi Network...";
   }
 
-
-  if (typeof Pi === "undefined") {
+  if (typeof window.Pi === "undefined") {
 
     if (status) {
-
-      status.innerHTML =
-        "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
-
+      status.innerHTML = "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
     }
 
     return;
-
   }
-
 
   try {
 
-    Pi.init({
-
+    window.Pi.init({
       version: "2.0",
       sandbox: true
-
     });
 
-
-    Pi.authenticate(
-
+    window.Pi.authenticate(
       ["username", "payments"],
 
       function(incompletePayment) {
-
-        console.log(
-          "Incomplete TEST payment:",
-          incompletePayment
-        );
-
+        console.log("Incomplete TEST payment:", incompletePayment);
       }
 
     )
 
     .then(function(authResult) {
 
-      console.log(
-        "PI AUTH RESULT:",
-        authResult
-      );
-
+      console.log("PI AUTH RESULT:", authResult);
 
       if (!authResult) {
-
-        throw new Error(
-          "Pi authentication returned no result."
-        );
-
+        throw new Error("Pi authentication returned no result.");
       }
 
-
-      currentUser =
-        authResult.user || {};
-
+      currentUser = authResult.user || {};
 
       const username =
         currentUser.username ||
         authResult.username ||
         "Pi User";
 
-
-      const usernameElement =
-        document.getElementById("username");
-
+      const usernameElement = document.getElementById("username");
 
       if (usernameElement) {
-
-        usernameElement.textContent =
-          "@" + username;
-
+        usernameElement.textContent = "@" + username;
       }
-
 
       if (status) {
-
-        status.innerHTML =
-          "✅ Pi Connected successfully!";
-
+        status.innerHTML = "✅ Pi Connected successfully!";
       }
-
-
-      /* GO TO HOME */
 
       showView("homeView");
 
@@ -1856,17 +1834,10 @@ function loginWithPi() {
 
     .catch(function(error) {
 
-      console.error(
-        "Pi Login Error:",
-        error
-      );
-
+      console.error("Pi Login Error:", error);
 
       if (status) {
-
-        status.innerHTML =
-          "❌ Pi Login failed. Please try again.";
-
+        status.innerHTML = "❌ Pi Login failed. Please try again.";
       }
 
     });
@@ -1875,17 +1846,10 @@ function loginWithPi() {
 
   catch (error) {
 
-    console.error(
-      "Pi SDK Error:",
-      error
-    );
-
+    console.error("Pi SDK Error:", error);
 
     if (status) {
-
-      status.innerHTML =
-        "❌ Error connecting to Pi.";
-
+      status.innerHTML = "❌ Error connecting to Pi.";
     }
 
   }
@@ -1893,134 +1857,71 @@ function loginWithPi() {
 }
 
 
-/* =====================================
-   HOME
-===================================== */
+/* HOME */
 
 function goHome() {
-
   showView("homeView");
-
 }
 
 
-/* =====================================
-   MARKETPLACE
-===================================== */
+/* MARKETPLACE */
 
 function showMarketplace() {
-
   showView("marketplaceView");
-
 }
 
 
-/* =====================================
-   PRODUCT DETAILS
-===================================== */
+/* PRODUCT DETAILS */
 
 function showProduct(productId) {
 
-  const product =
-    PRODUCTS[productId];
+  const product = PRODUCTS[productId];
 
   if (!product) {
-
     alert("Product not found.");
-
     return;
-
   }
 
+  currentProduct = product;
 
-  currentProduct =
-    product;
+  const name = document.getElementById("productName");
+  const price = document.getElementById("productPrice");
+  const ingredients = document.getElementById("productIngredients");
+  const icon = document.getElementById("productIcon");
 
+  if (name) name.textContent = product.name;
 
-  const name =
-    document.getElementById("productName");
-
-  const price =
-    document.getElementById("productPrice");
-
-  const ingredients =
-    document.getElementById("productIngredients");
-
-  const icon =
-    document.getElementById("productIcon");
-
-
-  if (name) {
-
-    name.textContent =
-      product.name;
-
-  }
-
-
-  if (price) {
-
-    price.textContent =
-      formatRWF(product.price);
-
-  }
-
+  if (price) price.textContent = formatRWF(product.price);
 
   if (ingredients) {
-
     ingredients.innerHTML =
       escapeHTML(product.ingredients) +
       "<br><br><small>All ingredients are roasted before being processed.</small>";
-
   }
 
+  if (icon) icon.textContent = product.icon;
 
-  if (icon) {
+  const quantity = document.getElementById("quantityInput");
 
-    icon.textContent =
-      product.icon;
+  if (quantity) quantity.value = 1;
 
-  }
+  const total = document.getElementById("productTotal");
 
-
-  const quantity =
-  document.getElementById("quantityInput");
-
-if (quantity) {
-  quantity.value = 1;
-}
-
-
-
-  const total =
-    document.getElementById("productTotal");
-
-  if (total) {
-
-    total.textContent =
-      formatRWF(product.price);
-
-  }
-
+  if (total) total.textContent = formatRWF(product.price);
 
   showView("productView");
 
 }
 
 
-/* =====================================
-   PRODUCT QUANTITY
-===================================== */
+/* PRODUCT QUANTITY */
 
 function updateProductTotal() {
 
   if (!currentProduct) return;
 
-  const quantityElement =
-    document.getElementById("quantityInput");
-
-  const totalElement =
-    document.getElementById("productTotal");
+  const quantityElement = document.getElementById("quantityInput");
+  const totalElement = document.getElementById("productTotal");
 
   const quantity = Math.max(
     1,
@@ -2035,9 +1936,7 @@ function updateProductTotal() {
 }
 
 
-/* =====================================
-   ADD TO CART
-===================================== */
+/* ADD TO CART */
 
 function addToCart() {
 
@@ -2046,8 +1945,7 @@ function addToCart() {
     return;
   }
 
-  const quantityElement =
-    document.getElementById("quantityInput");
+  const quantityElement = document.getElementById("quantityInput");
 
   const quantity = Math.max(
     1,
@@ -2074,16 +1972,6 @@ function addToCart() {
 
   }
 
-  // SAVE CART
-  saveData();
-
-  alert("✅ Added to Test Cart.");
-
-  showView("cartView");
-
-}
-
-  // SAVE CART
   saveData();
 
   alert("✅ Added to Test Cart.");
@@ -2093,64 +1981,41 @@ function addToCart() {
 }
 
 
-
-/* =====================================
-   CART
-===================================== */
+/* CART */
 
 function showCart() {
-
   showView("cartView");
-
 }
 
 
 function renderCart() {
 
-  const container =
-    document.getElementById("cartList");
+  const container = document.getElementById("cartList");
 
-
-  if (!container) {
-    return;
-  }
-
+  if (!container) return;
 
   if (cart.length === 0) {
 
     container.innerHTML =
       "<p class='small'>🛒 Test Cart is empty.</p>";
 
-    const total =
-      document.getElementById("cartTotal");
+    const total = document.getElementById("cartTotal");
 
-    if (total) {
-
-      total.textContent =
-        formatRWF(0);
-
-    }
+    if (total) total.textContent = formatRWF(0);
 
     return;
-
   }
-
 
   let html = "";
   let grandTotal = 0;
 
-
   cart.forEach(function(item, index) {
 
-    const itemTotal =
-      item.price * item.quantity;
-
+    const itemTotal = item.price * item.quantity;
 
     grandTotal += itemTotal;
 
-
     html += `
-
       <div class="card">
 
         <h3>
@@ -2159,45 +2024,29 @@ function renderCart() {
         </h3>
 
         <p class="small">
-          ${formatRWF(item.price)}
-          ×
-          ${item.quantity}
+          ${formatRWF(item.price)} × ${item.quantity}
         </p>
 
-        <strong>
-          ${formatRWF(itemTotal)}
-        </strong>
+        <strong>${formatRWF(itemTotal)}</strong>
 
         <br><br>
 
         <button
           class="secondary"
-          onclick="removeFromCart(${index})"
-        >
+          onclick="removeFromCart(${index})">
           🗑️ Remove
         </button>
 
       </div>
-
     `;
 
   });
 
+  container.innerHTML = html;
 
-  container.innerHTML =
-    html;
+  const total = document.getElementById("cartTotal");
 
-
-  const total =
-    document.getElementById("cartTotal");
-
-
-  if (total) {
-
-    total.textContent =
-      formatRWF(grandTotal);
-
-  }
+  if (total) total.textContent = formatRWF(grandTotal);
 
 }
 
@@ -2213,31 +2062,20 @@ function removeFromCart(index) {
 }
 
 
-/* =====================================
-   ORDER
-===================================== */
+/* ORDER */
 
 function startOrder() {
 
   if (cart.length === 0) {
-
     alert("🛒 Test Cart is empty.");
-
     return;
-
   }
 
-  const orderForm =
-    document.getElementById("orderFormView");
+  const orderForm = document.getElementById("orderFormView");
 
   if (!orderForm) {
-
-    alert(
-      "❌ Order Form ntibonetse muri Part 1."
-    );
-
+    alert("❌ Order Form ntibonetse muri Part 1.");
     return;
-
   }
 
   showView("orderFormView");
@@ -2252,29 +2090,22 @@ function reviewOrder() {
     return;
   }
 
-  const customerName =
-    document.getElementById("orderName").value.trim();
+  const nameElement = document.getElementById("orderName");
+  const phoneElement = document.getElementById("orderPhone");
+  const locationElement = document.getElementById("orderLocation");
+  const notesElement = document.getElementById("orderNotes");
 
-  const customerPhone =
-    document.getElementById("orderPhone").value.trim();
+  const customerName = nameElement ? nameElement.value.trim() : "";
+  const customerPhone = phoneElement ? phoneElement.value.trim() : "";
+  const customerLocation = locationElement ? locationElement.value.trim() : "";
+  const customerNotes = notesElement ? notesElement.value.trim() : "";
 
-  const customerLocation =
-    document.getElementById("orderLocation").value.trim();
-
-  const customerNotes =
-    document.getElementById("orderNotes").value.trim();
-
-  if (
-    !customerName ||
-    !customerPhone ||
-    !customerLocation
-  ) {
+  if (!customerName || !customerPhone || !customerLocation) {
     alert("Please fill in Name, Phone and Location.");
     return;
   }
 
-  const review =
-    document.getElementById("orderReviewBox");
+  const review = document.getElementById("orderReviewBox");
 
   if (!review) {
     alert("❌ Order Review section not found.");
@@ -2286,8 +2117,7 @@ function reviewOrder() {
 
   cart.forEach(function(item) {
 
-    const itemTotal =
-      item.price * item.quantity;
+    const itemTotal = item.price * item.quantity;
 
     total += itemTotal;
 
@@ -2299,6 +2129,7 @@ function reviewOrder() {
         — ${formatRWF(itemTotal)}
       </p>
     `;
+
   });
 
   html += `
@@ -2306,337 +2137,91 @@ function reviewOrder() {
 
     <p><strong>Total: ${formatRWF(total)}</strong></p>
 
-    <p class="small">
-      Customer: ${escapeHTML(customerName)}
-    </p>
-
-    <p class="small">
-      Phone: ${escapeHTML(customerPhone)}
-    </p>
-
-    <p class="small">
-      Location: ${escapeHTML(customerLocation)}
-    </p>
-
-    <p class="small">
-      Notes: ${escapeHTML(customerNotes || "None")}
-    </p>
-
-    <p class="small">
-      🧪 TEST ORDER ONLY
-    </p>
+    <p class="small">Customer: ${escapeHTML(customerName)}</p>
+    <p class="small">Phone: ${escapeHTML(customerPhone)}</p>
+    <p class="small">Location: ${escapeHTML(customerLocation)}</p>
+    <p class="small">Notes: ${escapeHTML(customerNotes || "None")}</p>
+    <p class="small">🧪 TEST ORDER ONLY</p>
   `;
 
   review.innerHTML = html;
 
   showView("orderReviewView");
+
 }
-
-
-/* =====================================
-   SUBMIT TEST ORDER
-===================================== */
+      /* SUBMIT TEST ORDER */
 
 function submitTestOrder() {
 
   if (cart.length === 0) {
-
     alert("Cart is empty.");
-
     return;
-
   }
 
-
-  const name =
-    document.getElementById("orderName");
-
-  const phone =
-    document.getElementById("orderPhone");
-
-  const location =
-    document.getElementById("orderLocation");
-
-
-  const customerName =
-    name ? name.value.trim() : "";
-
-
-  const customerPhone =
-    phone ? phone.value.trim() : "";
-
-
-  const customerLocation =
-    location ? location.value.trim() : "";
-
-
-  if (
-    !customerName ||
-    !customerPhone ||
-    !customerLocation
-  ) {
-
-    alert(
-      "Please complete the order form."
-    );
-
-    showView("orderFormView");
-
-    return;
-
-  }
-
-
-  let total = 0;
-
-
-  const items =
-    cart.map(function(item) {
-
-      const itemTotal =
-        item.price * item.quantity;
-
-
-      total += itemTotal;
-
-
-      return {
-
-        productId: item.id,
-        productName: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        total: itemTotal
-
-      };
-
-    });
-
-
-  const order = {
-
-    id:
-      "ORDER-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
-
-    customer:
-      customerName,
-
-    phone:
-      customerPhone,
-
-    location:
-      customerLocation,
-
-    items:
-      items,
-
-    total:
-      total,
-
-    status:
-      "TEST SUBMITTED",
-
-    createdAt:
-      new Date().toLocaleString()
-
-  };
-
-
-  testOrders.unshift(order);
-
-  saveData();
-
-
-  const orderNumber =
-    document.getElementById(
-      "submittedOrderNumber"
-    );
-
-
-  if (orderNumber) {
-
-    orderNumber.textContent =
-      order.id;
-
-  }
-
-
-  const submittedDetails =
-    document.getElementById(
-      "submittedOrderDetails"
-    );
-
-
-  if (submittedDetails) {
-
-    submittedDetails.innerHTML = `
-
-      <p>
-        <strong>Customer:</strong>
-        ${escapeHTML(order.customer)}
-      </p>
-
-      <p>
-        <strong>Phone:</strong>
-        ${escapeHTML(order.phone)}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${escapeHTML(order.location)}
-      </p>
-
-      
-
-
-/* =====================================
-   ORDERS
-===================================== */
-function submitTestOrder() {
-
-  if (cart.length === 0) {
-
-    alert("Cart is empty.");
-
-    return;
-
-  }
-
-  const name =
-    document.getElementById("orderName");
-
-  const phone =
-    document.getElementById("orderPhone");
-
-  const location =
-    document.getElementById("orderLocation");
-
-  const customerName =
-    name ? name.value.trim() : "";
-
-  const customerPhone =
-    phone ? phone.value.trim() : "";
-
-  const customerLocation =
-    location ? location.value.trim() : "";
-
-  if (
-    !customerName ||
-    !customerPhone ||
-    !customerLocation
-  ) {
-
+  const name = document.getElementById("orderName");
+  const phone = document.getElementById("orderPhone");
+  const location = document.getElementById("orderLocation");
+
+  const customerName = name ? name.value.trim() : "";
+  const customerPhone = phone ? phone.value.trim() : "";
+  const customerLocation = location ? location.value.trim() : "";
+
+  if (!customerName || !customerPhone || !customerLocation) {
     alert("Please complete the order form.");
-
     showView("orderFormView");
-
     return;
-
   }
 
   let total = 0;
 
-  const items =
-    cart.map(function(item) {
+  const items = cart.map(function(item) {
 
-      const itemTotal =
-        item.price * item.quantity;
+    const itemTotal = item.price * item.quantity;
 
-      total += itemTotal;
+    total += itemTotal;
 
-      return {
+    return {
+      productId: item.id,
+      productName: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      total: itemTotal
+    };
 
-        productId: item.id,
-        productName: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        total: itemTotal
-
-      };
-
-    });
+  });
 
   const order = {
 
-    id:
-      "ORDER-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
-
+    id: "ORDER-" + Math.floor(100000 + Math.random() * 900000),
     customer: customerName,
-
     phone: customerPhone,
-
     location: customerLocation,
-
     items: items,
-
     total: total,
-
     status: "TEST SUBMITTED",
-
-    createdAt:
-      new Date().toLocaleString()
+    createdAt: new Date().toLocaleString()
 
   };
 
   testOrders.unshift(order);
 
-  const orderNumber =
-    document.getElementById(
-      "submittedOrderNumber"
-    );
+  const orderNumber = document.getElementById("submittedOrderNumber");
 
   if (orderNumber) {
-
     orderNumber.textContent = order.id;
-
   }
 
-  const submittedDetails =
-    document.getElementById(
-      "submittedOrderDetails"
-    );
+  const submittedDetails = document.getElementById("submittedOrderDetails");
 
   if (submittedDetails) {
 
     submittedDetails.innerHTML = `
-
-      <p>
-        <strong>Customer:</strong>
-        ${escapeHTML(order.customer)}
-      </p>
-
-      <p>
-        <strong>Phone:</strong>
-        ${escapeHTML(order.phone)}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${escapeHTML(order.location)}
-      </p>
-
-      <p>
-        <strong>Total:</strong>
-        ${formatRWF(order.total)}
-      </p>
-
-      <p>
-        <strong>Status:</strong>
-        🧪 TEST SUBMITTED
-      </p>
-
-      <p class="small">
-        ${escapeHTML(order.createdAt)}
-      </p>
-
+      <p><strong>Customer:</strong> ${escapeHTML(order.customer)}</p>
+      <p><strong>Phone:</strong> ${escapeHTML(order.phone)}</p>
+      <p><strong>Location:</strong> ${escapeHTML(order.location)}</p>
+      <p><strong>Total:</strong> ${formatRWF(order.total)}</p>
+      <p><strong>Status:</strong> 🧪 TEST SUBMITTED</p>
+      <p class="small">${escapeHTML(order.createdAt)}</p>
     `;
 
   }
@@ -2648,53 +2233,79 @@ function submitTestOrder() {
   showView("orderSubmittedView");
 
 }
-  
-      
 
-/* =====================================
-   AGENT OPPORTUNITY
-===================================== */
+
+/* ORDERS */
+
+function renderOrders() {
+
+  const container = document.getElementById("ordersList");
+
+  if (!container) return;
+
+  if (testOrders.length === 0) {
+    container.innerHTML =
+      "<p class='small'>No TEST orders yet.</p>";
+    return;
+  }
+
+  let html = "";
+
+  testOrders.forEach(function(order) {
+
+    html += `
+      <div class="card">
+
+        <h3>${escapeHTML(order.id)}</h3>
+
+        <p>Customer: ${escapeHTML(order.customer)}</p>
+
+        <p>Total: ${formatRWF(order.total)}</p>
+
+        <p>Status: ${escapeHTML(order.status)}</p>
+
+        <p class="small">${escapeHTML(order.createdAt)}</p>
+
+      </div>
+    `;
+
+  });
+
+  container.innerHTML = html;
+
+}
+
+
+/* AGENT OPPORTUNITY */
 
 function showAgent() {
-
   showView("agentOpportunityView");
-
 }
-
 
 function showAgentDetails() {
-
   showView("agentDetailsView");
-
 }
-
 
 function startAgentApplication() {
-
   showView("agentApplicationView");
-
 }
 
 
-/* =====================================
-   AGENT APPLICATION
-===================================== */
+/* AGENT APPLICATION */
+
 function submitAgentApplication() {
 
-  const name =
-    document.getElementById("agentName").value.trim();
+  const nameElement = document.getElementById("agentName");
+  const phoneElement = document.getElementById("agentPhone");
+  const locationElement = document.getElementById("agentLocation");
+  const productElement = document.getElementById("agentProduct");
+  const experienceElement = document.getElementById("agentExperience");
 
-  const phone =
-    document.getElementById("agentPhone").value.trim();
-
-  const location =
-    document.getElementById("agentLocation").value.trim();
-
-  const product =
-    document.getElementById("agentProduct").value;
-
-  const experience =
-    document.getElementById("agentExperience").value.trim();
+  const name = nameElement ? nameElement.value.trim() : "";
+  const phone = phoneElement ? phoneElement.value.trim() : "";
+  const location = locationElement ? locationElement.value.trim() : "";
+  const product = productElement ? productElement.value : "";
+  const experience = experienceElement ? experienceElement.value.trim() : "";
 
   if (!name || !phone || !location) {
     alert("⚠️ Please fill in Full Name, Phone and Location.");
@@ -2704,15 +2315,12 @@ function submitAgentApplication() {
   const application = {
 
     id: "APP-" + Date.now(),
-
     name: name,
     phone: phone,
     location: location,
     product: product,
     experience: experience,
-
     status: "PENDING",
-
     date: new Date().toLocaleString()
 
   };
@@ -2725,185 +2333,78 @@ function submitAgentApplication() {
 
   showView("agentSuccessView");
 
-      }
-      
-/* =====================================
-   AGENT DASHBOARD
-===================================== */
+}
+
+
+/* AGENT DASHBOARD */
 
 function showAgentDashboard() {
-
   showView("agentDashboardView");
-
 }
 
 
 function renderAgentDashboard() {
 
-  const approved =
-    agentApplications.filter(
-      function(item) {
+  const approved = agentApplications.filter(function(item) {
+    return item.status === "APPROVED";
+  }).length;
 
-        return item.status === "APPROVED";
+  const salesValue = agentSales.reduce(function(total, sale) {
+    return total + Number(sale.salesValue || 0);
+  }, 0);
 
-      }
-    ).length;
+  const commission = agentSales.reduce(function(total, sale) {
 
+    if (sale.status !== "VERIFIED") return total;
 
-  const salesValue =
-    agentSales.reduce(
-      function(total, sale) {
+    return total + Number(sale.commission || 0);
 
-        return total +
-          Number(sale.salesValue || 0);
+  }, 0);
 
-      },
-      0
-    );
+  const idElement = document.getElementById("agentIdDisplay");
 
+  if (idElement) idElement.textContent = "AGENT-883311";
 
-  const commission =
-  agentSales.reduce(
-    function(total, sale) {
+  const countElement = document.getElementById("agentSalesCount");
 
-      if (sale.status !== "VERIFIED") {
-        return total;
-      }
+  if (countElement) countElement.textContent = agentSales.length;
 
-      return total +
-        Number(sale.commission || 0);
+  const salesElement = document.getElementById("agentSalesValue");
 
-    },
-    0
-  );
+  if (salesElement) salesElement.textContent = formatRWF(salesValue);
 
+  const commissionElement = document.getElementById("agentCommission");
 
-  const idElement =
-    document.getElementById(
-      "agentIdDisplay"
-    );
+  if (commissionElement) commissionElement.textContent = formatRWF(commission);
 
+  const amountElement = document.getElementById("commissionAmount");
 
-  if (idElement) {
+  if (amountElement) amountElement.textContent = formatRWF(commission);
 
-    idElement.textContent =
-      "AGENT-883311";
-
-  }
-
-
-  const countElement =
-    document.getElementById(
-      "agentSalesCount"
-    );
-
-
-  if (countElement) {
-
-    countElement.textContent =
-      agentSales.length;
-
-  }
-
-
-  const salesElement =
-    document.getElementById(
-      "agentSalesValue"
-    );
-
-
-  if (salesElement) {
-
-    salesElement.textContent =
-      formatRWF(salesValue);
-
-  }
-
-
-  const commissionElement =
-    document.getElementById(
-      "agentCommission"
-    );
-
-
-  if (commissionElement) {
-
-    commissionElement.textContent =
-      formatRWF(commission);
-
-  }
-
-
-  const amountElement =
-    document.getElementById(
-      "commissionAmount"
-    );
-
-
-  if (amountElement) {
-
-    amountElement.textContent =
-      formatRWF(commission);
-
-  }
-
-
-  const products =
-    document.getElementById(
-      "agentProductsList"
-    );
-
+  const products = document.getElementById("agentProductsList");
 
   if (products) {
 
     products.innerHTML = `
-
       <div class="card">
-
-        <strong>
-          🥣 MONTI 7 in 1
-        </strong>
-
-        <p class="small">
-          TEST Agent Product
-        </p>
-
+        <strong>🥣 MONTI 7 in 1</strong>
+        <p class="small">TEST Agent Product</p>
       </div>
 
       <div class="card">
-
-        <strong>
-          🌾 MONTI Composite Flour
-        </strong>
-
-        <p class="small">
-          TEST Agent Product
-        </p>
-
+        <strong>🌾 MONTI Composite Flour</strong>
+        <p class="small">TEST Agent Product</p>
       </div>
 
       <div class="card">
-
-        <strong>
-          🥜 MONTI Super 5K
-        </strong>
-
-        <p class="small">
-          TEST Agent Product
-        </p>
-
+        <strong>🥜 MONTI Super 5K</strong>
+        <p class="small">TEST Agent Product</p>
       </div>
-
     `;
 
   }
 
-
-  const salesList =
-    document.getElementById(
-      "agentSalesList"
-    );
-
+  const salesList = document.getElementById("agentSalesList");
 
   if (salesList) {
 
@@ -2912,49 +2413,26 @@ function renderAgentDashboard() {
       salesList.innerHTML =
         "<p class='small'>No TEST sales yet.</p>";
 
-    }
-
-    else {
+    } else {
 
       let html = "";
-
 
       agentSales.forEach(function(sale) {
 
         html += `
-
           <div class="card">
 
-            <strong>
-              ${escapeHTML(
-                sale.productName
-              )}
-            </strong>
+            <strong>${escapeHTML(sale.productName)}</strong>
 
-            <p>
-              Quantity:
-              ${sale.quantity}
-            </p>
+            <p>Quantity: ${sale.quantity} KG</p>
 
-            <p>
-              Sales:
-              ${formatRWF(
-                sale.salesValue
-              )}
-            </p>
+            <p>Sales: ${formatRWF(sale.salesValue)}</p>
 
-            <p>
-              Commission:
-              ${formatRWF(
-                sale.commission
-              )}
-            </p>
+            <p>Commission: ${formatRWF(sale.commission)}</p>
 
-                        <p class="small">
+            <p class="small">
               Status:
-              <strong>
-                ${escapeHTML(sale.status || "PENDING")}
-              </strong>
+              <strong>${escapeHTML(sale.status || "PENDING")}</strong>
             </p>
 
             <p class="small">
@@ -2968,42 +2446,23 @@ function renderAgentDashboard() {
             </p>
 
           </div>
-
         `;
 
       });
 
-
-      salesList.innerHTML =
-        html;
+      salesList.innerHTML = html;
 
     }
 
   }
 
-
-  const profile =
-    document.getElementById(
-      "agentProfileBox"
-    );
-
+  const profile = document.getElementById("agentProfileBox");
 
   if (profile) {
 
     profile.innerHTML = `
-
-      <p>
-        <strong>Agent ID:</strong>
-        AGENT-883311
-      </p>
-
-      <p>
-        <strong>Status:</strong>
-        ${approved > 0
-          ? "APPROVED"
-          : "TEST PROFILE"}
-      </p>
-
+      <p><strong>Agent ID:</strong> AGENT-883311</p>
+      <p><strong>Status:</strong> ${approved > 0 ? "APPROVED" : "TEST PROFILE"}</p>
     `;
 
   }
@@ -3011,13 +2470,17 @@ function renderAgentDashboard() {
 }
 
 
-/* =====================================
-   TEST SALE
-===================================== */
+/* TEST SALE */
 
 function submitAgentSale() {
+
   const productSelect = document.getElementById("agentSaleProduct");
   const quantityInput = document.getElementById("agentSaleQuantity");
+
+  if (!productSelect || !quantityInput) {
+    alert("Sale form not found.");
+    return;
+  }
 
   const quantity = Number(quantityInput.value);
 
@@ -3029,7 +2492,7 @@ function submitAgentSale() {
   const products = {
     monti7: "MONTI 7-in-1",
     composite: "MONTI Composite Flour",
-    super: "MONTI Super"
+    super: "MONTI Super 5K"
   };
 
   const productId = productSelect.value;
@@ -3043,18 +2506,22 @@ function submitAgentSale() {
   const commission = quantity * 300;
 
   const sale = {
+
     id: "SALE-" + Math.floor(100000 + Math.random() * 900000),
     productId: productId,
     productName: productName,
     quantity: quantity,
+    salesValue: 0,
     commission: commission,
     status: "PENDING",
     createdAt: new Date().toLocaleString()
+
   };
 
   agentSales.unshift(sale);
 
   saveData();
+
   renderAgentDashboard();
 
   quantityInput.value = "";
@@ -3065,11 +2532,15 @@ function submitAgentSale() {
     "Expected commission: " + commission + " RWF\n" +
     "Status: PENDING BUSINESS VERIFICATION"
   );
+
 }
+
+
+/* BUSINESS SALES */
+
 function renderBusinessSales() {
 
-  const salesList =
-    document.getElementById("businessSalesList");
+  const salesList = document.getElementById("businessSalesList");
 
   if (!salesList) return;
 
@@ -3090,25 +2561,18 @@ function renderBusinessSales() {
 
         <p>Quantity: ${sale.quantity} KG</p>
 
-        <p>Commission:
-          ${formatRWF(sale.commission)}
-        </p>
+        <p>Commission: ${formatRWF(sale.commission)}</p>
 
-        <p>Status:
-          <strong>${escapeHTML(sale.status)}</strong>
-        </p>
+        <p>Status: <strong>${escapeHTML(sale.status)}</strong></p>
 
         ${
           sale.status === "PENDING"
           ? `
-            <button
-              onclick="approveAgentSale('${sale.id}')">
+            <button onclick="approveAgentSale('${sale.id}')">
               ✅ APPROVE SALE
             </button>
 
-            <button
-              class="secondary"
-              onclick="rejectAgentSale('${sale.id}')">
+            <button class="secondary" onclick="rejectAgentSale('${sale.id}')">
               ❌ REJECT SALE
             </button>
           `
@@ -3121,16 +2585,15 @@ function renderBusinessSales() {
   });
 
   salesList.innerHTML = html;
+
 }
 
 
 function approveAgentSale(saleId) {
 
-  const sale = agentSales.find(
-    function(item) {
-      return item.id === saleId;
-    }
-  );
+  const sale = agentSales.find(function(item) {
+    return item.id === saleId;
+  });
 
   if (!sale || sale.status !== "PENDING") return;
 
@@ -3141,16 +2604,15 @@ function approveAgentSale(saleId) {
   renderBusinessSales();
 
   alert("✅ Sale verified successfully!");
+
 }
 
 
 function rejectAgentSale(saleId) {
 
-  const sale = agentSales.find(
-    function(item) {
-      return item.id === saleId;
-    }
-  );
+  const sale = agentSales.find(function(item) {
+    return item.id === saleId;
+  });
 
   if (!sale || sale.status !== "PENDING") return;
 
@@ -3161,319 +2623,166 @@ function rejectAgentSale(saleId) {
   renderBusinessSales();
 
   alert("❌ Sale rejected.");
+
 }
 
-/* =====================================
-   BUSINESS DASHBOARD
-===================================== */
+
+/* BUSINESS DASHBOARD */
 
 function showBusinessDashboard() {
-
   showView("businessDashboardView");
-
 }
 
 
 function renderBusinessDashboard() {
+
   renderBusinessSales();
-  const total =
-    agentApplications.length;
 
+  const total = agentApplications.length;
 
-  const pending =
-    agentApplications.filter(
-      function(item) {
+  const pending = agentApplications.filter(function(item) {
+    return item.status === "PENDING";
+  }).length;
 
-        return item.status === "PENDING";
+  const approved = agentApplications.filter(function(item) {
+    return item.status === "APPROVED";
+  }).length;
 
-      }
-    ).length;
+  const rejected = agentApplications.filter(function(item) {
+    return item.status === "REJECTED";
+  }).length;
 
+  const totalElement = document.getElementById("totalApplications");
+  const pendingElement = document.getElementById("pendingApplications");
+  const approvedElement = document.getElementById("approvedApplications");
+  const rejectedElement = document.getElementById("rejectedApplications");
 
-  const approved =
-    agentApplications.filter(
-      function(item) {
+  if (totalElement) totalElement.textContent = total;
+  if (pendingElement) pendingElement.textContent = pending;
+  if (approvedElement) approvedElement.textContent = approved;
+  if (rejectedElement) rejectedElement.textContent = rejected;
 
-        return item.status === "APPROVED";
+  const list = document.getElementById("businessApplicationsList");
 
-      }
-    ).length;
-
-
-  const rejected =
-    agentApplications.filter(
-      function(item) {
-
-        return item.status === "REJECTED";
-
-      }
-    ).length;
-
-
-  const totalElement =
-    document.getElementById(
-      "totalApplications"
-    );
-
-
-  const pendingElement =
-    document.getElementById(
-      "pendingApplications"
-    );
-
-
-  const approvedElement =
-    document.getElementById(
-      "approvedApplications"
-    );
-
-
-  const rejectedElement =
-    document.getElementById(
-      "rejectedApplications"
-    );
-
-
-  if (totalElement) {
-
-    totalElement.textContent =
-      total;
-
-  }
-
-
-  if (pendingElement) {
-
-    pendingElement.textContent =
-      pending;
-
-  }
-
-
-  if (approvedElement) {
-
-    approvedElement.textContent =
-      approved;
-
-  }
-
-
-  if (rejectedElement) {
-
-    rejectedElement.textContent =
-      rejected;
-
-  }
-
-
-  const list =
-    document.getElementById(
-      "businessApplicationsList"
-    );
-
-
-  if (!list) {
-    return;
-  }
-
+  if (!list) return;
 
   if (agentApplications.length === 0) {
-
     list.innerHTML =
       "<p class='small'>No agent applications yet.</p>";
-
     return;
-
   }
 
-
   let html = "";
-
 
   agentApplications.forEach(function(application) {
 
     html += `
-
       <div class="card">
 
-        <h3>
-          ${escapeHTML(
-            application.name
-          )}
-        </h3>
+        <h3>${escapeHTML(application.name)}</h3>
 
-        <p>
-          📱
-          ${escapeHTML(
-            application.phone
-          )}
-        </p>
+        <p>📱 ${escapeHTML(application.phone)}</p>
 
-        <p>
-          📍
-          ${escapeHTML(
-            application.location
-          )}
-        </p>
+        <p>📍 ${escapeHTML(application.location)}</p>
 
         <p>
           Status:
-          <strong>
-            ${escapeHTML(
-              application.status
-            )}
-          </strong>
+          <strong>${escapeHTML(application.status)}</strong>
         </p>
 
         <p class="small">
-          ID:
-          ${escapeHTML(
-            application.id
-          )}
+          ID: ${escapeHTML(application.id)}
         </p>
 
         ${
           application.status === "PENDING"
           ? `
-
-            <button
-              class="primary"
-              onclick="approveAgent('${application.id}')"
-            >
+            <button class="primary" onclick="approveAgent('${application.id}')">
               ✅ Approve
             </button>
 
-            <button
-              class="secondary"
-              onclick="rejectAgent('${application.id}')"
-            >
+            <button class="secondary" onclick="rejectAgent('${application.id}')">
               ❌ Reject
             </button>
-
           `
           : ""
         }
 
       </div>
-
     `;
 
   });
 
-
-  list.innerHTML =
-    html;
+  list.innerHTML = html;
 
   renderBusinessSales();
 
 }
 
 
-/* =====================================
-   APPROVE AGENT
-===================================== */
+/* APPROVE AGENT */
 
 function approveAgent(applicationId) {
 
-  const application =
-    agentApplications.find(
-      function(item) {
-
-        return item.id === applicationId;
-
-      }
-    );
-
+  const application = agentApplications.find(function(item) {
+    return item.id === applicationId;
+  });
 
   if (!application) {
-
     alert("Application not found.");
-
     return;
-
   }
 
-
-  application.status =
-    "APPROVED";
-
+  application.status = "APPROVED";
 
   saveData();
 
   renderBusinessDashboard();
 
-  alert(
-    "✅ Agent application approved."
-  );
+  alert("✅ Agent application approved.");
 
 }
 
 
-/* =====================================
-   REJECT AGENT
-===================================== */
+/* REJECT AGENT */
 
 function rejectAgent(applicationId) {
 
-  const application =
-    agentApplications.find(
-      function(item) {
-
-        return item.id === applicationId;
-
-      }
-    );
-
+  const application = agentApplications.find(function(item) {
+    return item.id === applicationId;
+  });
 
   if (!application) {
-
     alert("Application not found.");
-
     return;
-
   }
 
-
-  application.status =
-    "REJECTED";
-
+  application.status = "REJECTED";
 
   saveData();
 
   renderBusinessDashboard();
 
-  alert(
-    "❌ Agent application rejected."
-  );
+  alert("❌ Agent application rejected.");
 
 }
 
 
-/* =====================================
-   NOTIFICATIONS
-===================================== */
+/* NOTIFICATIONS */
 
 function showNotifications() {
-
   showView("notificationsView");
-
 }
 
 
-/* =====================================
-   ADMIN
-===================================== */
+/* ADMIN */
 
 function showAdmin() {
-
   showView("adminView");
-
 }
 
 
-/* =====================================
-   COMING SOON
-===================================== */
+/* COMING SOON */
 
 function comingSoon(name) {
 
@@ -3486,22 +2795,15 @@ function comingSoon(name) {
 }
 
 
-/* =====================================
-   INITIAL LOAD
-===================================== */
+/* INITIAL LOAD */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+document.addEventListener("DOMContentLoaded", function() {
 
-    showView("loginView");
+  showView("loginView");
 
-    console.log(
-      "AMANA HUB TEST MODE loaded successfully."
-    );
+  console.log("AMANA HUB TEST MODE loaded successfully.");
 
-  }
-);
+});
 
 </script>
 </div>
