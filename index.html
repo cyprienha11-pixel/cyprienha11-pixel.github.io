@@ -1563,7 +1563,9 @@ const BACKEND_URL = "https://amana-hub.onrender.com";
 let currentUser = null;
 let currentProduct = null;
 
-let cart = [];
+let cart = JSON.parse(
+  localStorage.getItem("amanaCart") || "[]"
+);
 
 let testOrders = JSON.parse(
   localStorage.getItem("amanaTestOrders") || "[]"
@@ -2073,13 +2075,14 @@ function addToCart() {
 
   }
 
+  // SAVE CART
+  saveData();
+
   alert("✅ Added to Test Cart.");
 
   showView("cartView");
 
 }
-
-
 
 
 
@@ -2194,6 +2197,8 @@ function renderCart() {
 function removeFromCart(index) {
 
   cart.splice(index, 1);
+
+  saveData();
 
   renderCart();
 
@@ -2477,6 +2482,139 @@ function submitTestOrder() {
         ${escapeHTML(order.location)}
       </p>
 
+      
+
+
+/* =====================================
+   ORDERS
+===================================== */
+function submitTestOrder() {
+
+  if (cart.length === 0) {
+
+    alert("Cart is empty.");
+
+    return;
+
+  }
+
+  const name =
+    document.getElementById("orderName");
+
+  const phone =
+    document.getElementById("orderPhone");
+
+  const location =
+    document.getElementById("orderLocation");
+
+  const customerName =
+    name ? name.value.trim() : "";
+
+  const customerPhone =
+    phone ? phone.value.trim() : "";
+
+  const customerLocation =
+    location ? location.value.trim() : "";
+
+  if (
+    !customerName ||
+    !customerPhone ||
+    !customerLocation
+  ) {
+
+    alert("Please complete the order form.");
+
+    showView("orderFormView");
+
+    return;
+
+  }
+
+  let total = 0;
+
+  const items =
+    cart.map(function(item) {
+
+      const itemTotal =
+        item.price * item.quantity;
+
+      total += itemTotal;
+
+      return {
+
+        productId: item.id,
+        productName: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        total: itemTotal
+
+      };
+
+    });
+
+  const order = {
+
+    id:
+      "ORDER-" +
+      Math.floor(
+        100000 +
+        Math.random() * 900000
+      ),
+
+    customer: customerName,
+
+    phone: customerPhone,
+
+    location: customerLocation,
+
+    items: items,
+
+    total: total,
+
+    status: "TEST SUBMITTED",
+
+    createdAt:
+      new Date().toLocaleString()
+
+  };
+
+  testOrders.unshift(order);
+
+  const orderNumber =
+    document.getElementById(
+      "submittedOrderNumber"
+    );
+
+  if (orderNumber) {
+
+    orderNumber.textContent = order.id;
+
+  }
+
+  const submittedDetails =
+    document.getElementById(
+      "submittedOrderDetails"
+    );
+
+  if (submittedDetails) {
+
+    submittedDetails.innerHTML = `
+
+      <p>
+        <strong>Customer:</strong>
+        ${escapeHTML(order.customer)}
+      </p>
+
+      <p>
+        <strong>Phone:</strong>
+        ${escapeHTML(order.phone)}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(order.location)}
+      </p>
+
       <p>
         <strong>Total:</strong>
         ${formatRWF(order.total)}
@@ -2495,180 +2633,14 @@ function submitTestOrder() {
 
   }
 
-
   cart = [];
+
+  saveData();
 
   showView("orderSubmittedView");
 
 }
 
-
-/* =====================================
-   ORDERS
-===================================== */
-
-function showOrders() {
-
-  showView("ordersView");
-
-}
-
-
-function renderOrders() {
-
-  const container =
-    document.getElementById(
-      "ordersList"
-    );
-
-
-  if (!container) {
-    return;
-  }
-
-
-  if (testOrders.length === 0) {
-
-    container.innerHTML =
-      "<p class='small'>📦 No TEST orders yet.</p>";
-
-    return;
-
-  }
-
-
-  let html = "";
-
-
-  testOrders.forEach(function(order) {
-
-    html += `
-
-      <div class="card">
-
-        <h3>
-          ${escapeHTML(order.id)}
-        </h3>
-
-        <p>
-          ${formatRWF(order.total)}
-        </p>
-
-        <p class="small">
-          ${escapeHTML(order.status)}
-        </p>
-
-        <button
-          class="secondary"
-          onclick="showOrderDetails('${order.id}')"
-        >
-          View Details
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-
-  container.innerHTML =
-    html;
-
-}
-
-
-function showOrderDetails(orderId) {
-
-  const order =
-    testOrders.find(function(item) {
-
-      return item.id === orderId;
-
-    });
-
-
-  if (!order) {
-
-    alert("Order not found.");
-
-    return;
-
-  }
-
-
-  const container =
-  document.getElementById(
-    "orderDetailsBox"
-  );
-
-
-  if (container) {
-
-    let itemsHTML = "";
-
-
-    order.items.forEach(function(item) {
-
-      itemsHTML += `
-
-        <p>
-          ${escapeHTML(item.productName)}
-          × ${item.quantity}
-          —
-          ${formatRWF(item.total)}
-        </p>
-
-      `;
-
-    });
-
-
-    container.innerHTML = `
-
-      <h2>
-        ${escapeHTML(order.id)}
-      </h2>
-
-      ${itemsHTML}
-
-      <hr>
-
-      <p>
-        <strong>
-          Total:
-          ${formatRWF(order.total)}
-        </strong>
-      </p>
-
-      <p>
-        Customer:
-        ${escapeHTML(order.customer)}
-      </p>
-
-      <p>
-        Phone:
-        ${escapeHTML(order.phone)}
-      </p>
-
-      <p>
-        Location:
-        ${escapeHTML(order.location)}
-      </p>
-
-      <p>
-        Status:
-        ${escapeHTML(order.status)}
-      </p>
-
-    `;
-
-  }
-
-
-  showView("orderDetailsView");
-
-}
 
 
 /* =====================================
