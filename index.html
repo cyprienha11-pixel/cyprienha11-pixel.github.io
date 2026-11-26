@@ -2293,49 +2293,72 @@ function startAgentApplication() {
 
 
 /* AGENT APPLICATION */
+async function submitAgentApplication() {
 
-function submitAgentApplication() {
-
-  const nameElement = document.getElementById("agentName");
-  const phoneElement = document.getElementById("agentPhone");
-  const locationElement = document.getElementById("agentLocation");
-  const productElement = document.getElementById("agentProduct");
-  const experienceElement = document.getElementById("agentExperience");
-
-  const name = nameElement ? nameElement.value.trim() : "";
-  const phone = phoneElement ? phoneElement.value.trim() : "";
-  const location = locationElement ? locationElement.value.trim() : "";
-  const product = productElement ? productElement.value : "";
-  const experience = experienceElement ? experienceElement.value.trim() : "";
+  const name = document.getElementById("agentName").value.trim();
+  const phone = document.getElementById("agentPhone").value.trim();
+  const location = document.getElementById("agentLocation").value.trim();
+  const product = document.getElementById("agentProduct").value;
+  const experience = document.getElementById("agentExperience").value.trim();
 
   if (!name || !phone || !location) {
     alert("⚠️ Please fill in Full Name, Phone and Location.");
     return;
   }
 
-  const application = {
+  if (!currentAccessToken) {
+    alert("⚠️ Please login with Pi Network first.");
+    return;
+  }
 
-    id: "APP-" + Date.now(),
-    name: name,
-    phone: phone,
-    location: location,
-    product: product,
-    experience: experience,
-    status: "PENDING",
-    date: new Date().toLocaleString()
+  try {
 
-  };
+    const response = await fetch(
+      `${BACKEND_URL}/api/agents/applications`,
+      {
+        method: "POST",
 
-  agentApplications.push(application);
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentAccessToken}`
+        },
 
-  saveData();
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          location: location,
+          product: product,
+          experience: experience
+        })
+      }
+    );
 
-  alert("✅ TEST Application submitted successfully!");
+    const data = await response.json();
 
-  showView("agentSuccessView");
+    if (!response.ok) {
+      throw new Error(data.error || "Application submission failed.");
+    }
 
+    const applicationNumber =
+  document.getElementById("applicationNumber");
+
+if (applicationNumber && data.application) {
+  applicationNumber.textContent = data.application.id;
 }
 
+alert("✅ Agent Application submitted successfully!");
+
+showView("agentSuccessView");
+
+  } catch (error) {
+
+    console.error("Agent Application Error:", error);
+
+    alert("❌ Submission failed: " + error.message);
+
+  }
+
+}
 
 /* AGENT DASHBOARD */
 
