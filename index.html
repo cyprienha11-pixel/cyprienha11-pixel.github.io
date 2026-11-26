@@ -1811,14 +1811,8 @@ function loginWithPi() {
       if (!authResult) {
         throw new Error("Pi authentication returned no result.");
       }
-
       currentUser = authResult.user || {};
-currentAccessToken = authResult.accessToken;
-
-const username =
-  currentUser.username ||
-  authResult.username ||
-  "Pi User";
+      currentAccessToken = authResult.accessToken;
 
       const username =
         currentUser.username ||
