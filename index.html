@@ -1813,6 +1813,12 @@ function loginWithPi() {
       }
 
       currentUser = authResult.user || {};
+currentAccessToken = authResult.accessToken;
+
+const username =
+  currentUser.username ||
+  authResult.username ||
+  "Pi User";
 
       const username =
         currentUser.username ||
