@@ -1770,87 +1770,74 @@ function escapeHTML(value) {
 
 
 /* PI LOGIN */
+let piInitialization = null;
 
-function loginWithPi() {
+async function loginWithPi() {
 
   const status = document.getElementById("loginStatus");
 
-  if (status) {
-    status.innerHTML = "⏳ Connecting to Pi Network...";
-  }
-
-  if (typeof window.Pi === "undefined") {
-
-    if (status) {
-      status.innerHTML = "❌ Pi SDK ntibonetse. Fungura AMANA HUB muri Pi Browser.";
-    }
-
-    return;
-  }
-
   try {
 
-    window.Pi.init({
-      version: "2.0",
-      sandbox: true
-    });
+    if (status) {
+      status.innerHTML = "⏳ Step 1: Checking Pi SDK...";
+    }
 
-    window.Pi.authenticate(
+    if (typeof window.Pi === "undefined") {
+      throw new Error("Pi SDK not found. Open in Pi Browser.");
+    }
+
+    if (status) {
+      status.innerHTML = "⏳ Step 2: Initializing Pi SDK...";
+    }
+
+    if (!piInitialization) {
+      piInitialization = window.Pi.init({
+        version: "2.0",
+        sandbox: true
+      });
+    }
+
+    await piInitialization;
+
+    if (status) {
+      status.innerHTML = "⏳ Step 3: Opening Pi authentication...";
+    }
+
+    const authResult = await window.Pi.authenticate(
       ["username", "payments"],
-
       function(incompletePayment) {
         console.log("Incomplete TEST payment:", incompletePayment);
       }
+    );
 
-    )
+    if (!authResult || !authResult.accessToken) {
+      throw new Error("Pi did not return an access token.");
+    }
 
-    .then(function(authResult) {
+    currentUser = authResult.user || {};
+    currentAccessToken = authResult.accessToken;
 
-      console.log("PI AUTH RESULT:", authResult);
+    const usernameElement = document.getElementById("username");
 
-      if (!authResult) {
-        throw new Error("Pi authentication returned no result.");
-      }
-      currentUser = authResult.user || {};
-      currentAccessToken = authResult.accessToken;
-
-      const username =
-        currentUser.username ||
-        authResult.username ||
-        "Pi User";
-
-      const usernameElement = document.getElementById("username");
-
-      if (usernameElement) {
-        usernameElement.textContent = "@" + username;
-      }
-
-      if (status) {
-        status.innerHTML = "✅ Pi Connected successfully!";
-      }
-
-      showView("homeView");
-
-    })
-
-    .catch(function(error) {
-
-      console.error("Pi Login Error:", error);
-
-      if (status) {
-        status.innerHTML = "❌ Pi Login failed. Please try again.";
-      }
-
-    });
-
-  }
-
-  catch (error) {
-
-    console.error("Pi SDK Error:", error);
+    if (usernameElement) {
+      usernameElement.textContent =
+        "@" + (currentUser.username || "Pi User");
+    }
 
     if (status) {
-      status.innerHTML = "❌ Error connecting to Pi.";
+      status.innerHTML = "✅ Pi Connected successfully!";
+    }
+
+    showView("homeView");
+
+  } catch (error) {
+
+    console.error("Pi Login Error:", error);
+
+    piInitialization = null;
+
+    if (status) {
+      status.innerHTML = "❌ " + error.message;
     }
 
   }
