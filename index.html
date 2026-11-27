@@ -2657,139 +2657,201 @@ function showBusinessDashboard() {
   showView("businessDashboardView");
 }
 
-
-function renderBusinessDashboard() {
+// BUSINESS DASHBOARD - LOAD APPLICATIONS FROM NEON
+async function renderBusinessDashboard() {
 
   renderBusinessSales();
-
-  const total = agentApplications.length;
-
-  const pending = agentApplications.filter(function(item) {
-    return item.status === "PENDING";
-  }).length;
-
-  const approved = agentApplications.filter(function(item) {
-    return item.status === "APPROVED";
-  }).length;
-
-  const rejected = agentApplications.filter(function(item) {
-    return item.status === "REJECTED";
-  }).length;
-
-  const totalElement = document.getElementById("totalApplications");
-  const pendingElement = document.getElementById("pendingApplications");
-  const approvedElement = document.getElementById("approvedApplications");
-  const rejectedElement = document.getElementById("rejectedApplications");
-
-  if (totalElement) totalElement.textContent = total;
-  if (pendingElement) pendingElement.textContent = pending;
-  if (approvedElement) approvedElement.textContent = approved;
-  if (rejectedElement) rejectedElement.textContent = rejected;
 
   const list = document.getElementById("businessApplicationsList");
 
   if (!list) return;
 
-  if (agentApplications.length === 0) {
+  if (!currentAccessToken) {
     list.innerHTML =
-      "<p class='small'>No agent applications yet.</p>";
+      "<p class='small'>Please login with Pi Network first.</p>";
     return;
   }
 
-  let html = "";
+  list.innerHTML =
+    "<p class='small'>Loading applications...</p>";
 
-  agentApplications.forEach(function(application) {
+  try {
 
-    html += `
-      <div class="card">
-
-        <h3>${escapeHTML(application.name)}</h3>
-
-        <p>📱 ${escapeHTML(application.phone)}</p>
-
-        <p>📍 ${escapeHTML(application.location)}</p>
-
-        <p>
-          Status:
-          <strong>${escapeHTML(application.status)}</strong>
-        </p>
-
-        <p class="small">
-          ID: ${escapeHTML(application.id)}
-        </p>
-
-        ${
-          application.status === "PENDING"
-          ? `
-            <button class="primary" onclick="approveAgent('${application.id}')">
-              ✅ Approve
-            </button>
-
-            <button class="secondary" onclick="rejectAgent('${application.id}')">
-              ❌ Reject
-            </button>
-          `
-          : ""
+    const response = await fetch(
+      `${BACKEND_URL}/api/admin/agents/applications`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${currentAccessToken}`
         }
+      }
+    );
 
-      </div>
-    `;
+    const data = await response.json();
 
-  });
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to load applications.");
+    }
 
-  list.innerHTML = html;
+    agentApplications = data.applications || [];
 
-  renderBusinessSales();
+    const total = agentApplications.length;
+
+    const pending = agentApplications.filter(function(item) {
+      return item.status === "PENDING";
+    }).length;
+
+    const approved = agentApplications.filter(function(item) {
+      return item.status === "APPROVED";
+    }).length;
+
+    const rejected = agentApplications.filter(function(item) {
+      return item.status === "REJECTED";
+    }).length;
+
+    const totalElement = document.getElementById("totalApplications");
+    const pendingElement = document.getElementById("pendingApplications");
+    const approvedElement = document.getElementById("approvedApplications");
+    const rejectedElement = document.getElementById("rejectedApplications");
+
+    if (totalElement) totalElement.textContent = total;
+    if (pendingElement) pendingElement.textContent = pending;
+    if (approvedElement) approvedElement.textContent = approved;
+    if (rejectedElement) rejectedElement.textContent = rejected;
+
+    if (agentApplications.length === 0) {
+
+      list.innerHTML =
+        "<p class='small'>No agent applications yet.</p>";
+
+      return;
+    }
+
+    let html = "";
+
+    agentApplications.forEach(function(application) {
+
+      html += `
+        <div class="card">
+
+          <h3>${escapeHTML(application.name)}</h3>
+
+          <p>📱 ${escapeHTML(application.phone)}</p>
+
+          <p>📍 ${escapeHTML(application.location)}</p>
+
+          <p>
+            Status:
+            <strong>${escapeHTML(application.status)}</strong>
+          </p>
+
+          <p class="small">
+            ID: ${escapeHTML(application.id)}
+          </p>
+
+          ${
+            application.status === "PENDING"
+            ? `
+              <button class="primary" onclick="approveAgent('${application.id}')">
+                ✅ Approve
+              </button>
+
+              <button class="secondary" onclick="rejectAgent('${application.id}')">
+                ❌ Reject
+              </button>
+            `
+            : ""
+          }
+
+        </div>
+      `;
+
+    });
+
+    list.innerHTML = html;
+
+  } catch (error) {
+
+    console.error("Business Dashboard Error:", error);
+
+    list.innerHTML =
+      "<p class='small'>❌ " +
+      escapeHTML(error.message) +
+      "</p>";
+
+  }
 
 }
 
+/* APPROVE OR REJECT AGENT - SAVE TO NEON */
 
-/* APPROVE AGENT */
+async function updateAgentStatus(applicationId, newStatus) {
+
+  if (!currentAccessToken) {
+    alert("Please login with Pi Network first.");
+    return;
+  }
+
+  const confirmed = confirm(
+    "Are you sure you want to " +
+    newStatus.toLowerCase() +
+    " this Agent application?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+
+    const response = await fetch(
+      `${BACKEND_URL}/api/admin/agents/applications/${encodeURIComponent(applicationId)}/status`,
+      {
+        method: "PATCH",
+
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentAccessToken}`
+        },
+
+        body: JSON.stringify({
+          status: newStatus
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Status update failed.");
+    }
+
+    alert(
+      "✅ Application successfully " +
+      newStatus.toLowerCase() +
+      "!"
+    );
+
+    await renderBusinessDashboard();
+
+  } catch (error) {
+
+    console.error("Agent Status Error:", error);
+
+    alert("❌ " + error.message);
+
+  }
+
+}
+
 
 function approveAgent(applicationId) {
-
-  const application = agentApplications.find(function(item) {
-    return item.id === applicationId;
-  });
-
-  if (!application) {
-    alert("Application not found.");
-    return;
-  }
-
-  application.status = "APPROVED";
-
-  saveData();
-
-  renderBusinessDashboard();
-
-  alert("✅ Agent application approved.");
-
+  updateAgentStatus(applicationId, "APPROVED");
 }
 
-
-/* REJECT AGENT */
 
 function rejectAgent(applicationId) {
-
-  const application = agentApplications.find(function(item) {
-    return item.id === applicationId;
-  });
-
-  if (!application) {
-    alert("Application not found.");
-    return;
-  }
-
-  application.status = "REJECTED";
-
-  saveData();
-
-  renderBusinessDashboard();
-
-  alert("❌ Agent application rejected.");
-
+  updateAgentStatus(applicationId, "REJECTED");
 }
+
 
 
 /* NOTIFICATIONS */
