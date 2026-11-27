@@ -2483,7 +2483,7 @@ function renderAgentDashboard() {
 
 /* TEST SALE */
 
-function submitAgentSale() {
+async function submitAgentSale() {
 
   const productSelect = document.getElementById("agentSaleProduct");
   const quantityInput = document.getElementById("agentSaleQuantity");
@@ -2495,54 +2495,76 @@ function submitAgentSale() {
 
   const quantity = Number(quantityInput.value);
 
-  if (!quantity || quantity <= 0) {
+  if (!Number.isFinite(quantity) || quantity <= 0) {
     alert("Please enter a valid quantity in KG.");
     return;
   }
 
-  const products = {
-    monti7: "MONTI 7-in-1",
-    composite: "MONTI Composite Flour",
-    super: "MONTI Super 5K"
-  };
-
-  const productId = productSelect.value;
-  const productName = products[productId];
-
-  if (!productName) {
-    alert("Please select a valid product.");
+  if (!currentAccessToken) {
+    alert("Please login with Pi Network first.");
     return;
   }
 
-  const commission = quantity * 300;
+  const productId = productSelect.value;
 
-  const sale = {
+  try {
 
-    id: "SALE-" + Math.floor(100000 + Math.random() * 900000),
-    productId: productId,
-    productName: productName,
-    quantity: quantity,
-    salesValue: 0,
-    commission: commission,
-    status: "PENDING",
-    createdAt: new Date().toLocaleString()
+    const response = await fetch(
+      `${BACKEND_URL}/api/agents/sales`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentAccessToken}`
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: quantity
+        })
+      }
+    );
 
-  };
+    const data = await response.json();
 
-  agentSales.unshift(sale);
+    if (!response.ok) {
+      throw new Error(data.error || "Sale submission failed.");
+    }
 
-  saveData();
+    const savedSale = data.sale;
 
-  renderAgentDashboard();
+    const sale = {
+      id: savedSale.id,
+      productId: savedSale.product_id,
+      productName: savedSale.product_name,
+      quantity: Number(savedSale.quantity),
+      salesValue: Number(savedSale.sales_value),
+      commission: Number(savedSale.commission),
+      status: savedSale.status,
+      createdAt: savedSale.created_at
+    };
 
-  quantityInput.value = "";
+    agentSales.unshift(sale);
 
-  alert(
-    "Sale submitted successfully!\n" +
-    "Quantity: " + quantity + " KG\n" +
-    "Expected commission: " + commission + " RWF\n" +
-    "Status: PENDING BUSINESS VERIFICATION"
-  );
+    saveData();
+
+    renderAgentDashboard();
+
+    quantityInput.value = "";
+
+    alert(
+      "Sale saved successfully to Neon!\n" +
+      "Quantity: " + quantity + " KG\n" +
+      "Expected commission: " + sale.commission + " RWF\n" +
+      "Status: PENDING BUSINESS VERIFICATION"
+    );
+
+  } catch (error) {
+
+    console.error("Agent Sale Error:", error);
+
+    alert("Sale submission failed: " + error.message);
+
+  }
 
 }
 
